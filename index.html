@@ -3,23 +3,31 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no" />
-  <title>Mahal's Pixel Hamster Gacha</title>
+  <meta name="apple-mobile-web-app-capable" content="yes" />
+  <meta name="apple-mobile-web-app-title" content="Matcha" />
+  <meta name="theme-color" content="#2d4a36" />
+  <title>Matcha</title>
+  <link rel="icon" type="image/svg+xml" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 16 16' shape-rendering='crispEdges'%3E%3Crect width='16' height='16' rx='3' fill='%232d4a36'/%3E%3Crect x='7' y='11' width='2' height='3' fill='%235c3c28'/%3E%3Crect x='4' y='5' width='8' height='6' fill='%2378a878'/%3E%3Crect x='5' y='3' width='6' height='2' fill='%23a3c9a8'/%3E%3Crect x='6' y='6' width='2' height='2' fill='%23f4d06f'/%3E%3C/svg%3E" />
   <link rel="preconnect" href="https://fonts.googleapis.com" />
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
   <link href="https://fonts.googleapis.com/css2?family=Press+Start+2P&family=VT323&display=swap" rel="stylesheet" />
   <style>
     :root {
       --bg-outer: #2d4a36;
-      --bg-outer-dark: #213728;
+      --bg-outer-dark: #203627;
       --screen-bg: #e8f3e8;
       --screen-bg-alt: #d7ead7;
       --accent-primary: #78a878;
-      --accent-primary-dark: #5b875b;
+      --accent-primary-dark: #588658;
       --accent-secondary: #a3c9a8;
+      --pot-terracotta: #b5654a;
+      --pot-terracotta-dark: #8c4832;
+      --soil-rich: #5c3c28;
       --accent-gold: #f4d06f;
-      --accent-gold-dark: #d1a73e;
+      --accent-gold-dark: #cfa538;
       --ink: #1b2e21;
       --rose: #e88d97;
+      --water-blue: #7bc4d4;
       --white: #f7fbf7;
     }
 
@@ -34,21 +42,15 @@
       min-height: 100%;
       background-color: var(--bg-outer-dark);
       background-image:
-        radial-gradient(circle at 20% 20%, rgba(163, 201, 168, 0.1) 0%, transparent 45%),
+        radial-gradient(circle at 20% 20%, rgba(163, 201, 168, 0.12) 0%, transparent 45%),
         radial-gradient(circle at 80% 80%, rgba(244, 208, 111, 0.08) 0%, transparent 45%),
-        repeating-linear-gradient(
-          0deg,
-          rgba(0, 0, 0, 0.06) 0px,
-          rgba(0, 0, 0, 0.06) 2px,
-          transparent 2px,
-          transparent 4px
-        );
+        repeating-linear-gradient(0deg, rgba(0, 0, 0, 0.06) 0px, rgba(0, 0, 0, 0.06) 2px, transparent 2px, transparent 4px);
       color: var(--ink);
       font-family: 'VT323', monospace;
       display: flex;
       justify-content: center;
       align-items: center;
-      padding: 12px;
+      padding: 10px;
       overflow-x: hidden;
     }
 
@@ -58,13 +60,13 @@
       max-width: 480px;
       background: var(--bg-outer);
       border: 4px solid var(--ink);
+      border-radius: 18px 18px 34px 18px;
+      padding: 12px;
       box-shadow:
         inset 4px 4px 0 rgba(255, 255, 255, 0.14),
         inset -4px -4px 0 rgba(0, 0, 0, 0.3),
-        0 12px 0 var(--ink),
+        0 10px 0 var(--ink),
         0 20px 36px rgba(0, 0, 0, 0.45);
-      border-radius: 18px 18px 34px 18px;
-      padding: 14px;
       position: relative;
     }
 
@@ -72,7 +74,7 @@
       display: flex;
       justify-content: space-between;
       align-items: center;
-      margin-bottom: 10px;
+      margin-bottom: 8px;
       padding: 0 4px;
     }
 
@@ -80,7 +82,6 @@
       font-family: 'Press Start 2P', monospace;
       font-size: 9px;
       color: var(--accent-secondary);
-      letter-spacing: 0.5px;
       display: flex;
       align-items: center;
       gap: 6px;
@@ -108,24 +109,23 @@
       opacity: 0.55;
     }
 
-    /* Bezel & LCD Screen */
     .screen-bezel {
-      background: #1b2e21;
-      padding: 10px;
-      border-radius: 10px 10px 20px 10px;
+      background: var(--ink);
+      padding: 8px;
+      border-radius: 10px 10px 18px 10px;
       border: 3px solid #122017;
     }
 
     .lcd-screen {
       background: var(--screen-bg);
       border: 3px solid var(--ink);
-      min-height: 540px;
+      min-height: 590px;
       position: relative;
       overflow: hidden;
       display: flex;
       flex-direction: column;
       background-image:
-        linear-gradient(rgba(27, 46, 33, 0.03) 50%, transparent 50%),
+        linear-gradient(rgba(27, 46, 33, 0.025) 50%, transparent 50%),
         linear-gradient(90deg, rgba(27, 46, 33, 0.02) 50%, transparent 50%);
       background-size: 100% 4px, 4px 100%;
     }
@@ -133,76 +133,78 @@
     /* Pixel Buttons */
     .px-btn {
       font-family: 'Press Start 2P', monospace;
-      font-size: 11px;
-      line-height: 1.4;
+      font-size: 9px;
+      line-height: 1.35;
       color: var(--ink);
       background: var(--accent-primary);
       border: 3px solid var(--ink);
       box-shadow:
-        inset -3px -3px 0 var(--accent-primary-dark),
-        inset 3px 3px 0 var(--accent-secondary),
-        0 4px 0 var(--ink);
-      padding: 11px 14px;
+        inset -2px -2px 0 var(--accent-primary-dark),
+        inset 2px 2px 0 var(--accent-secondary),
+        0 3px 0 var(--ink);
+      padding: 8px 10px;
       cursor: pointer;
       text-align: center;
       user-select: none;
-      transition: transform 0.06s ease, box-shadow 0.06s ease;
       display: inline-flex;
       align-items: center;
       justify-content: center;
-      gap: 6px;
+      gap: 5px;
+      transition: transform 0.06s ease, box-shadow 0.06s ease;
     }
 
     .px-btn:hover:not(:disabled) {
       filter: brightness(1.04);
     }
 
-    .px-btn:active:not(:disabled),
-    .px-btn.is-pressed {
-      transform: translateY(3px);
+    .px-btn:active:not(:disabled) {
+      transform: translateY(2px);
       box-shadow:
-        inset -2px -2px 0 var(--accent-primary-dark),
-        inset 2px 2px 0 var(--accent-secondary),
+        inset -1px -1px 0 var(--accent-primary-dark),
+        inset 1px 1px 0 var(--accent-secondary),
         0 1px 0 var(--ink);
     }
 
     .px-btn:disabled {
-      opacity: 0.65;
+      opacity: 0.55;
       cursor: not-allowed;
     }
 
     .px-btn-gold {
       background: var(--accent-gold);
       box-shadow:
-        inset -3px -3px 0 var(--accent-gold-dark),
-        inset 3px 3px 0 #fae39c,
-        0 4px 0 var(--ink);
-    }
-
-    .px-btn-gold:active:not(:disabled) {
-      box-shadow:
         inset -2px -2px 0 var(--accent-gold-dark),
         inset 2px 2px 0 #fae39c,
-        0 1px 0 var(--ink);
+        0 3px 0 var(--ink);
     }
 
     .px-btn-secondary {
       background: var(--accent-secondary);
       box-shadow:
-        inset -3px -3px 0 var(--accent-primary),
-        inset 3px 3px 0 #cde5d0,
-        0 4px 0 var(--ink);
-      font-size: 9px;
-      padding: 9px 10px;
+        inset -2px -2px 0 var(--accent-primary),
+        inset 2px 2px 0 #d5ebd7,
+        0 3px 0 var(--ink);
+    }
+
+    .px-btn-terra {
+      background: var(--pot-terracotta);
+      color: var(--white);
+      box-shadow:
+        inset -2px -2px 0 var(--pot-terracotta-dark),
+        inset 2px 2px 0 #d48369,
+        0 3px 0 var(--ink);
     }
 
     .px-btn-sm {
-      font-size: 8px;
-      padding: 6px 8px;
-      box-shadow:
-        inset -2px -2px 0 var(--accent-primary-dark),
-        inset 2px 2px 0 var(--accent-secondary),
-        0 2px 0 var(--ink);
+      font-size: 7px;
+      padding: 5px 7px;
+      border-width: 2px;
+      box-shadow: 0 2px 0 var(--ink);
+    }
+
+    .px-btn-sm:active:not(:disabled) {
+      transform: translateY(2px);
+      box-shadow: none;
     }
 
     /* Title Screen */
@@ -214,12 +216,12 @@
       justify-content: center;
       padding: 24px 16px;
       text-align: center;
-      gap: 18px;
-      background:
-        radial-gradient(circle at 50% 42%, var(--white) 0%, var(--screen-bg) 65%);
+      gap: 14px;
+      background: radial-gradient(circle at 50% 42%, var(--white) 0%, var(--screen-bg) 70%);
     }
 
-    .title-screen.hidden {
+    .title-screen.hidden,
+    .game-shell.hidden {
       display: none;
     }
 
@@ -228,32 +230,34 @@
       font-size: 8px;
       background: var(--accent-gold);
       border: 2px solid var(--ink);
-      padding: 5px 10px;
+      padding: 5px 9px;
       box-shadow: 2px 2px 0 var(--ink);
     }
 
-    .title-heading {
+    .title-logo {
       font-family: 'Press Start 2P', monospace;
-      font-size: 16px;
-      line-height: 1.7;
+      font-size: 28px;
       margin: 0;
+      letter-spacing: 3px;
       color: var(--ink);
-      text-shadow: 2px 2px 0 var(--accent-secondary);
+      text-shadow: 3px 3px 0 var(--accent-secondary);
     }
 
     .title-subtitle {
       font-size: 22px;
       margin: 0;
       color: var(--accent-primary-dark);
-      line-height: 1.2;
+      line-height: 1.15;
     }
 
-    .title-hamster-wrap {
+    .title-hammie {
       animation: floatIdle 2.2s ease-in-out infinite;
     }
 
     .blink-btn {
       animation: blinkPulse 1.3s steps(2, start) infinite;
+      padding: 12px 18px;
+      font-size: 11px;
     }
 
     @keyframes blinkPulse {
@@ -266,38 +270,37 @@
       50% { transform: translateY(-5px); }
     }
 
-    /* Main Game Screen */
-    .game-screen {
+    /* Game Shell */
+    .game-shell {
       flex: 1;
       display: flex;
       flex-direction: column;
-      justify-content: space-between;
-      padding: 10px;
-      gap: 10px;
-    }
-
-    .game-screen.hidden {
-      display: none;
+      height: 100%;
     }
 
     /* Top HUD */
-    .hud-bar {
+    .hud-wrap {
+      background: var(--screen-bg-alt);
+      border-bottom: 3px solid var(--ink);
+      padding: 7px 8px;
+      display: flex;
+      flex-direction: column;
+      gap: 6px;
+    }
+
+    .hud-row-top {
       display: grid;
       grid-template-columns: auto 1fr auto;
       align-items: center;
-      gap: 8px;
-      background: var(--screen-bg-alt);
-      border: 3px solid var(--ink);
-      padding: 6px 8px;
-      box-shadow: 0 3px 0 rgba(27, 46, 33, 0.18);
+      gap: 6px;
     }
 
     .hud-lvl {
       font-family: 'Press Start 2P', monospace;
-      font-size: 10px;
+      font-size: 9px;
       background: var(--accent-gold);
       border: 2px solid var(--ink);
-      padding: 5px 7px;
+      padding: 4px 6px;
       white-space: nowrap;
     }
 
@@ -308,25 +311,23 @@
 
     .hud-timer-label {
       font-family: 'Press Start 2P', monospace;
-      font-size: 7px;
+      font-size: 6px;
       color: var(--accent-primary-dark);
       margin-bottom: 2px;
     }
 
     .hud-timer-val {
-      font-family: 'VT323', monospace;
-      font-size: 20px;
+      font-size: 18px;
       font-weight: bold;
-      letter-spacing: 0.5px;
       color: var(--ink);
     }
 
     .sound-btn {
       font-family: 'Press Start 2P', monospace;
-      font-size: 9px;
+      font-size: 8px;
       background: var(--white);
       border: 2px solid var(--ink);
-      padding: 5px 7px;
+      padding: 4px 6px;
       cursor: pointer;
       color: var(--ink);
       box-shadow: 0 2px 0 var(--ink);
@@ -337,47 +338,391 @@
       box-shadow: none;
     }
 
-    /* Stage / Gacha + Hamster Area */
-    .stage-area {
-      position: relative;
-      flex: 1;
-      min-height: 290px;
-      background:
-        linear-gradient(180deg, #f3faf3 0%, #e1efe1 72%, #c3dec4 72%, #b2d1b4 100%);
-      border: 3px solid var(--ink);
+    .hud-currencies {
       display: flex;
-      align-items: flex-end;
-      justify-content: center;
-      padding: 16px 10px 14px;
+      justify-content: space-between;
+      align-items: center;
+      gap: 6px;
+      font-family: 'Press Start 2P', monospace;
+      font-size: 8px;
+    }
+
+    .currency-pill {
+      flex: 1;
+      background: var(--white);
+      border: 2px solid var(--ink);
+      padding: 4px 7px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 4px;
+    }
+
+    /* Notification Banner */
+    .unlock-banner {
+      display: none;
+      background: var(--accent-gold);
+      border-bottom: 3px solid var(--ink);
+      padding: 6px 8px;
+      font-family: 'Press Start 2P', monospace;
+      font-size: 7px;
+      line-height: 1.5;
+      text-align: center;
+      cursor: pointer;
+    }
+
+    .unlock-banner.visible {
+      display: block;
+    }
+
+    /* Room Viewport */
+    .room-viewport {
+      flex: 1;
+      overflow-y: auto;
+      padding: 8px;
+      display: flex;
+      flex-direction: column;
+      gap: 8px;
+      position: relative;
+    }
+
+    .room-panel {
+      display: none;
+      flex-direction: column;
+      gap: 8px;
+      flex: 1;
+    }
+
+    .room-panel.active {
+      display: flex;
+    }
+
+    .room-header-bar {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      gap: 6px;
+    }
+
+    .room-title {
+      font-family: 'Press Start 2P', monospace;
+      font-size: 9px;
+      margin: 0;
+      color: var(--ink);
+    }
+
+    /* Greenhouse Stage */
+    .greenhouse-window {
+      position: relative;
+      background: linear-gradient(180deg, #dff0e6 0%, #c9e4d3 68%, #9d7558 68%, #835f46 100%);
+      border: 3px solid var(--ink);
+      padding: 10px 8px 8px;
+      min-height: 235px;
+      display: flex;
+      flex-direction: column;
+      justify-content: space-between;
       overflow: hidden;
     }
 
-    .stage-decor-clouds {
-      position: absolute;
-      top: 10px;
-      left: 12px;
-      right: 12px;
-      display: flex;
-      justify-content: space-between;
-      pointer-events: none;
-      opacity: 0.7;
+    .greenhouse-window.is-raining {
+      background: linear-gradient(180deg, #b8d0c7 0%, #9abbb0 68%, #8d684f 68%, #73513a 100%);
     }
 
-    .stage-pair {
+    .rain-overlay {
+      position: absolute;
+      inset: 0;
+      pointer-events: none;
+      display: none;
+      background-image: repeating-linear-gradient(
+        105deg,
+        transparent 0px,
+        transparent 14px,
+        rgba(123, 196, 212, 0.45) 14px,
+        rgba(123, 196, 212, 0.45) 16px
+      );
+      animation: rainFall 0.45s linear infinite;
+      z-index: 1;
+    }
+
+    .greenhouse-window.is-raining .rain-overlay {
+      display: block;
+    }
+
+    @keyframes rainFall {
+      from { background-position: 0 0; }
+      to { background-position: -12px 24px; }
+    }
+
+    .weather-badge {
+      position: relative;
+      z-index: 2;
+      align-self: flex-start;
+      font-family: 'Press Start 2P', monospace;
+      font-size: 7px;
+      background: var(--white);
+      border: 2px solid var(--ink);
+      padding: 3px 6px;
+    }
+
+    .pots-grid {
+      position: relative;
+      z-index: 2;
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 6px;
+      align-items: end;
+      margin-top: 8px;
+    }
+
+    .pot-slot {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 4px;
+      position: relative;
+    }
+
+    .pot-sprite-box {
+      position: relative;
+      width: 82px;
+      height: 92px;
+      display: flex;
+      align-items: flex-end;
+      justify-content: center;
+    }
+
+    .dew-drop-btn {
+      position: absolute;
+      top: 12px;
+      right: 8px;
+      background: transparent;
+      border: none;
+      padding: 0;
+      cursor: pointer;
+      animation: floatIdle 1.3s ease-in-out infinite;
+      z-index: 5;
+    }
+
+    .ladybug-btn {
+      position: absolute;
+      top: 28px;
+      left: 6px;
+      background: transparent;
+      border: none;
+      padding: 0;
+      cursor: pointer;
+      animation: floatIdle 1.1s ease-in-out infinite;
+      z-index: 5;
+    }
+
+    .pot-meta {
+      width: 100%;
+      background: var(--white);
+      border: 2px solid var(--ink);
+      padding: 4px;
+      text-align: center;
+      font-size: 16px;
+      line-height: 1.05;
+    }
+
+    .pot-name {
+      font-family: 'Press Start 2P', monospace;
+      font-size: 6px;
+      margin-bottom: 2px;
+      white-space: nowrap;
+      overflow: hidden;
+      text-overflow: ellipsis;
+    }
+
+    .pot-stage {
+      font-size: 15px;
+      color: var(--accent-primary-dark);
+    }
+
+    .pot-actions {
+      display: flex;
+      gap: 3px;
+      width: 100%;
+      justify-content: center;
+      flex-wrap: wrap;
+    }
+
+    /* Hammie Corner in Greenhouse */
+    .hammie-bar {
+      background: var(--white);
+      border: 3px solid var(--ink);
+      padding: 8px;
+      display: grid;
+      grid-template-columns: auto 1fr;
+      gap: 8px;
+      align-items: center;
+      position: relative;
+    }
+
+    .hammie-clicker {
+      cursor: pointer;
+      user-select: none;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      position: relative;
+    }
+
+    .hammie-svg {
+      width: 68px;
+      height: 68px;
+      transform-origin: bottom center;
+    }
+
+    .hammie-clicker.idle .hammie-svg {
+      animation: hamsterBreathe 2s ease-in-out infinite;
+    }
+
+    .hammie-clicker.munching .hammie-svg {
+      animation: hamsterMunch 0.24s steps(2, end) infinite;
+    }
+
+    .hammie-clicker.jumping .hammie-svg {
+      animation: hamsterJump 0.4s ease-in-out infinite;
+    }
+
+    .hammie-svg .eyes-happy,
+    .hammie-svg .seed-munch,
+    .hammie-svg .leaf-umbrella {
+      display: none;
+    }
+
+    .hammie-clicker.munching .hammie-svg .eyes-normal,
+    .hammie-clicker.jumping .hammie-svg .eyes-normal {
+      display: none;
+    }
+
+    .hammie-clicker.munching .hammie-svg .eyes-happy,
+    .hammie-clicker.jumping .hammie-svg .eyes-happy {
+      display: block;
+    }
+
+    .hammie-clicker.munching .hammie-svg .seed-munch {
+      display: block;
+    }
+
+    .hammie-clicker.umbrella .hammie-svg .leaf-umbrella {
+      display: block;
+    }
+
+    @keyframes hamsterBreathe {
+      0%, 100% { transform: scale(1, 1); }
+      50% { transform: scale(1.03, 0.96); }
+    }
+
+    @keyframes hamsterMunch {
+      0%, 100% { transform: translateY(0); }
+      50% { transform: translateY(-2px); }
+    }
+
+    @keyframes hamsterJump {
+      0%, 100% { transform: translateY(0); }
+      50% { transform: translateY(-14px); }
+    }
+
+    .hammie-info {
+      display: flex;
+      flex-direction: column;
+      gap: 5px;
+    }
+
+    .hammie-speech {
+      background: var(--screen-bg);
+      border: 2px solid var(--ink);
+      padding: 5px 7px;
+      font-size: 18px;
+      line-height: 1.1;
+      min-height: 42px;
+      display: flex;
+      align-items: center;
+    }
+
+    .hammie-btns {
+      display: flex;
+      gap: 6px;
+      flex-wrap: wrap;
+    }
+
+    /* Secret Garden Room */
+    .garden-locked-box {
+      flex: 1;
+      background: linear-gradient(180deg, #dff0e6 0%, #b9dabf 100%);
+      border: 3px solid var(--ink);
+      padding: 18px 14px;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      text-align: center;
+      gap: 12px;
+    }
+
+    .garden-zones-list {
+      display: flex;
+      flex-direction: column;
+      gap: 7px;
+    }
+
+    .garden-zone-card {
+      background: var(--white);
+      border: 3px solid var(--ink);
+      padding: 8px;
+      display: grid;
+      grid-template-columns: 58px 1fr auto;
+      gap: 8px;
+      align-items: center;
+    }
+
+    .zone-preview {
+      width: 58px;
+      height: 58px;
+      border: 2px solid var(--ink);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+
+    .zone-meadow { background: #cbe8b8; }
+    .zone-field { background: #f8e9a8; }
+    .zone-moss { background: #a8cdb1; }
+    .zone-rock { background: #d6cfc2; }
+    .zone-trellis { background: #d8ecc8; }
+
+    .zone-title {
+      font-family: 'Press Start 2P', monospace;
+      font-size: 8px;
+      margin-bottom: 3px;
+    }
+
+    .zone-desc {
+      font-size: 17px;
+      line-height: 1.08;
+      color: var(--accent-primary-dark);
+    }
+
+    /* Gacha Room */
+    .gacha-stage {
+      background: linear-gradient(180deg, #f3faf3 0%, #e1efe1 72%, #c3dec4 72%, #b2d1b4 100%);
+      border: 3px solid var(--ink);
+      padding: 12px 10px 10px;
       display: flex;
       align-items: flex-end;
       justify-content: center;
       gap: 10px;
+      min-height: 238px;
       position: relative;
-      z-index: 2;
-      width: 100%;
+      overflow: hidden;
     }
 
-    /* Gacha Machine */
     .gacha-wrap {
       position: relative;
-      width: 184px;
-      height: 230px;
+      width: 176px;
+      height: 214px;
       display: flex;
       align-items: flex-end;
       justify-content: center;
@@ -389,19 +734,17 @@
 
     @keyframes machineShake {
       0%, 100% { transform: translate(0, 0); }
-      20% { transform: translate(-3px, 1px); }
-      40% { transform: translate(3px, -1px); }
-      60% { transform: translate(-2px, -1px); }
-      80% { transform: translate(2px, 1px); }
+      25% { transform: translate(-3px, 1px); }
+      50% { transform: translate(3px, -1px); }
+      75% { transform: translate(-2px, -1px); }
     }
 
     .crank-group {
       transform-origin: 92px 154px;
-      transition: transform 0.2s ease;
     }
 
     .gacha-wrap.cranking .crank-group {
-      animation: crankSpin 0.65s linear infinite;
+      animation: crankSpin 0.6s linear infinite;
     }
 
     @keyframes crankSpin {
@@ -409,10 +752,9 @@
       to { transform: rotate(360deg); }
     }
 
-    /* Dropped capsule animation */
     .dropped-capsule {
       position: absolute;
-      bottom: 18px;
+      bottom: 16px;
       left: 50%;
       transform: translateX(-50%) scale(0);
       opacity: 0;
@@ -421,131 +763,160 @@
     }
 
     .dropped-capsule.drop-in {
-      animation: capsuleDrop 0.65s cubic-bezier(0.22, 1.25, 0.36, 1) forwards;
+      animation: capsuleDrop 0.62s cubic-bezier(0.22, 1.25, 0.36, 1) forwards;
     }
 
     @keyframes capsuleDrop {
-      0% { transform: translate(-50%, -44px) scale(0.4); opacity: 0; }
-      55% { transform: translate(-50%, 4px) scale(1.1); opacity: 1; }
-      75% { transform: translate(-50%, -6px) scale(0.95); opacity: 1; }
+      0% { transform: translate(-50%, -40px) scale(0.4); opacity: 0; }
+      60% { transform: translate(-50%, 3px) scale(1.08); opacity: 1; }
       100% { transform: translate(-50%, 0) scale(1); opacity: 1; }
     }
 
-    /* Hamster Area */
-    .hamster-wrap {
-      position: relative;
-      width: 118px;
-      height: 140px;
+    .gacha-controls {
       display: flex;
       flex-direction: column;
-      align-items: center;
-      justify-content: flex-end;
-      cursor: pointer;
-      user-select: none;
+      gap: 6px;
     }
 
-    .hamster-svg {
-      width: 108px;
-      height: 108px;
-      transform-origin: bottom center;
-      transition: transform 0.12s ease;
-    }
-
-    .hamster-wrap.idle .hamster-svg {
-      animation: hamsterBreathe 2s ease-in-out infinite;
-    }
-
-    .hamster-wrap.jumping .hamster-svg {
-      animation: hamsterJump 0.42s ease-in-out infinite;
-    }
-
-    .hamster-wrap.munching .hamster-svg {
-      animation: hamsterMunch 0.24s steps(2, end) infinite;
-    }
-
-    .hamster-wrap:active .hamster-svg {
-      transform: scale(0.94, 1.05);
-    }
-
-    @keyframes hamsterBreathe {
-      0%, 100% { transform: scale(1, 1) translateY(0); }
-      50% { transform: scale(1.03, 0.96) translateY(1px); }
-    }
-
-    @keyframes hamsterJump {
-      0%, 100% { transform: translateY(0) scale(1, 1); }
-      45% { transform: translateY(-18px) scale(0.95, 1.06); }
-    }
-
-    @keyframes hamsterMunch {
-      0%, 100% { transform: translateY(0) scale(1, 1); }
-      50% { transform: translateY(-2px) scale(1.04, 0.96); }
-    }
-
-    /* Hamster eyes/mouth overlays */
-    .hamster-svg .eyes-happy,
-    .hamster-svg .seed-munch {
-      display: none;
-    }
-
-    .hamster-wrap.jumping .hamster-svg .eyes-normal,
-    .hamster-wrap.munching .hamster-svg .eyes-normal {
-      display: none;
-    }
-
-    .hamster-wrap.jumping .hamster-svg .eyes-happy,
-    .hamster-wrap.munching .hamster-svg .eyes-happy {
-      display: block;
-    }
-
-    .hamster-wrap.munching .hamster-svg .seed-munch {
-      display: block;
-    }
-
-    /* Speech Bubble */
-    .speech-bubble {
-      position: absolute;
-      bottom: 118px;
-      right: 0;
-      width: 175px;
-      background: var(--white);
-      border: 3px solid var(--ink);
-      padding: 7px 9px;
-      font-size: 18px;
+    .gacha-rates-note {
+      font-size: 16px;
+      text-align: center;
+      color: var(--accent-primary-dark);
       line-height: 1.1;
+    }
+
+    /* Dex & Journal Room */
+    .subtab-row {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 5px;
+    }
+
+    .subtab-btn {
+      font-family: 'Press Start 2P', monospace;
+      font-size: 7px;
+      padding: 6px 4px;
+      border: 2px solid var(--ink);
+      background: var(--white);
+      cursor: pointer;
       color: var(--ink);
-      box-shadow: 3px 3px 0 rgba(27, 46, 33, 0.25);
-      z-index: 10;
-      opacity: 0;
-      transform: translateY(6px);
-      pointer-events: none;
-      transition: opacity 0.18s ease, transform 0.18s ease;
     }
 
-    .speech-bubble.visible {
-      opacity: 1;
-      transform: translateY(0);
+    .subtab-btn.active {
+      background: var(--accent-gold);
     }
 
-    .speech-bubble::after {
-      content: '';
+    .dex-scroll {
+      display: flex;
+      flex-direction: column;
+      gap: 6px;
+    }
+
+    .dex-card {
+      background: var(--white);
+      border: 2px solid var(--ink);
+      padding: 8px;
+      display: flex;
+      flex-direction: column;
+      gap: 4px;
+    }
+
+    .dex-card.locked {
+      background: var(--screen-bg-alt);
+      opacity: 0.72;
+    }
+
+    .dex-card-top {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      gap: 6px;
+    }
+
+    .rarity-pill {
+      font-family: 'Press Start 2P', monospace;
+      font-size: 6px;
+      padding: 3px 5px;
+      border: 2px solid var(--ink);
+    }
+
+    .rarity-pill.common { background: var(--accent-primary); }
+    .rarity-pill.rare { background: var(--accent-secondary); }
+    .rarity-pill.ultra { background: var(--accent-gold); }
+    .rarity-pill.botanical { background: #c5e3a5; }
+
+    .dex-card-msg {
+      font-size: 19px;
+      line-height: 1.15;
+    }
+
+    .backup-box {
+      background: var(--white);
+      border: 2px solid var(--ink);
+      padding: 10px;
+      display: flex;
+      flex-direction: column;
+      gap: 8px;
+    }
+
+    .backup-textarea {
+      width: 100%;
+      min-height: 76px;
+      font-family: 'VT323', monospace;
+      font-size: 16px;
+      border: 2px solid var(--ink);
+      padding: 6px;
+      background: var(--screen-bg);
+      color: var(--ink);
+      resize: vertical;
+    }
+
+    /* Bottom Navigation */
+    .bottom-nav {
+      display: grid;
+      grid-template-columns: repeat(4, 1fr);
+      gap: 4px;
+      background: var(--bg-outer);
+      border-top: 3px solid var(--ink);
+      padding: 6px;
+    }
+
+    .nav-btn {
+      font-family: 'Press Start 2P', monospace;
+      font-size: 6.5px;
+      line-height: 1.35;
+      padding: 7px 3px;
+      border: 2px solid var(--ink);
+      background: var(--screen-bg-alt);
+      color: var(--ink);
+      cursor: pointer;
+      text-align: center;
+      position: relative;
+    }
+
+    .nav-btn.active {
+      background: var(--accent-gold);
+      box-shadow: inset 0 2px 0 #fae39c;
+    }
+
+    .nav-badge {
       position: absolute;
-      bottom: -9px;
-      right: 40px;
-      width: 0;
-      height: 0;
-      border-left: 7px solid transparent;
-      border-right: 7px solid transparent;
-      border-top: 9px solid var(--ink);
+      top: -5px;
+      right: -3px;
+      background: var(--rose);
+      color: var(--ink);
+      border: 2px solid var(--ink);
+      font-size: 6px;
+      padding: 1px 3px;
     }
 
-    /* Floating Hearts & Sparkles */
+    /* Floating FX & Confetti */
     .fx-layer {
       position: absolute;
       inset: 0;
       pointer-events: none;
       overflow: hidden;
-      z-index: 12;
+      z-index: 20;
     }
 
     .float-fx {
@@ -554,50 +925,40 @@
     }
 
     @keyframes floatUpFade {
-      0% { transform: translateY(0) scale(0.8); opacity: 1; }
-      100% { transform: translateY(-65px) scale(1.15); opacity: 0; }
+      0% { transform: translateY(0) scale(0.85); opacity: 1; }
+      100% { transform: translateY(-58px) scale(1.15); opacity: 0; }
     }
 
-    /* Controls Panel */
-    .controls-panel {
-      display: flex;
-      flex-direction: column;
-      gap: 8px;
+    .confetti-layer {
+      position: fixed;
+      inset: 0;
+      pointer-events: none;
+      z-index: 90;
+      overflow: hidden;
     }
 
-    .pull-btn-main {
-      width: 100%;
-      padding: 13px 12px;
-      font-size: 12px;
+    .confetti-piece {
+      position: absolute;
+      top: -28px;
+      animation: confettiFall linear forwards;
     }
 
-    .sub-actions {
-      display: grid;
-      grid-template-columns: 1fr 1fr;
-      gap: 8px;
-    }
-
-    .secret-pill {
-      display: none;
-      width: 100%;
-      font-size: 8px;
-      padding: 7px 8px;
-    }
-
-    .secret-pill.unlocked {
-      display: inline-flex;
+    @keyframes confettiFall {
+      0% { transform: translateY(0) rotate(0deg); opacity: 1; }
+      88% { opacity: 1; }
+      100% { transform: translateY(105vh) rotate(360deg); opacity: 0; }
     }
 
     /* Modals */
     .modal-overlay {
       position: fixed;
       inset: 0;
-      background: rgba(18, 32, 23, 0.78);
+      background: rgba(18, 32, 23, 0.8);
       display: none;
       align-items: center;
       justify-content: center;
-      padding: 16px;
-      z-index: 50;
+      padding: 14px;
+      z-index: 60;
     }
 
     .modal-overlay.open {
@@ -614,234 +975,104 @@
       display: flex;
       flex-direction: column;
       overflow: hidden;
-      animation: modalPop 0.22s cubic-bezier(0.22, 1.3, 0.36, 1);
+      animation: modalPop 0.2s cubic-bezier(0.22, 1.3, 0.36, 1);
     }
 
     @keyframes modalPop {
-      from { transform: scale(0.85); opacity: 0; }
+      from { transform: scale(0.86); opacity: 0; }
       to { transform: scale(1); opacity: 1; }
     }
 
     .modal-header {
       background: var(--accent-primary);
       border-bottom: 3px solid var(--ink);
-      padding: 10px 12px;
+      padding: 9px 12px;
       display: flex;
       justify-content: space-between;
       align-items: center;
       gap: 8px;
     }
 
-    .modal-header.rarity-common { background: var(--accent-primary); }
-    .modal-header.rarity-rare { background: var(--accent-secondary); }
-    .modal-header.rarity-ultra { background: var(--accent-gold); }
+    .modal-header.gold { background: var(--accent-gold); }
+    .modal-header.mint { background: var(--accent-secondary); }
 
     .modal-title {
       font-family: 'Press Start 2P', monospace;
-      font-size: 10px;
+      font-size: 9px;
       line-height: 1.4;
-      color: var(--ink);
       margin: 0;
     }
 
     .modal-body {
-      padding: 16px 14px;
+      padding: 12px;
       overflow-y: auto;
       display: flex;
       flex-direction: column;
-      gap: 12px;
+      gap: 10px;
     }
 
-    .capsule-meta-row {
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      gap: 8px;
-      flex-wrap: wrap;
-    }
-
-    .rarity-tag {
-      font-family: 'Press Start 2P', monospace;
-      font-size: 8px;
-      padding: 4px 8px;
-      border: 2px solid var(--ink);
-      background: var(--white);
-    }
-
-    .new-tag {
-      font-family: 'Press Start 2P', monospace;
-      font-size: 8px;
-      padding: 4px 8px;
-      border: 2px solid var(--ink);
-      background: var(--accent-gold);
-    }
-
-    .capsule-message-box {
+    .modal-box {
       background: var(--white);
       border: 3px solid var(--ink);
-      padding: 14px;
-      font-size: 24px;
-      line-height: 1.28;
-      text-align: center;
-      color: var(--ink);
-    }
-
-    .capsule-category {
-      font-family: 'Press Start 2P', monospace;
-      font-size: 8px;
-      color: var(--accent-primary-dark);
+      padding: 12px;
+      font-size: 22px;
+      line-height: 1.25;
       text-align: center;
     }
 
-    .modal-footer {
-      padding: 0 14px 14px;
-      display: flex;
-      justify-content: center;
-    }
-
-    /* Mahal's Dex */
-    .dex-progress {
-      font-family: 'Press Start 2P', monospace;
-      font-size: 9px;
+    .seed-option-card {
       background: var(--white);
       border: 2px solid var(--ink);
-      padding: 8px 10px;
-      text-align: center;
-    }
-
-    .dex-filters {
-      display: flex;
-      gap: 6px;
-      flex-wrap: wrap;
-      justify-content: center;
-    }
-
-    .dex-filter-btn {
-      font-family: 'Press Start 2P', monospace;
-      font-size: 7px;
-      padding: 5px 7px;
-      border: 2px solid var(--ink);
-      background: var(--white);
-      cursor: pointer;
-      color: var(--ink);
-    }
-
-    .dex-filter-btn.active {
-      background: var(--accent-gold);
-    }
-
-    .dex-list {
+      padding: 8px;
       display: flex;
       flex-direction: column;
-      gap: 8px;
+      gap: 5px;
     }
 
-    .dex-item {
-      background: var(--white);
-      border: 2px solid var(--ink);
-      padding: 9px 10px;
-      display: flex;
-      flex-direction: column;
-      gap: 4px;
-    }
-
-    .dex-item.locked {
-      background: var(--screen-bg-alt);
-      opacity: 0.72;
-    }
-
-    .dex-item-top {
+    .seed-option-head {
       display: flex;
       justify-content: space-between;
       align-items: center;
-      gap: 6px;
+      font-family: 'Press Start 2P', monospace;
+      font-size: 8px;
     }
 
-    .dex-item-badge {
-      font-family: 'Press Start 2P', monospace;
-      font-size: 7px;
-      padding: 3px 6px;
-      border: 2px solid var(--ink);
-    }
-
-    .dex-item-badge.common { background: var(--accent-primary); }
-    .dex-item-badge.rare { background: var(--accent-secondary); }
-    .dex-item-badge.ultra { background: var(--accent-gold); }
-
-    .dex-item-cat {
-      font-family: 'Press Start 2P', monospace;
-      font-size: 7px;
+    .seed-option-stats {
+      font-size: 17px;
+      line-height: 1.12;
       color: var(--accent-primary-dark);
     }
 
-    .dex-item-msg {
-      font-size: 20px;
-      line-height: 1.2;
-      color: var(--ink);
-    }
-
-    /* Secret Letter */
     .letter-paper {
       background: #fffdf5;
       border: 3px solid var(--ink);
-      padding: 14px;
-      font-size: 22px;
-      line-height: 1.32;
+      padding: 13px;
+      font-size: 21px;
+      line-height: 1.28;
       white-space: pre-line;
-      color: var(--ink);
     }
 
-    /* Screen-wide Confetti Layer */
-    .confetti-layer {
-      position: fixed;
-      inset: 0;
-      pointer-events: none;
-      z-index: 80;
-      overflow: hidden;
-    }
-
-    .confetti-piece {
-      position: absolute;
-      top: -28px;
-      animation: confettiFall linear forwards;
-    }
-
-    @keyframes confettiFall {
-      0% { transform: translateY(0) rotate(0deg); opacity: 1; }
-      85% { opacity: 1; }
-      100% { transform: translateY(105vh) rotate(360deg); opacity: 0; }
-    }
-
-    /* Bottom Console Decor */
     .console-bottom-bar {
       display: flex;
       justify-content: space-between;
       align-items: center;
-      margin-top: 10px;
+      margin-top: 8px;
       padding: 0 6px;
       font-family: 'Press Start 2P', monospace;
       font-size: 7px;
       color: var(--accent-secondary);
       opacity: 0.85;
     }
-
-    @media (max-width: 400px) {
-      .title-heading { font-size: 13px; }
-      .gacha-wrap { width: 162px; height: 210px; }
-      .hamster-wrap { width: 102px; }
-      .hamster-svg { width: 94px; height: 94px; }
-      .hud-timer-val { font-size: 18px; }
-    }
   </style>
 </head>
 <body>
   <div class="confetti-layer" id="confettiLayer"></div>
 
-  <main class="console-shell" aria-label="Mahal's Pixel Hamster Gacha Handheld">
+  <main class="console-shell" aria-label="Matcha Handheld Console">
     <div class="console-top-bar">
       <div class="console-brand">
         <span class="power-led" aria-hidden="true"></span>
-        <span>MAHAL-BOY MATCHA</span>
+        <span>MATCHA-BOY POCKET</span>
       </div>
       <div class="console-vents" aria-hidden="true">
         <span></span><span></span><span></span>
@@ -852,910 +1083,1462 @@
       <div class="lcd-screen">
         <!-- ================= TITLE SCREEN ================= -->
         <section class="title-screen" id="titleScreen">
-          <div class="title-badge">MONTHSARY EDITION</div>
-          <h1 class="title-heading">HAPPY MONTHSARY,<br />MAHAL!</h1>
+          <div class="title-badge">EST. APRIL 26, 2025</div>
+          <h1 class="title-logo">MATCHA</h1>
+          <p class="title-subtitle">Mahal’s Pocket Greenhouse<br />&amp; Pixel Gacha</p>
 
-          <div class="title-hamster-wrap" aria-hidden="true">
-            <svg width="96" height="96" viewBox="0 0 24 24" shape-rendering="crispEdges">
+          <!-- Hammie in Straw Sunhat -->
+          <div class="title-hammie" aria-hidden="true">
+            <svg width="104" height="104" viewBox="0 0 24 24" shape-rendering="crispEdges">
+              <!-- Straw Sunhat -->
+              <rect x="7" y="1" width="10" height="3" fill="#f4d06f" />
+              <rect x="7" y="3" width="10" height="1" fill="#b5654a" />
+              <rect x="4" y="4" width="16" height="2" fill="#f4d06f" />
+              <rect x="6" y="1" width="12" height="1" fill="#1b2e21" />
+              <rect x="3" y="4" width="1" height="2" fill="#1b2e21" />
+              <rect x="20" y="4" width="1" height="2" fill="#1b2e21" />
               <!-- Ears -->
-              <rect x="4" y="4" width="4" height="4" fill="#1b2e21" />
-              <rect x="5" y="5" width="2" height="2" fill="#e88d97" />
-              <rect x="16" y="4" width="4" height="4" fill="#1b2e21" />
-              <rect x="17" y="5" width="2" height="2" fill="#e88d97" />
-              <!-- Head & Body Outline -->
-              <rect x="6" y="5" width="12" height="2" fill="#1b2e21" />
-              <rect x="4" y="7" width="2" height="10" fill="#1b2e21" />
-              <rect x="18" y="7" width="2" height="10" fill="#1b2e21" />
-              <rect x="5" y="17" width="14" height="2" fill="#1b2e21" />
-              <rect x="7" y="19" width="10" height="2" fill="#1b2e21" />
-              <!-- Fur Fill -->
-              <rect x="6" y="7" width="12" height="10" fill="#e8be94" />
-              <rect x="6" y="17" width="12" height="2" fill="#e8be94" />
-              <rect x="8" y="12" width="8" height="7" fill="#fff6eb" />
+              <rect x="4" y="6" width="3" height="2" fill="#1b2e21" />
+              <rect x="17" y="6" width="3" height="2" fill="#1b2e21" />
+              <!-- Body -->
+              <rect x="4" y="8" width="2" height="10" fill="#1b2e21" />
+              <rect x="18" y="8" width="2" height="10" fill="#1b2e21" />
+              <rect x="5" y="18" width="14" height="2" fill="#1b2e21" />
+              <rect x="7" y="20" width="10" height="2" fill="#1b2e21" />
+              <rect x="6" y="6" width="12" height="12" fill="#e8be94" />
+              <rect x="8" y="13" width="8" height="5" fill="#fff6eb" />
               <!-- Eyes & Cheeks -->
-              <rect x="8" y="9" width="2" height="2" fill="#1b2e21" />
-              <rect x="8" y="9" width="1" height="1" fill="#ffffff" />
-              <rect x="14" y="9" width="2" height="2" fill="#1b2e21" />
-              <rect x="14" y="9" width="1" height="1" fill="#ffffff" />
-              <rect x="6" y="11" width="2" height="2" fill="#e88d97" />
-              <rect x="16" y="11" width="2" height="2" fill="#e88d97" />
-              <!-- Nose & Smile -->
-              <rect x="11" y="11" width="2" height="1" fill="#e88d97" />
-              <rect x="10" y="12" width="1" height="1" fill="#1b2e21" />
-              <rect x="13" y="12" width="1" height="1" fill="#1b2e21" />
-              <rect x="11" y="13" width="2" height="1" fill="#1b2e21" />
-              <!-- Heart Held -->
-              <rect x="10" y="15" width="1" height="1" fill="#e88d97" />
-              <rect x="13" y="15" width="1" height="1" fill="#e88d97" />
-              <rect x="9" y="16" width="6" height="1" fill="#e88d97" />
-              <rect x="10" y="17" width="4" height="1" fill="#e88d97" />
-              <rect x="11" y="18" width="2" height="1" fill="#e88d97" />
+              <rect x="8" y="10" width="2" height="2" fill="#1b2e21" />
+              <rect x="8" y="10" width="1" height="1" fill="#ffffff" />
+              <rect x="14" y="10" width="2" height="2" fill="#1b2e21" />
+              <rect x="14" y="10" width="1" height="1" fill="#ffffff" />
+              <rect x="6" y="12" width="2" height="2" fill="#e88d97" />
+              <rect x="16" y="12" width="2" height="2" fill="#e88d97" />
+              <rect x="11" y="12" width="2" height="1" fill="#e88d97" />
+              <rect x="10" y="13" width="1" height="1" fill="#1b2e21" />
+              <rect x="13" y="13" width="1" height="1" fill="#1b2e21" />
+              <!-- Tiny Sprout -->
+              <rect x="11" y="15" width="2" height="3" fill="#588658" />
+              <rect x="9" y="15" width="2" height="2" fill="#78a878" />
+              <rect x="13" y="15" width="2" height="2" fill="#a3c9a8" />
             </svg>
           </div>
-
-          <p class="title-subtitle">A cozy pixel gacha full of love notes, memories &amp; coupons</p>
 
           <button class="px-btn px-btn-gold blink-btn" id="pressStartBtn" type="button">
             [ PRESS START ]
           </button>
         </section>
 
-        <!-- ================= MAIN GAME SCREEN ================= -->
-        <section class="game-screen hidden" id="gameScreen">
-          <!-- Top HUD -->
-          <header class="hud-bar">
-            <div class="hud-lvl" id="hudLevel">LVL --</div>
-            <div class="hud-timer" aria-live="off">
-              <div class="hud-timer-label">TOGETHER SINCE APR 26, 2025</div>
-              <div class="hud-timer-val" id="hudTimer">000D : 00H : 00M : 00S</div>
+        <!-- ================= MAIN GAME SHELL ================= -->
+        <section class="game-shell hidden" id="gameShell">
+          <!-- Top Status HUD -->
+          <header class="hud-wrap">
+            <div class="hud-row-top">
+              <div class="hud-lvl" id="hudLevel">LVL 19</div>
+              <div class="hud-timer">
+                <div class="hud-timer-label">TOGETHER SINCE APR 26, 2025</div>
+                <div class="hud-timer-val" id="hudTimer">000D : 00H : 00M : 00S</div>
+              </div>
+              <button class="sound-btn" id="soundToggleBtn" type="button">SFX:ON</button>
             </div>
-            <button class="sound-btn" id="soundToggleBtn" type="button" aria-label="Toggle 8-bit sound">
-              SFX:ON
-            </button>
+            <div class="hud-currencies">
+              <div class="currency-pill">
+                <span>LOVE DEW</span>
+                <span id="hudDew">0</span>
+              </div>
+              <div class="currency-pill">
+                <span>SEEDS</span>
+                <span id="hudSeeds">0</span>
+              </div>
+            </div>
           </header>
 
-          <!-- Interactive Stage -->
-          <div class="stage-area" id="stageArea">
-            <div class="stage-decor-clouds" aria-hidden="true">
-              <svg width="36" height="16" viewBox="0 0 18 8" shape-rendering="crispEdges">
-                <rect x="4" y="2" width="8" height="2" fill="#ffffff" />
-                <rect x="2" y="4" width="14" height="3" fill="#ffffff" />
-              </svg>
-              <svg width="32" height="16" viewBox="0 0 16 8" shape-rendering="crispEdges">
-                <rect x="4" y="2" width="6" height="2" fill="#ffffff" />
-                <rect x="2" y="4" width="12" height="3" fill="#ffffff" />
-              </svg>
-            </div>
+          <!-- Garden Unlock Banner -->
+          <div class="unlock-banner" id="unlockBanner" role="button" tabindex="0">
+            THE GARDEN GATE IS OPEN! Your sprout is ready to be planted outside! (Tap to visit)
+          </div>
 
+          <!-- Room Viewport -->
+          <div class="room-viewport" id="roomViewport">
             <div class="fx-layer" id="fxLayer" aria-hidden="true"></div>
 
-            <div class="stage-pair">
-              <!-- Gacha Machine SVG -->
-              <div class="gacha-wrap" id="gachaWrap">
-                <svg width="184" height="230" viewBox="0 0 184 230" shape-rendering="crispEdges" aria-label="Pixel Gacha Machine">
-                  <!-- Top Lid -->
-                  <rect x="46" y="8" width="92" height="10" fill="#1b2e21" />
-                  <rect x="52" y="12" width="80" height="6" fill="#78a878" />
-                  <rect x="82" y="2" width="20" height="8" fill="#1b2e21" />
-                  <rect x="86" y="4" width="12" height="4" fill="#f4d06f" />
+            <!-- ROOM 1: GREENHOUSE -->
+            <div class="room-panel active" id="roomGreenhouse">
+              <div class="room-header-bar">
+                <h2 class="room-title">WINDOWSILL GREENHOUSE</h2>
+                <button class="px-btn px-btn-sm px-btn-secondary" id="dailyCheckinBtn" type="button">
+                  DAILY GIFT
+                </button>
+              </div>
 
-                  <!-- Glass Dome Outline & Background -->
-                  <rect x="28" y="18" width="128" height="104" fill="#1b2e21" />
-                  <rect x="34" y="24" width="116" height="92" fill="#d9efe0" />
-                  <!-- Glass Shine -->
-                  <rect x="40" y="30" width="8" height="36" fill="#f7fbf7" />
-                  <rect x="40" y="72" width="8" height="10" fill="#f7fbf7" />
+              <div class="greenhouse-window" id="greenhouseWindow">
+                <div class="rain-overlay" aria-hidden="true"></div>
+                <div class="weather-badge" id="weatherBadge">SUNNY WINDOWSILL</div>
+                <div class="pots-grid" id="potsGrid"></div>
+              </div>
 
-                  <!-- Capsules inside Dome -->
-                  <!-- Row 1 (bottom) -->
-                  <rect x="42" y="92" width="22" height="20" fill="#1b2e21" />
-                  <rect x="44" y="94" width="18" height="8" fill="#78a878" />
-                  <rect x="44" y="102" width="18" height="8" fill="#f7fbf7" />
+              <!-- Hammie Head Gardener -->
+              <div class="hammie-bar">
+                <div class="hammie-clicker idle" id="hammieGreenhouse" role="button" tabindex="0" aria-label="Hammie Head Gardener">
+                  <svg class="hammie-svg" viewBox="0 0 24 24" shape-rendering="crispEdges">
+                    <!-- Leaf Umbrella (Rainy day) -->
+                    <g class="leaf-umbrella">
+                      <rect x="2" y="0" width="10" height="2" fill="#588658" />
+                      <rect x="1" y="2" width="12" height="2" fill="#78a878" />
+                      <rect x="6" y="4" width="1" height="8" fill="#5c3c28" />
+                    </g>
+                    <!-- Straw Sunhat -->
+                    <rect x="7" y="1" width="10" height="3" fill="#f4d06f" />
+                    <rect x="7" y="3" width="10" height="1" fill="#b5654a" />
+                    <rect x="4" y="4" width="16" height="2" fill="#f4d06f" />
+                    <!-- Ears -->
+                    <rect x="4" y="6" width="3" height="2" fill="#1b2e21" />
+                    <rect x="17" y="6" width="3" height="2" fill="#1b2e21" />
+                    <!-- Body -->
+                    <rect x="4" y="8" width="2" height="10" fill="#1b2e21" />
+                    <rect x="18" y="8" width="2" height="10" fill="#1b2e21" />
+                    <rect x="5" y="18" width="14" height="2" fill="#1b2e21" />
+                    <rect x="6" y="20" width="4" height="2" fill="#1b2e21" />
+                    <rect x="14" y="20" width="4" height="2" fill="#1b2e21" />
+                    <rect x="6" y="6" width="12" height="12" fill="#e8be94" />
+                    <rect x="8" y="13" width="8" height="5" fill="#fff6eb" />
+                    <!-- Eyes -->
+                    <g class="eyes-normal">
+                      <rect x="8" y="10" width="2" height="2" fill="#1b2e21" />
+                      <rect x="8" y="10" width="1" height="1" fill="#ffffff" />
+                      <rect x="14" y="10" width="2" height="2" fill="#1b2e21" />
+                      <rect x="14" y="10" width="1" height="1" fill="#ffffff" />
+                    </g>
+                    <g class="eyes-happy">
+                      <rect x="8" y="10" width="1" height="1" fill="#1b2e21" />
+                      <rect x="9" y="9" width="1" height="1" fill="#1b2e21" />
+                      <rect x="10" y="10" width="1" height="1" fill="#1b2e21" />
+                      <rect x="13" y="10" width="1" height="1" fill="#1b2e21" />
+                      <rect x="14" y="9" width="1" height="1" fill="#1b2e21" />
+                      <rect x="15" y="10" width="1" height="1" fill="#1b2e21" />
+                    </g>
+                    <!-- Cheeks & Nose -->
+                    <rect x="6" y="12" width="2" height="2" fill="#e88d97" />
+                    <rect x="16" y="12" width="2" height="2" fill="#e88d97" />
+                    <rect x="11" y="12" width="2" height="1" fill="#e88d97" />
+                    <rect x="10" y="13" width="1" height="1" fill="#1b2e21" />
+                    <rect x="13" y="13" width="1" height="1" fill="#1b2e21" />
+                    <!-- Seed Munch -->
+                    <g class="seed-munch">
+                      <rect x="10" y="14" width="4" height="4" fill="#1b2e21" />
+                      <rect x="11" y="15" width="2" height="2" fill="#f4d06f" />
+                    </g>
+                  </svg>
+                </div>
 
-                  <rect x="68" y="90" width="22" height="22" fill="#1b2e21" />
-                  <rect x="70" y="92" width="18" height="9" fill="#f4d06f" />
-                  <rect x="70" y="101" width="18" height="9" fill="#f7fbf7" />
+                <div class="hammie-info">
+                  <div class="hammie-speech" id="hammieSpeech">Hi Mahal! Plant a seed on the sill!</div>
+                  <div class="hammie-btns">
+                    <button class="px-btn px-btn-sm px-btn-gold" id="feedHammieBtn" type="button">
+                      [ FEED SEED (-1) ]
+                    </button>
+                    <button class="px-btn px-btn-sm px-btn-secondary" id="secretLetterBtn" type="button" style="display:none;">
+                      ★ SECRET LETTER
+                    </button>
+                  </div>
+                </div>
+              </div>
+            </div>
 
-                  <rect x="94" y="92" width="22" height="20" fill="#1b2e21" />
-                  <rect x="96" y="94" width="18" height="8" fill="#a3c9a8" />
-                  <rect x="96" y="102" width="18" height="8" fill="#f7fbf7" />
+            <!-- ROOM 2: SECRET GARDEN -->
+            <div class="room-panel" id="roomGarden">
+              <div class="room-header-bar">
+                <h2 class="room-title">MAHAL'S SECRET GARDEN</h2>
+              </div>
+              <div id="gardenContent"></div>
+            </div>
 
-                  <rect x="120" y="90" width="22" height="22" fill="#1b2e21" />
-                  <rect x="122" y="92" width="18" height="9" fill="#78a878" />
-                  <rect x="122" y="101" width="18" height="9" fill="#f7fbf7" />
+            <!-- ROOM 3: GACHA MACHINE -->
+            <div class="room-panel" id="roomGacha">
+              <div class="room-header-bar">
+                <h2 class="room-title">HAMSTER GACHA</h2>
+                <span class="rarity-pill ultra" id="freePullBadge">1 FREE DAILY</span>
+              </div>
 
-                  <!-- Row 2 -->
-                  <rect x="52" y="68" width="22" height="20" fill="#1b2e21" />
-                  <rect x="54" y="70" width="18" height="8" fill="#a3c9a8" />
-                  <rect x="54" y="78" width="18" height="8" fill="#f7fbf7" />
+              <div class="gacha-stage">
+                <div class="gacha-wrap" id="gachaWrap">
+                  <svg width="176" height="214" viewBox="0 0 184 230" shape-rendering="crispEdges">
+                    <rect x="46" y="8" width="92" height="10" fill="#1b2e21" />
+                    <rect x="52" y="12" width="80" height="6" fill="#78a878" />
+                    <rect x="82" y="2" width="20" height="8" fill="#1b2e21" />
+                    <rect x="86" y="4" width="12" height="4" fill="#f4d06f" />
+                    <rect x="28" y="18" width="128" height="104" fill="#1b2e21" />
+                    <rect x="34" y="24" width="116" height="92" fill="#d9efe0" />
+                    <rect x="40" y="30" width="8" height="36" fill="#f7fbf7" />
+                    <!-- Capsules inside dome -->
+                    <rect x="44" y="92" width="20" height="18" fill="#1b2e21" />
+                    <rect x="46" y="94" width="16" height="7" fill="#78a878" />
+                    <rect x="46" y="101" width="16" height="7" fill="#f7fbf7" />
 
-                  <rect x="80" y="66" width="22" height="20" fill="#1b2e21" />
-                  <rect x="82" y="68" width="18" height="8" fill="#78a878" />
-                  <rect x="82" y="76" width="18" height="8" fill="#f7fbf7" />
+                    <rect x="70" y="90" width="20" height="20" fill="#1b2e21" />
+                    <rect x="72" y="92" width="16" height="8" fill="#f4d06f" />
+                    <rect x="72" y="100" width="16" height="8" fill="#f7fbf7" />
 
-                  <rect x="108" y="68" width="22" height="20" fill="#1b2e21" />
-                  <rect x="110" y="70" width="18" height="8" fill="#f4d06f" />
-                  <rect x="110" y="78" width="18" height="8" fill="#f7fbf7" />
+                    <rect x="96" y="92" width="20" height="18" fill="#1b2e21" />
+                    <rect x="98" y="94" width="16" height="7" fill="#a3c9a8" />
+                    <rect x="98" y="101" width="16" height="7" fill="#f7fbf7" />
 
-                  <!-- Row 3 -->
-                  <rect x="66" y="44" width="22" height="20" fill="#1b2e21" />
-                  <rect x="68" y="46" width="18" height="8" fill="#f4d06f" />
-                  <rect x="68" y="54" width="18" height="8" fill="#f7fbf7" />
+                    <rect x="120" y="90" width="20" height="20" fill="#1b2e21" />
+                    <rect x="122" y="92" width="16" height="8" fill="#78a878" />
+                    <rect x="122" y="100" width="16" height="8" fill="#f7fbf7" />
 
-                  <rect x="94" y="46" width="22" height="20" fill="#1b2e21" />
-                  <rect x="96" y="48" width="18" height="8" fill="#78a878" />
-                  <rect x="96" y="56" width="18" height="8" fill="#f7fbf7" />
+                    <rect x="58" y="66" width="20" height="18" fill="#1b2e21" />
+                    <rect x="60" y="68" width="16" height="7" fill="#a3c9a8" />
+                    <rect x="60" y="75" width="16" height="7" fill="#f7fbf7" />
 
-                  <!-- Machine Body -->
-                  <rect x="34" y="122" width="116" height="98" fill="#1b2e21" />
-                  <rect x="40" y="128" width="104" height="86" fill="#78a878" />
-                  <rect x="40" y="128" width="104" height="10" fill="#a3c9a8" />
+                    <rect x="98" y="66" width="20" height="18" fill="#1b2e21" />
+                    <rect x="100" y="68" width="16" height="7" fill="#f4d06f" />
+                    <rect x="100" y="75" width="16" height="7" fill="#f7fbf7" />
 
-                  <!-- Crank Plate & Handle -->
-                  <rect x="74" y="138" width="36" height="32" fill="#1b2e21" />
-                  <rect x="78" y="142" width="28" height="24" fill="#f4d06f" />
-                  <g class="crank-group">
-                    <rect x="88" y="146" width="8" height="16" fill="#1b2e21" />
-                    <rect x="82" y="151" width="20" height="6" fill="#1b2e21" />
-                    <rect x="89" y="152" width="6" height="4" fill="#fff6eb" />
-                  </g>
+                    <rect x="34" y="122" width="116" height="98" fill="#1b2e21" />
+                    <rect x="40" y="128" width="104" height="86" fill="#78a878" />
+                    <rect x="40" y="128" width="104" height="10" fill="#a3c9a8" />
+                    <rect x="74" y="138" width="36" height="32" fill="#1b2e21" />
+                    <rect x="78" y="142" width="28" height="24" fill="#f4d06f" />
+                    <g class="crank-group">
+                      <rect x="88" y="146" width="8" height="16" fill="#1b2e21" />
+                      <rect x="82" y="151" width="20" height="6" fill="#1b2e21" />
+                      <rect x="89" y="152" width="6" height="4" fill="#fff6eb" />
+                    </g>
+                    <rect x="64" y="176" width="56" height="34" fill="#1b2e21" />
+                    <rect x="70" y="182" width="44" height="24" fill="#2d4a36" />
+                    <rect x="28" y="220" width="128" height="8" fill="#1b2e21" />
+                  </svg>
 
-                  <!-- Dispenser Chute -->
-                  <rect x="64" y="176" width="56" height="34" fill="#1b2e21" />
-                  <rect x="70" y="182" width="44" height="24" fill="#2d4a36" />
-                  <rect x="74" y="182" width="36" height="6" fill="#1b2e21" />
+                  <div class="dropped-capsule" id="droppedCapsule" aria-hidden="true">
+                    <svg width="26" height="26" viewBox="0 0 14 14" shape-rendering="crispEdges">
+                      <rect x="2" y="1" width="10" height="12" fill="#1b2e21" />
+                      <rect x="1" y="3" width="12" height="8" fill="#1b2e21" />
+                      <rect x="3" y="2" width="8" height="5" id="dropCapTop" fill="#f4d06f" />
+                      <rect x="2" y="4" width="10" height="3" id="dropCapMid" fill="#f4d06f" />
+                      <rect x="2" y="7" width="10" height="4" fill="#f7fbf7" />
+                    </svg>
+                  </div>
+                </div>
 
-                  <!-- Base Feet -->
-                  <rect x="28" y="220" width="128" height="8" fill="#1b2e21" />
-                </svg>
-
-                <!-- Capsule that drops into chute -->
-                <div class="dropped-capsule" id="droppedCapsule" aria-hidden="true">
-                  <svg width="28" height="28" viewBox="0 0 14 14" shape-rendering="crispEdges">
-                    <rect x="2" y="1" width="10" height="12" fill="#1b2e21" />
-                    <rect x="1" y="3" width="12" height="8" fill="#1b2e21" />
-                    <rect x="3" y="2" width="8" height="5" id="dropCapTop" fill="#f4d06f" />
-                    <rect x="2" y="4" width="10" height="3" id="dropCapMid" fill="#f4d06f" />
-                    <rect x="2" y="7" width="10" height="4" fill="#f7fbf7" />
-                    <rect x="3" y="10" width="8" height="2" fill="#f7fbf7" />
+                <div class="hammie-clicker idle" id="hammieGacha" role="button" tabindex="0" aria-label="Hammie at Gacha Machine">
+                  <svg class="hammie-svg" viewBox="0 0 24 24" shape-rendering="crispEdges">
+                    <rect x="7" y="1" width="10" height="3" fill="#f4d06f" />
+                    <rect x="7" y="3" width="10" height="1" fill="#b5654a" />
+                    <rect x="4" y="4" width="16" height="2" fill="#f4d06f" />
+                    <rect x="4" y="6" width="3" height="2" fill="#1b2e21" />
+                    <rect x="17" y="6" width="3" height="2" fill="#1b2e21" />
+                    <rect x="4" y="8" width="2" height="10" fill="#1b2e21" />
+                    <rect x="18" y="8" width="2" height="10" fill="#1b2e21" />
+                    <rect x="5" y="18" width="14" height="2" fill="#1b2e21" />
+                    <rect x="6" y="20" width="4" height="2" fill="#1b2e21" />
+                    <rect x="14" y="20" width="4" height="2" fill="#1b2e21" />
+                    <rect x="6" y="6" width="12" height="12" fill="#e8be94" />
+                    <rect x="8" y="13" width="8" height="5" fill="#fff6eb" />
+                    <g class="eyes-normal">
+                      <rect x="8" y="10" width="2" height="2" fill="#1b2e21" />
+                      <rect x="8" y="10" width="1" height="1" fill="#ffffff" />
+                      <rect x="14" y="10" width="2" height="2" fill="#1b2e21" />
+                      <rect x="14" y="10" width="1" height="1" fill="#ffffff" />
+                    </g>
+                    <g class="eyes-happy">
+                      <rect x="8" y="10" width="1" height="1" fill="#1b2e21" />
+                      <rect x="9" y="9" width="1" height="1" fill="#1b2e21" />
+                      <rect x="10" y="10" width="1" height="1" fill="#1b2e21" />
+                      <rect x="13" y="10" width="1" height="1" fill="#1b2e21" />
+                      <rect x="14" y="9" width="1" height="1" fill="#1b2e21" />
+                      <rect x="15" y="10" width="1" height="1" fill="#1b2e21" />
+                    </g>
+                    <rect x="6" y="12" width="2" height="2" fill="#e88d97" />
+                    <rect x="16" y="12" width="2" height="2" fill="#e88d97" />
+                    <rect x="11" y="12" width="2" height="1" fill="#e88d97" />
+                    <rect x="10" y="13" width="1" height="1" fill="#1b2e21" />
+                    <rect x="13" y="13" width="1" height="1" fill="#1b2e21" />
                   </svg>
                 </div>
               </div>
 
-              <!-- Hamster Mascot (Clickable for Easter Egg) -->
-              <div
-                class="hamster-wrap idle"
-                id="hamsterBtn"
-                role="button"
-                tabindex="0"
-                aria-label="Hamster mascot. Tap to say hi!"
-              >
-                <div class="speech-bubble" id="speechBubble" aria-live="polite"></div>
-
-                <svg class="hamster-svg" viewBox="0 0 24 24" shape-rendering="crispEdges">
-                  <!-- Ears -->
-                  <rect x="4" y="4" width="4" height="4" fill="#1b2e21" />
-                  <rect x="5" y="5" width="2" height="2" fill="#e88d97" />
-                  <rect x="16" y="4" width="4" height="4" fill="#1b2e21" />
-                  <rect x="17" y="5" width="2" height="2" fill="#e88d97" />
-
-                  <!-- Outline -->
-                  <rect x="6" y="5" width="12" height="2" fill="#1b2e21" />
-                  <rect x="4" y="7" width="2" height="11" fill="#1b2e21" />
-                  <rect x="18" y="7" width="2" height="11" fill="#1b2e21" />
-                  <rect x="5" y="18" width="14" height="2" fill="#1b2e21" />
-                  <rect x="6" y="20" width="4" height="2" fill="#1b2e21" />
-                  <rect x="14" y="20" width="4" height="2" fill="#1b2e21" />
-
-                  <!-- Body Fur -->
-                  <rect x="6" y="7" width="12" height="11" fill="#e8be94" />
-                  <rect x="8" y="12" width="8" height="6" fill="#fff6eb" />
-
-                  <!-- Normal Eyes -->
-                  <g class="eyes-normal">
-                    <rect x="8" y="9" width="2" height="2" fill="#1b2e21" />
-                    <rect x="8" y="9" width="1" height="1" fill="#ffffff" />
-                    <rect x="14" y="9" width="2" height="2" fill="#1b2e21" />
-                    <rect x="14" y="9" width="1" height="1" fill="#ffffff" />
-                  </g>
-
-                  <!-- Happy / Munching Eyes (^ ^) -->
-                  <g class="eyes-happy">
-                    <rect x="8" y="9" width="1" height="1" fill="#1b2e21" />
-                    <rect x="9" y="8" width="1" height="1" fill="#1b2e21" />
-                    <rect x="10" y="9" width="1" height="1" fill="#1b2e21" />
-                    <rect x="13" y="9" width="1" height="1" fill="#1b2e21" />
-                    <rect x="14" y="8" width="1" height="1" fill="#1b2e21" />
-                    <rect x="15" y="9" width="1" height="1" fill="#1b2e21" />
-                  </g>
-
-                  <!-- Cheeks & Nose -->
-                  <rect x="6" y="11" width="2" height="2" fill="#e88d97" />
-                  <rect x="16" y="11" width="2" height="2" fill="#e88d97" />
-                  <rect x="11" y="11" width="2" height="1" fill="#e88d97" />
-                  <rect x="10" y="12" width="1" height="1" fill="#1b2e21" />
-                  <rect x="13" y="12" width="1" height="1" fill="#1b2e21" />
-                  <rect x="11" y="13" width="2" height="1" fill="#1b2e21" />
-
-                  <!-- Paws -->
-                  <rect x="7" y="14" width="2" height="2" fill="#f7d5b4" />
-                  <rect x="15" y="14" width="2" height="2" fill="#f7d5b4" />
-
-                  <!-- Sunflower Seed (visible when munching) -->
-                  <g class="seed-munch">
-                    <rect x="10" y="13" width="4" height="4" fill="#1b2e21" />
-                    <rect x="11" y="14" width="2" height="2" fill="#f4d06f" />
-                  </g>
-                </svg>
+              <div class="gacha-controls">
+                <button class="px-btn px-btn-gold" id="pullBtn" type="button" style="padding: 12px; font-size: 10px;">
+                  [ PULL CAPSULE ]
+                </button>
+                <div class="gacha-rates-note">
+                  55% Matcha Notes • 30% Mint Memories • 10% Golden Coupons • 5% Rare Seeds
+                </div>
               </div>
             </div>
-          </div>
 
-          <!-- Controls -->
-          <div class="controls-panel">
-            <button class="px-btn px-btn-gold pull-btn-main" id="pullBtn" type="button">
-              [ PULL CAPSULE ]
-            </button>
+            <!-- ROOM 4: DEX & JOURNAL -->
+            <div class="room-panel" id="roomDex">
+              <div class="room-header-bar">
+                <h2 class="room-title">DEX &amp; JOURNAL</h2>
+              </div>
 
-            <div class="sub-actions">
-              <button class="px-btn px-btn-secondary" id="feedBtn" type="button">
-                [ FEED SEED ]
-              </button>
-              <button class="px-btn px-btn-secondary" id="dexBtn" type="button">
-                [ MAHAL'S DEX ]
-              </button>
+              <div class="subtab-row" id="dexSubtabs">
+                <button class="subtab-btn active" data-subtab="notes" type="button">NOTES &amp; COUPONS</button>
+                <button class="subtab-btn" data-subtab="flora" type="button">FLORA DEX</button>
+                <button class="subtab-btn" data-subtab="backup" type="button">SAVE BACKUP</button>
+              </div>
+
+              <div class="dex-scroll" id="dexContent"></div>
             </div>
-
-            <button class="px-btn px-btn-gold secret-pill" id="secretLetterBtn" type="button">
-              ★ SECRET MONTHSARY LETTER UNLOCKED ★
-            </button>
           </div>
+
+          <!-- Bottom Navigation -->
+          <nav class="bottom-nav" aria-label="Rooms">
+            <button class="nav-btn active" data-room="greenhouse" type="button">GREENHOUSE</button>
+            <button class="nav-btn" data-room="garden" id="navGardenBtn" type="button">GARDEN</button>
+            <button class="nav-btn" data-room="gacha" id="navGachaBtn" type="button">GACHA</button>
+            <button class="nav-btn" data-room="dex" type="button">DEX &amp; LOG</button>
+          </nav>
         </section>
       </div>
     </div>
 
     <div class="console-bottom-bar">
       <span>START: 04.26.2025</span>
-      <span>A: PULL &nbsp; B: FEED</span>
+      <span>MATCHA POCKET EDITION</span>
     </div>
   </main>
 
-  <!-- ================= CAPSULE RESULT MODAL ================= -->
-  <div class="modal-overlay" id="capsuleModal" role="dialog" aria-modal="true" aria-labelledby="capsuleModalTitle">
+  <!-- ================= SEED SELECTION MODAL ================= -->
+  <div class="modal-overlay" id="seedModal" role="dialog" aria-modal="true">
     <div class="modal-card">
-      <div class="modal-header" id="capsuleModalHeader">
-        <h2 class="modal-title" id="capsuleModalTitle">CAPSULE OPENED!</h2>
-        <button class="px-btn px-btn-sm" id="closeCapsuleBtn" type="button">X</button>
+      <div class="modal-header">
+        <h3 class="modal-title">CHOOSE A SEED PACKET</h3>
+        <button class="px-btn px-btn-sm" data-close="seedModal" type="button">X</button>
       </div>
-      <div class="modal-body">
-        <div class="capsule-meta-row">
-          <span class="rarity-tag" id="capsuleRarityTag">COMMON</span>
-          <span class="new-tag" id="capsuleNewTag">NEW!</span>
-        </div>
-        <div class="capsule-category" id="capsuleCategory">DAILY AFFIRMATION</div>
-        <div class="capsule-message-box" id="capsuleMessage"></div>
-      </div>
-      <div class="modal-footer">
-        <button class="px-btn px-btn-gold" id="keepCapsuleBtn" type="button">[ KEEP IN DEX ]</button>
-      </div>
+      <div class="modal-body" id="seedModalBody"></div>
     </div>
   </div>
 
-  <!-- ================= MAHAL'S DEX MODAL ================= -->
-  <div class="modal-overlay" id="dexModal" role="dialog" aria-modal="true" aria-labelledby="dexModalTitle">
+  <!-- ================= GENERIC MESSAGE / DEW / CAPSULE MODAL ================= -->
+  <div class="modal-overlay" id="messageModal" role="dialog" aria-modal="true">
     <div class="modal-card">
-      <div class="modal-header rarity-rare">
-        <h2 class="modal-title" id="dexModalTitle">MAHAL'S DEX</h2>
-        <button class="px-btn px-btn-sm" id="closeDexBtn" type="button">X</button>
+      <div class="modal-header gold" id="messageModalHeader">
+        <h3 class="modal-title" id="messageModalTitle">CAPSULE OPENED!</h3>
+        <button class="px-btn px-btn-sm" data-close="messageModal" type="button">X</button>
       </div>
       <div class="modal-body">
-        <div class="dex-progress" id="dexProgress">Unlocked: 0 / 25</div>
-        <div class="dex-filters" id="dexFilters">
-          <button class="dex-filter-btn active" data-filter="all" type="button">ALL</button>
-          <button class="dex-filter-btn" data-filter="common" type="button">COMMON</button>
-          <button class="dex-filter-btn" data-filter="rare" type="button">RARE</button>
-          <button class="dex-filter-btn" data-filter="ultra" type="button">ULTRA RARE</button>
-        </div>
-        <div class="dex-list" id="dexList"></div>
+        <div id="messageModalMeta" style="display:flex; gap:6px; justify-content:center; flex-wrap:wrap;"></div>
+        <div class="modal-box" id="messageModalBody"></div>
+      </div>
+      <div style="padding: 0 12px 12px; display:flex; justify-content:center;">
+        <button class="px-btn px-btn-gold" data-close="messageModal" type="button">[ OKAY! ]</button>
       </div>
     </div>
   </div>
 
   <!-- ================= SECRET LETTER MODAL ================= -->
-  <div class="modal-overlay" id="secretModal" role="dialog" aria-modal="true" aria-labelledby="secretModalTitle">
+  <div class="modal-overlay" id="secretModal" role="dialog" aria-modal="true">
     <div class="modal-card">
-      <div class="modal-header rarity-ultra">
-        <h2 class="modal-title" id="secretModalTitle">SECRET LOVE LETTER</h2>
-        <button class="px-btn px-btn-sm" id="closeSecretBtn" type="button">X</button>
+      <div class="modal-header gold">
+        <h3 class="modal-title">19TH MONTHSARY LETTER</h3>
+        <button class="px-btn px-btn-sm" data-close="secretModal" type="button">X</button>
       </div>
       <div class="modal-body">
         <div class="letter-paper" id="secretLetterBody"></div>
       </div>
-      <div class="modal-footer">
-        <button class="px-btn px-btn-gold" id="closeSecretFooterBtn" type="button">[ CLOSE ]</button>
+      <div style="padding: 0 12px 12px; display:flex; justify-content:center;">
+        <button class="px-btn px-btn-gold" data-close="secretModal" type="button">[ CLOSE ]</button>
       </div>
     </div>
   </div>
 
   <script>
     /* =========================================================================
-       CUSTOMIZATION SECTION — EDIT YOUR PERSONAL MESSAGES HERE!
+       CUSTOMIZATION SECTION — EDIT YOUR PERSONAL MESSAGES & DATA HERE!
        ========================================================================= */
 
-    // 1. Relationship Start Date (ISO format with local timezone or midnight)
+    // 1. Relationship Start Date
     const RELATIONSHIP_START_DATE = "2025-04-26T00:00:00";
 
-    // 2. Capsule Pool
-    //    rarity: "common" (60% drop), "rare" (30% drop), "ultra" (10% drop)
-    //    Replace or add entries freely! Keep each id unique.
-    const CAPSULE_POOL = [
-      // --- COMMON: Matcha Capsules (60% drop rate) ---
-      { id: "c1",  rarity: "common", category: "Daily Affirmation", message: "I love you, Mahal! Always and in all ways." },
-      { id: "c2",  rarity: "common", category: "Sweet Compliment",  message: "Your smile is still my favorite sight in the whole world." },
-      { id: "c3",  rarity: "common", category: "Cozy Reminder",     message: "Drink some water and take a deep breath today, Mahal. I'm proud of you!" },
-      { id: "c4",  rarity: "common", category: "Sweet Compliment",  message: "Everything feels softer, warmer, and brighter whenever I'm with you." },
-      { id: "c5",  rarity: "common", category: "Daily Affirmation", message: "No matter how busy the day gets, you are always my favorite person to come home to." },
-      { id: "c6",  rarity: "common", category: "Little Note",       message: "You make ordinary days feel like my favorite memories." },
-      { id: "c7",  rarity: "common", category: "Daily Affirmation", message: "Thank you for being so patient, kind, and wonderfully you, Mahal." },
-      { id: "c8",  rarity: "common", category: "Sweet Compliment",  message: "You're the prettiest, cutest, and most lovable person I know." },
-      { id: "c9",  rarity: "common", category: "Cozy Reminder",     message: "Whenever you feel tired, remember you have a permanent hug waiting for you." },
-      { id: "c10", rarity: "common", category: "Little Note",       message: "I fall in love with the little things you do every single day." },
-      { id: "c11", rarity: "common", category: "Daily Affirmation", message: "You're doing amazing, Mahal. I'm always cheering the loudest for you!" },
-      { id: "c12", rarity: "common", category: "Sweet Compliment",  message: "Even your sleepy voice is 10/10 adorable to me." },
-      { id: "c13", rarity: "common", category: "Little Note",       message: "My favorite notification on my phone will always be your name." },
-      { id: "c14", rarity: "common", category: "Cozy Reminder",     message: "Sending you a pocket-sized kiss right through this screen!" },
-
-      // --- RARE: Mint Capsules (30% drop rate) ---
-      { id: "r1", rarity: "rare", category: "Core Memory",    message: "April 26, 2025: The day our story officially started—and my favorite date on the calendar." },
-      { id: "r2", rarity: "rare", category: "Inside Joke",    message: "[Placeholder] Insert our favorite inside joke or silly nickname moment here!" },
-      { id: "r3", rarity: "rare", category: "Shared Memory",  message: "[Placeholder] Remember that spontaneous food trip we couldn't stop laughing about?" },
-      { id: "r4", rarity: "rare", category: "Milestone",      message: "Every single monthsary with you feels like leveling up in the coziest game ever." },
-      { id: "r5", rarity: "rare", category: "Shared Memory",  message: "[Placeholder] Our late-night talks where we lose track of time are still my favorite." },
-      { id: "r6", rarity: "rare", category: "Inside Joke",    message: "[Placeholder] That one look we give each other across the room when something funny happens." },
-      { id: "r7", rarity: "rare", category: "Milestone",      message: "From April 26, 2025 to today—thank you for every laugh, hug, and adventure together." },
-
-      // --- ULTRA RARE: Golden Sunflower Seed Capsules (10% drop rate) ---
-      { id: "u1", rarity: "ultra", category: "Redeemable Coupon", message: "COUPON: 1 Free Iced Matcha or Coffee Delivery, anytime you crave it!" },
-      { id: "u2", rarity: "ultra", category: "Redeemable Coupon", message: "COUPON: Unli Back Rubs & Head Scratches (Valid whenever you want!)" },
-      { id: "u3", rarity: "ultra", category: "Redeemable Coupon", message: "COUPON: Your Pick for Movie Night + Snacks on Me!" },
-      { id: "u4", rarity: "ultra", category: "Redeemable Coupon", message: "COUPON: 1 Free Dinner Date at Your Favorite Spot!" }
+    // 2. Botanical Seed Catalog (Real-world inspired growth timelines in days)
+    const SEED_CATALOG = [
+      {
+        id: "marigold",
+        name: "Sweet Alyssum / Marigold",
+        shortName: "Marigold",
+        type: "Annual (Fast Starter)",
+        sproutDays: 4,
+        transplantDays: 7,
+        bloomDays: 30,
+        zoneId: "meadow",
+        zoneName: "Sunny Meadow",
+        petalColor: "#f4d06f",
+        fact: "Fast-sprouting golden blooms that love full sun and attract helpful ladybugs!",
+        perk: "Fastest sprout to unlock the Secret Garden."
+      },
+      {
+        id: "sunflower",
+        name: "Dwarf Teddy Bear Sunflower",
+        shortName: "Sunflower",
+        type: "Annual (Medium)",
+        sproutDays: 7,
+        transplantDays: 10,
+        bloomDays: 50,
+        zoneId: "field",
+        zoneName: "Open Sunflower Field",
+        petalColor: "#f0b443",
+        fact: "Fluffy golden double-petal blooms! Heliotropic buds turn to follow the sun.",
+        perk: "Generates +2 free Sunflower Seeds daily once bloomed!"
+      },
+      {
+        id: "forgetmenot",
+        name: "Forget-Me-Not",
+        shortName: "Forget-Me-Not",
+        type: "Biennial / Perennial",
+        sproutDays: 10,
+        transplantDays: 14,
+        bloomDays: 45,
+        zoneId: "moss",
+        zoneName: "Shaded Mossy Corner",
+        petalColor: "#8ecae6",
+        fact: "Delicate sky-blue blossoms that thrive in cool, moist, shaded corners.",
+        perk: "A timeless symbol of true love and remembrance."
+      },
+      {
+        id: "lavender",
+        name: "English Lavender",
+        shortName: "Lavender",
+        type: "Permanent Perennial",
+        sproutDays: 14,
+        transplantDays: 21,
+        bloomDays: 45,
+        zoneId: "rock",
+        zoneName: "Sunny Rock Patch",
+        petalColor: "#b596d6",
+        fact: "Fragrant purple spikes that thrive in dry, gritty soil and full sunshine.",
+        perk: "Lives permanently in your garden once bloomed."
+      },
+      {
+        id: "sampaguita",
+        name: "Sampaguita (Philippine Jasmine)",
+        shortName: "Sampaguita",
+        type: "Permanent Perennial",
+        sproutDays: 14,
+        transplantDays: 21,
+        bloomDays: 45,
+        zoneId: "trellis",
+        zoneName: "Tropical Trellis",
+        petalColor: "#fff8f0",
+        fact: "Sweetly scented star-shaped white blossoms symbolizing devotion and purity.",
+        perk: "Lives permanently as a forever shrub in your garden."
+      }
     ];
 
-    // 3. Hamster Speech Bubble Quotes (shown when feeding sunflower seeds)
-    const HAMSTER_QUOTES = [
-      "Cronch! Mahal is the cutest!",
-      "Seed power! I love Mahal!",
-      "Yum! Happy monthsary, Mahal!",
-      "Matcha + Mahal = perfection!",
-      "*happy hamster squeaks!*",
-      "You're my favorite human!",
-      "More seeds, more kisses!"
+    // 3. Daily Love Dew Notes (Revealed when tapping the glowing dewdrop after watering)
+    const DAILY_LOVE_DEW_NOTES = [
+      "Good morning, Mahal! Just a reminder that you are my favorite thought every day.",
+      "Like a little sprout, my love for you keeps growing stronger every single day.",
+      "Drink your water today, Mahal! I'm always cheering for you.",
+      "You make even the quietest days feel warm and sunny.",
+      "I love your smile more than Hammie loves sunflower seeds!",
+      "Thank you for being my safe place since April 26, 2025.",
+      "Sending you a pocket-sized hug and a kiss right now, Mahal!",
+      "No matter how busy today gets, I can't wait to talk to you.",
+      "You are the prettiest flower in this whole greenhouse."
     ];
 
-    // 4. Secret Monthsary Love Letter (unlocked by tapping the hamster 5 times)
-    const SECRET_LETTER = `Dear Mahal,
+    // 4. Gacha Capsule Pool
+    //    rarity: "common" (55%), "rare" (30%), "ultra" (10%), "botanical" (5%)
+    const GACHA_CAPSULE_POOL = [
+      // --- COMMON (Matcha Capsule - 55%) ---
+      { id: "c1", rarity: "common", category: "Daily Affirmation", message: "I love you, Mahal! Always and in all ways." },
+      { id: "c2", rarity: "common", category: "Sweet Compliment",  message: "Your laugh is still my favorite sound in the entire world." },
+      { id: "c3", rarity: "common", category: "Cozy Reminder",     message: "Take a deep breath and unclench your shoulders, Mahal. You're doing great!" },
+      { id: "c4", rarity: "common", category: "Sweet Compliment",  message: "You look extra adorable even when you're sleepy." },
+      { id: "c5", rarity: "common", category: "Daily Affirmation", message: "I'm so proud of everything you're working hard on." },
+      { id: "c6", rarity: "common", category: "Little Note",       message: "You're my favorite person to do absolutely nothing with." },
+      { id: "c7", rarity: "common", category: "Daily Affirmation", message: "Every day with you feels like a cozy cup of iced matcha." },
+      { id: "c8", rarity: "common", category: "Little Note",       message: "I fall in love with you a little more every time you smile at me." },
 
-Happy Monthsary! Since April 26, 2025, every month with you has been my favorite chapter.
+      // --- RARE (Mint Capsule - 30%) ---
+      { id: "r1", rarity: "rare", category: "Milestone",     message: "April 26, 2025: The day our story began—and my favorite date ever." },
+      { id: "r2", rarity: "rare", category: "Shared Memory", message: "[Placeholder] Remember our favorite spontaneous food trip together?" },
+      { id: "r3", rarity: "rare", category: "Inside Joke",   message: "[Placeholder] Insert our funniest inside joke or nickname here!" },
+      { id: "r4", rarity: "rare", category: "Milestone",     message: "Happy 19th Monthsary, Mahal! 19 levels of love and counting." },
+      { id: "r5", rarity: "rare", category: "Shared Memory", message: "[Placeholder] Those late-night talks where we lose track of time." },
 
-Thank you for bringing so much warmth, laughter, and comfort into my life. Even on the quietest or busiest days, just knowing I have you by my side makes everything feel right.
+      // --- ULTRA RARE (Golden Sunflower Capsule - 10% Redeemable Coupons) ---
+      { id: "u1", rarity: "ultra", category: "Date Coupon", message: "COUPON: 1 Free Iced Matcha Delivery — anytime you crave it!" },
+      { id: "u2", rarity: "ultra", category: "Date Coupon", message: "COUPON: Unli Back Rubs & Head Scratches (Valid anytime!)" },
+      { id: "u3", rarity: "ultra", category: "Date Coupon", message: "COUPON: Movie Night Dictator — your pick + snacks on me!" },
+      { id: "u4", rarity: "ultra", category: "Date Coupon", message: "COUPON: 1 Free Dinner Date at your favorite restaurant!" },
 
-I made this little pixel hamster gacha so you always have a pocket full of love notes, memories, and treats whenever you want a smile.
+      // --- BOTANICAL MYSTERY CAPSULE (5% Rare Seed Packets) ---
+      { id: "b1", rarity: "botanical", seedId: "lavender",   category: "Botanical Seed", message: "Rare Seed Packet Found: English Lavender! Check your Greenhouse pots." },
+      { id: "b2", rarity: "botanical", seedId: "sampaguita", category: "Botanical Seed", message: "Rare Seed Packet Found: Sampaguita (Philippine Jasmine)! Check your Greenhouse pots." },
+      { id: "b3", rarity: "botanical", seedId: "sunflower",  category: "Botanical Seed", message: "Seed Packet Found: Dwarf Teddy Bear Sunflower! Plant it for daily seeds." }
+    ];
 
-I love you so much, Mahal. Here's to countless more monthsaries together!
+    // 5. Hammie's Speech Bubble Quotes (Plant care tips & sweet one-liners)
+    const HAMMIE_SPEECH_QUOTES = [
+      "Cronch! Watering pots spawns Love Dew notes!",
+      "Tip: Marigolds sprout in just 4 days!",
+      "Mahal is the best gardener ever!",
+      "Sunflowers give +2 free seeds daily once bloomed!",
+      "Lavender loves dry sunny rock patches!",
+      "Forget-Me-Nots love cool shady moss!",
+      "*happy hamster squeaks!* I love Mahal!"
+    ];
+
+    // 6. Secret 19th Monthsary Love Letter (Tap Hammie 5 times in a row!)
+    const SECRET_MONTHSARY_LETTER = `Dearest Mahal,
+
+Happy 19th Monthsary! Since April 26, 2025, every single month with you has been my favorite chapter.
+
+Like this little pocket greenhouse, our love is something I want to water, care for, and watch bloom every single day—from fast little joys to forever perennials.
+
+Thank you for being my sunshine, my peace, and my favorite adventure. I love you more than words can fit in any capsule!
 
 Forever yours,
 Your Player 2`;
 
     /* =========================================================================
-       APPLICATION LOGIC (NO EDITS NEEDED BELOW)
+       APPLICATION STATE & ENGINE (NO EDITS NEEDED BELOW)
        ========================================================================= */
 
-    const STORAGE_KEY_DEX = "mahal_gacha_unlocked_v1";
-    const STORAGE_KEY_SECRET = "mahal_gacha_secret_v1";
+    const STORAGE_KEY = "matcha_greenhouse_save_v1";
+    const MS_PER_DAY = 86400000;
+    const CARE_COOLDOWN_MS = 12 * 3600 * 1000; // 12 hours
 
-    const RARITY_LABELS = {
-      common: "COMMON • MATCHA",
-      rare: "RARE • MINT",
-      ultra: "ULTRA RARE • GOLDEN SEED"
-    };
+    const GARDEN_ZONES = [
+      { id: "meadow",  name: "Sunny Meadow",         css: "zone-meadow",  hint: "Bright & warm open grass" },
+      { id: "field",   name: "Open Sunflower Field", css: "zone-field",   hint: "Full sun, tall space" },
+      { id: "moss",    name: "Shaded Mossy Corner",  css: "zone-moss",    hint: "Cool, moist & shady" },
+      { id: "rock",    name: "Sunny Rock Patch",     css: "zone-rock",    hint: "Dry, gritty & sunny" },
+      { id: "trellis", name: "Tropical Trellis",     css: "zone-trellis", hint: "Warm breeze & climbing frame" }
+    ];
 
-    const RARITY_COLOR_HEX = {
-      common: "#78a878",
-      rare: "#a3c9a8",
-      ultra: "#f4d06f"
-    };
+    function defaultState() {
+      return {
+        loveDew: 0,
+        seeds: 5,
+        seedInventory: {
+          marigold: 2,
+          sunflower: 1,
+          forgetmenot: 1,
+          lavender: 1,
+          sampaguita: 1
+        },
+        pots: [null, null, null],
+        garden: {}, // zoneId -> { seedId, plantedAt, bonusDays, bloomed }
+        gardenUnlocked: false,
+        unlockedCapsules: [],
+        redeemedCoupons: [],
+        discoveredFlowers: [],
+        secretUnlocked: false,
+        lastFreePullDate: "",
+        lastDailyCheckinDate: "",
+        lastSunflowerHarvestDate: ""
+      };
+    }
 
-    // State
-    let unlockedIds = loadUnlocked();
-    let secretUnlocked = localStorage.getItem(STORAGE_KEY_SECRET) === "1";
+    let state = loadState();
     let soundEnabled = true;
-    let isPulling = false;
-    let hamsterTapCount = 0;
-    let hamsterTapTimer = null;
-    let speechTimer = null;
-    let currentDexFilter = "all";
     let audioCtx = null;
+    let currentRoom = "greenhouse";
+    let currentDexSubtab = "notes";
+    let activePotIndex = null;
+    let isPulling = false;
+    let hammieTaps = 0;
+    let hammieTapTimer = null;
+    let isRaining = false;
+    let ladybugPotIndex = -1;
 
-    // DOM References
-    const titleScreen = document.getElementById("titleScreen");
-    const gameScreen = document.getElementById("gameScreen");
-    const pressStartBtn = document.getElementById("pressStartBtn");
-    const hudLevel = document.getElementById("hudLevel");
-    const hudTimer = document.getElementById("hudTimer");
-    const soundToggleBtn = document.getElementById("soundToggleBtn");
-
-    const gachaWrap = document.getElementById("gachaWrap");
-    const droppedCapsule = document.getElementById("droppedCapsule");
-    const dropCapTop = document.getElementById("dropCapTop");
-    const dropCapMid = document.getElementById("dropCapMid");
-    const hamsterBtn = document.getElementById("hamsterBtn");
-    const speechBubble = document.getElementById("speechBubble");
-    const fxLayer = document.getElementById("fxLayer");
-    const confettiLayer = document.getElementById("confettiLayer");
-
-    const pullBtn = document.getElementById("pullBtn");
-    const feedBtn = document.getElementById("feedBtn");
-    const dexBtn = document.getElementById("dexBtn");
-    const secretLetterBtn = document.getElementById("secretLetterBtn");
-
-    const capsuleModal = document.getElementById("capsuleModal");
-    const capsuleModalHeader = document.getElementById("capsuleModalHeader");
-    const capsuleRarityTag = document.getElementById("capsuleRarityTag");
-    const capsuleNewTag = document.getElementById("capsuleNewTag");
-    const capsuleCategory = document.getElementById("capsuleCategory");
-    const capsuleMessage = document.getElementById("capsuleMessage");
-    const closeCapsuleBtn = document.getElementById("closeCapsuleBtn");
-    const keepCapsuleBtn = document.getElementById("keepCapsuleBtn");
-
-    const dexModal = document.getElementById("dexModal");
-    const dexProgress = document.getElementById("dexProgress");
-    const dexFilters = document.getElementById("dexFilters");
-    const dexList = document.getElementById("dexList");
-    const closeDexBtn = document.getElementById("closeDexBtn");
-
-    const secretModal = document.getElementById("secretModal");
-    const secretLetterBody = document.getElementById("secretLetterBody");
-    const closeSecretBtn = document.getElementById("closeSecretBtn");
-    const closeSecretFooterBtn = document.getElementById("closeSecretFooterBtn");
-
-    // Persistence helpers
-    function loadUnlocked() {
+    function loadState() {
       try {
-        const raw = localStorage.getItem(STORAGE_KEY_DEX);
-        const parsed = raw ? JSON.parse(raw) : [];
-        return Array.isArray(parsed) ? parsed : [];
+        const raw = localStorage.getItem(STORAGE_KEY);
+        if (!raw) return defaultState();
+        const parsed = JSON.parse(raw);
+        return { ...defaultState(), ...parsed };
       } catch {
-        return [];
+        return defaultState();
       }
     }
 
-    function saveUnlocked() {
+    function saveState() {
       try {
-        localStorage.setItem(STORAGE_KEY_DEX, JSON.stringify(unlockedIds));
+        localStorage.setItem(STORAGE_KEY, JSON.stringify(state));
       } catch {
-        // Ignore storage quota errors
+        // ignore quota error
       }
     }
 
-    // Procedural 8-bit Web Audio API
+    function todayKey() {
+      const d = new Date();
+      return `${d.getFullYear()}-${String(d.getMonth() + 1).padStart(2, "0")}-${String(d.getDate()).padStart(2, "0")}`;
+    }
+
+    // Procedural 8-Bit Web Audio
     function ensureAudio() {
       if (!audioCtx) {
         const Ctx = window.AudioContext || window.webkitAudioContext;
         if (Ctx) audioCtx = new Ctx();
       }
-      if (audioCtx && audioCtx.state === "suspended") {
-        audioCtx.resume();
-      }
+      if (audioCtx && audioCtx.state === "suspended") audioCtx.resume();
     }
 
-    function playTone(freq, duration, type = "square", delay = 0, volume = 0.08) {
+    function playTone(freq, dur, type = "square", delay = 0, vol = 0.07) {
       if (!soundEnabled) return;
       ensureAudio();
       if (!audioCtx) return;
-
-      const startTime = audioCtx.currentTime + delay;
+      const t = audioCtx.currentTime + delay;
       const osc = audioCtx.createOscillator();
       const gain = audioCtx.createGain();
       osc.type = type;
-      osc.frequency.setValueAtTime(freq, startTime);
-
-      gain.gain.setValueAtTime(volume, startTime);
-      gain.gain.exponentialRampToValueAtTime(0.001, startTime + duration);
-
+      osc.frequency.setValueAtTime(freq, t);
+      gain.gain.setValueAtTime(vol, t);
+      gain.gain.exponentialRampToValueAtTime(0.001, t + dur);
       osc.connect(gain);
       gain.connect(audioCtx.destination);
-      osc.start(startTime);
-      osc.stop(startTime + duration);
+      osc.start(t);
+      osc.stop(t + dur);
     }
 
     const sfx = {
-      blip() {
-        playTone(660, 0.07, "square", 0, 0.07);
-      },
-      start() {
-        playTone(523.25, 0.09, "square", 0, 0.08);
-        playTone(659.25, 0.09, "square", 0.09, 0.08);
-        playTone(783.99, 0.14, "square", 0.18, 0.08);
-      },
-      crank() {
-        const notes = [330, 392, 440, 392, 523, 587];
-        notes.forEach((n, idx) => {
-          playTone(n, 0.08, "square", idx * 0.09, 0.07);
-        });
-      },
-      drop(rarity) {
-        if (rarity === "ultra") {
-          [523.25, 659.25, 783.99, 1046.5, 1318.5].forEach((n, i) => {
-            playTone(n, 0.12, "square", i * 0.08, 0.09);
-          });
-        } else if (rarity === "rare") {
-          [440, 554.37, 659.25, 880].forEach((n, i) => {
-            playTone(n, 0.1, "square", i * 0.08, 0.08);
-          });
-        } else {
-          playTone(587.33, 0.09, "triangle", 0, 0.1);
-          playTone(783.99, 0.14, "square", 0.08, 0.07);
-        }
-      },
-      crunch() {
+      blip: () => playTone(660, 0.06, "square", 0, 0.06),
+      start: () => [523, 659, 784].forEach((f, i) => playTone(f, 0.1, "square", i * 0.09)),
+      water: () => [440, 587, 740].forEach((f, i) => playTone(f, 0.07, "triangle", i * 0.05, 0.09)),
+      crunch: () => {
         playTone(220, 0.04, "sawtooth", 0, 0.06);
-        playTone(310, 0.04, "sawtooth", 0.07, 0.06);
-        playTone(240, 0.05, "sawtooth", 0.14, 0.06);
-        playTone(784, 0.1, "square", 0.22, 0.06);
+        playTone(300, 0.04, "sawtooth", 0.07, 0.06);
+        playTone(784, 0.1, "square", 0.15, 0.06);
       },
-      secret() {
-        const fanfare = [523.25, 659.25, 783.99, 1046.5, 783.99, 1046.5];
-        fanfare.forEach((n, i) => {
-          playTone(n, i === fanfare.length - 1 ? 0.28 : 0.1, "square", i * 0.1, 0.08);
-        });
-      }
+      crank: () => [330, 392, 440, 523, 587].forEach((f, i) => playTone(f, 0.08, "square", i * 0.09)),
+      drop: (rarity) => {
+        const seq = rarity === "ultra" || rarity === "botanical" ? [523, 659, 784, 1046] : [494, 659, 784];
+        seq.forEach((f, i) => playTone(f, 0.11, "square", i * 0.08, 0.08));
+      },
+      fanfare: () => [523, 659, 784, 1046, 784, 1046].forEach((f, i) => playTone(f, 0.14, "square", i * 0.1, 0.08))
     };
 
-    // Relationship Level & Live Timer
-    function updateRelationshipHUD() {
+    // Relationship Timer & Level
+    function updateHUD() {
       const start = new Date(RELATIONSHIP_START_DATE);
       const now = new Date();
-      const diffMs = Math.max(0, now - start);
-
-      // Total completed months since start date
       let months = (now.getFullYear() - start.getFullYear()) * 12 + (now.getMonth() - start.getMonth());
-      if (now.getDate() < start.getDate()) {
-        months -= 1;
+      if (now.getDate() < start.getDate()) months -= 1;
+      document.getElementById("hudLevel").textContent = `LVL ${Math.max(0, months)}`;
+
+      const diffSec = Math.floor(Math.max(0, now - start) / 1000);
+      const d = Math.floor(diffSec / 86400);
+      const h = Math.floor((diffSec % 86400) / 3600);
+      const m = Math.floor((diffSec % 3600) / 60);
+      const s = diffSec % 60;
+      const p = (n) => String(n).padStart(2, "0");
+      document.getElementById("hudTimer").textContent = `${d}D : ${p(h)}H : ${p(m)}M : ${p(s)}S`;
+
+      document.getElementById("hudDew").textContent = state.loveDew;
+      document.getElementById("hudSeeds").textContent = state.seeds;
+
+      const hasFreePull = state.lastFreePullDate !== todayKey();
+      const gachaBtn = document.getElementById("navGachaBtn");
+      gachaBtn.innerHTML = hasFreePull ? `GACHA<span class="nav-badge">FREE</span>` : "GACHA";
+      const freeBadge = document.getElementById("freePullBadge");
+      if (freeBadge) freeBadge.textContent = hasFreePull ? "1 FREE DAILY" : "COST: 3 SEEDS";
+      const pullBtn = document.getElementById("pullBtn");
+      if (pullBtn && !isPulling) {
+        pullBtn.textContent = hasFreePull ? "[ PULL FREE DAILY CAPSULE ]" : "[ PULL CAPSULE (3 SEEDS) ]";
       }
-      months = Math.max(0, months);
-      hudLevel.textContent = `LVL ${months}`;
 
-      const totalSeconds = Math.floor(diffMs / 1000);
-      const days = Math.floor(totalSeconds / 86400);
-      const hrs = Math.floor((totalSeconds % 86400) / 3600);
-      const mins = Math.floor((totalSeconds % 3600) / 60);
-      const secs = totalSeconds % 60;
-
-      const pad = (n) => String(n).padStart(2, "0");
-      hudTimer.textContent = `${days}D : ${pad(hrs)}H : ${pad(mins)}M : ${pad(secs)}S`;
+      const gardenBtn = document.getElementById("navGardenBtn");
+      gardenBtn.textContent = state.gardenUnlocked ? "GARDEN" : "GARDEN 🔒";
     }
 
-    // Visual FX Helpers
-    function spawnStageHeart(xPercent, yPercent) {
-      const el = document.createElement("div");
-      el.className = "float-fx";
-      el.style.left = `${xPercent}%`;
-      el.style.top = `${yPercent}%`;
-      el.innerHTML = `
-        <svg width="18" height="16" viewBox="0 0 9 8" shape-rendering="crispEdges">
-          <rect x="1" y="1" width="2" height="1" fill="#e88d97" />
-          <rect x="6" y="1" width="2" height="1" fill="#e88d97" />
-          <rect x="0" y="2" width="4" height="2" fill="#e88d97" />
-          <rect x="5" y="2" width="4" height="2" fill="#e88d97" />
-          <rect x="1" y="4" width="7" height="1" fill="#e88d97" />
-          <rect x="2" y="5" width="5" height="1" fill="#e88d97" />
-          <rect x="3" y="6" width="3" height="1" fill="#e88d97" />
-          <rect x="4" y="7" width="1" height="1" fill="#e88d97" />
-        </svg>
-      `;
-      fxLayer.appendChild(el);
-      setTimeout(() => el.remove(), 1250);
+    function getSeedById(id) {
+      return SEED_CATALOG.find((s) => s.id === id);
     }
 
-    function spawnSparklesAroundChute() {
-      const coords = [
-        [34, 72], [44, 64], [24, 68], [38, 82]
-      ];
-      coords.forEach(([x, y], i) => {
-        setTimeout(() => {
-          const el = document.createElement("div");
-          el.className = "float-fx";
-          el.style.left = `${x}%`;
-          el.style.top = `${y}%`;
-          el.innerHTML = `
-            <svg width="14" height="14" viewBox="0 0 7 7" shape-rendering="crispEdges">
-              <rect x="3" y="0" width="1" height="7" fill="#f4d06f" />
-              <rect x="0" y="3" width="7" height="1" fill="#f4d06f" />
-              <rect x="2" y="2" width="3" height="3" fill="#fff6eb" />
-            </svg>
-          `;
-          fxLayer.appendChild(el);
-          setTimeout(() => el.remove(), 1200);
-        }, i * 70);
+    function getPlantAgeDays(plantObj) {
+      if (!plantObj) return 0;
+      const elapsed = (Date.now() - plantObj.plantedAt) / MS_PER_DAY;
+      return elapsed + (plantObj.bonusDays || 0);
+    }
+
+    function getPlantStage(plantObj) {
+      const seed = getSeedById(plantObj.seedId);
+      const age = getPlantAgeDays(plantObj);
+      if (age >= seed.bloomDays) return { key: "bloom", label: "Full Bloom!" };
+      if (age >= seed.transplantDays) return { key: "ready", label: "Ready to Transplant!" };
+      if (age >= seed.sproutDays) return { key: "sprout", label: "Sprout" };
+      return { key: "seed", label: "Seedling" };
+    }
+
+    // Check Garden Unlock & Daily Sunflower Harvest
+    function evaluateProgression() {
+      let newlyUnlocked = false;
+      state.pots.forEach((pot) => {
+        if (!pot) return;
+        const seed = getSeedById(pot.seedId);
+        if (getPlantAgeDays(pot) >= seed.transplantDays && !state.gardenUnlocked) {
+          state.gardenUnlocked = true;
+          newlyUnlocked = true;
+        }
+      });
+
+      if (newlyUnlocked) {
+        document.getElementById("unlockBanner").classList.add("visible");
+        sfx.fanfare();
+      }
+
+      // Check bloomed sunflowers in garden for +2 daily seeds
+      const sf = state.garden.field;
+      if (sf && sf.seedId === "sunflower") {
+        const age = getPlantAgeDays(sf);
+        if (age >= getSeedById("sunflower").bloomDays && state.lastSunflowerHarvestDate !== todayKey()) {
+          state.lastSunflowerHarvestDate = todayKey();
+          state.seeds += 2;
+          document.getElementById("hammieSpeech").textContent = "Your Sunflower bloomed! +2 free Sunflower Seeds today!";
+        }
+      }
+
+      saveState();
+    }
+
+    // Pixel Art Plant Renderer
+    function renderPlantSVG(seed, stageKey) {
+      if (stageKey === "seed") {
+        return `
+          <svg width="70" height="80" viewBox="0 0 20 22" shape-rendering="crispEdges">
+            <!-- Pot -->
+            <rect x="4" y="13" width="12" height="2" fill="#1b2e21"/>
+            <rect x="5" y="15" width="10" height="6" fill="#b5654a"/>
+            <rect x="4" y="14" width="12" height="2" fill="#d48369"/>
+            <rect x="6" y="13" width="8" height="1" fill="#5c3c28"/>
+            <!-- Tiny Bump -->
+            <rect x="9" y="11" width="2" height="2" fill="#78a878"/>
+          </svg>`;
+      }
+      if (stageKey === "sprout") {
+        return `
+          <svg width="70" height="80" viewBox="0 0 20 22" shape-rendering="crispEdges">
+            <rect x="4" y="13" width="12" height="2" fill="#1b2e21"/>
+            <rect x="5" y="15" width="10" height="6" fill="#b5654a"/>
+            <rect x="4" y="14" width="12" height="2" fill="#d48369"/>
+            <rect x="9" y="8" width="2" height="5" fill="#588658"/>
+            <rect x="6" y="7" width="3" height="2" fill="#78a878"/>
+            <rect x="11" y="7" width="3" height="2" fill="#a3c9a8"/>
+          </svg>`;
+      }
+      if (stageKey === "ready") {
+        return `
+          <svg width="70" height="80" viewBox="0 0 20 22" shape-rendering="crispEdges">
+            <rect x="4" y="13" width="12" height="2" fill="#1b2e21"/>
+            <rect x="5" y="15" width="10" height="6" fill="#b5654a"/>
+            <rect x="4" y="14" width="12" height="2" fill="#d48369"/>
+            <rect x="9" y="6" width="2" height="7" fill="#588658"/>
+            <rect x="6" y="8" width="3" height="3" fill="#78a878"/>
+            <rect x="11" y="8" width="3" height="3" fill="#78a878"/>
+            <rect x="8" y="4" width="4" height="3" fill="${seed.petalColor}"/>
+          </svg>`;
+      }
+      // Full bloom
+      return `
+        <svg width="70" height="80" viewBox="0 0 20 22" shape-rendering="crispEdges">
+          <rect x="4" y="14" width="12" height="2" fill="#1b2e21"/>
+          <rect x="5" y="16" width="10" height="5" fill="#b5654a"/>
+          <rect x="4" y="15" width="12" height="2" fill="#d48369"/>
+          <rect x="9" y="7" width="2" height="7" fill="#588658"/>
+          <rect x="6" y="10" width="3" height="2" fill="#78a878"/>
+          <rect x="11" y="10" width="3" height="2" fill="#78a878"/>
+          <rect x="7" y="2" width="6" height="6" fill="${seed.petalColor}"/>
+          <rect x="6" y="4" width="8" height="2" fill="${seed.petalColor}"/>
+          <rect x="9" y="4" width="2" height="2" fill="#5c3c28"/>
+        </svg>`;
+    }
+
+    // Weather & Random Visitors
+    function rollWeatherAndVisitors() {
+      isRaining = Math.random() < 0.22;
+      const win = document.getElementById("greenhouseWindow");
+      const badge = document.getElementById("weatherBadge");
+      const hammie = document.getElementById("hammieGreenhouse");
+
+      if (isRaining) {
+        win.classList.add("is-raining");
+        badge.textContent = "GENTLE RAIN (AUTO-WATERED!)";
+        hammie.classList.add("umbrella");
+        // Auto-water all pots
+        state.pots.forEach((p) => {
+          if (p) {
+            p.lastWatered = Date.now();
+            p.hasDewDrop = true;
+          }
+        });
+        saveState();
+      } else {
+        win.classList.remove("is-raining");
+        badge.textContent = "SUNNY WINDOWSILL";
+        hammie.classList.remove("umbrella");
+      }
+
+      // Random ladybug on an occupied pot
+      const occupied = state.pots.map((p, i) => (p ? i : -1)).filter((i) => i !== -1);
+      if (!isRaining && occupied.length > 0 && Math.random() < 0.45) {
+        ladybugPotIndex = occupied[Math.floor(Math.random() * occupied.length)];
+      } else {
+        ladybugPotIndex = -1;
+      }
+    }
+
+    // Render Greenhouse Pots
+    function renderGreenhouse() {
+      const grid = document.getElementById("potsGrid");
+      grid.innerHTML = "";
+
+      state.pots.forEach((pot, idx) => {
+        const slot = document.createElement("div");
+        slot.className = "pot-slot";
+
+        if (!pot) {
+          slot.innerHTML = `
+            <div class="pot-sprite-box">
+              <svg width="70" height="80" viewBox="0 0 20 22" shape-rendering="crispEdges">
+                <rect x="4" y="13" width="12" height="2" fill="#1b2e21"/>
+                <rect x="5" y="15" width="10" height="6" fill="#b5654a"/>
+                <rect x="4" y="14" width="12" height="2" fill="#d48369"/>
+                <rect x="6" y="13" width="8" height="1" fill="#5c3c28"/>
+              </svg>
+            </div>
+            <div class="pot-meta">
+              <div class="pot-name">EMPTY POT</div>
+              <div class="pot-stage">Ready to plant</div>
+            </div>
+            <div class="pot-actions">
+              <button class="px-btn px-btn-sm px-btn-gold" data-plant-pot="${idx}" type="button">+ PLANT</button>
+            </div>`;
+        } else {
+          const seed = getSeedById(pot.seedId);
+          const stage = getPlantStage(pot);
+          const age = getPlantAgeDays(pot).toFixed(1);
+          const canWater = Date.now() - (pot.lastWatered || 0) >= CARE_COOLDOWN_MS;
+          const canSun = Date.now() - (pot.lastSun || 0) >= CARE_COOLDOWN_MS;
+
+          let extraBtns = "";
+          if (pot.hasDewDrop) {
+            extraBtns += `
+              <button class="dew-drop-btn" data-dew-pot="${idx}" title="Tap Love Dew!" type="button">
+                <svg width="18" height="20" viewBox="0 0 9 10" shape-rendering="crispEdges">
+                  <rect x="4" y="0" width="1" height="2" fill="#1b2e21"/>
+                  <rect x="3" y="2" width="3" height="2" fill="#7bc4d4"/>
+                  <rect x="2" y="4" width="5" height="4" fill="#7bc4d4"/>
+                  <rect x="3" y="8" width="3" height="1" fill="#7bc4d4"/>
+                  <rect x="3" y="4" width="1" height="2" fill="#ffffff"/>
+                </svg>
+              </button>`;
+          }
+          if (ladybugPotIndex === idx) {
+            extraBtns += `
+              <button class="ladybug-btn" data-ladybug-pot="${idx}" title="Tap Lucky Ladybug!" type="button">
+                <svg width="16" height="16" viewBox="0 0 8 8" shape-rendering="crispEdges">
+                  <rect x="2" y="1" width="4" height="1" fill="#1b2e21"/>
+                  <rect x="1" y="2" width="6" height="4" fill="#d94f4f"/>
+                  <rect x="3" y="2" width="2" height="4" fill="#1b2e21"/>
+                  <rect x="2" y="3" width="1" height="1" fill="#1b2e21"/>
+                  <rect x="5" y="4" width="1" height="1" fill="#1b2e21"/>
+                </svg>
+              </button>`;
+          }
+
+          slot.innerHTML = `
+            <div class="pot-sprite-box">
+              ${extraBtns}
+              ${renderPlantSVG(seed, stage.key)}
+            </div>
+            <div class="pot-meta">
+              <div class="pot-name">${seed.shortName}</div>
+              <div class="pot-stage">${stage.label} (${age}d)</div>
+            </div>
+            <div class="pot-actions">
+              <button class="px-btn px-btn-sm" data-water-pot="${idx}" ${canWater ? "" : "disabled"} type="button">WATER</button>
+              <button class="px-btn px-btn-sm px-btn-secondary" data-sun-pot="${idx}" ${canSun ? "" : "disabled"} type="button">SUN</button>
+              ${stage.key === "ready" || stage.key === "bloom" ? `<button class="px-btn px-btn-sm px-btn-gold" data-transplant-pot="${idx}" type="button">OUTSIDE</button>` : ""}
+            </div>`;
+        }
+        grid.appendChild(slot);
       });
     }
 
-    function showSpeechBubble(text) {
-      speechBubble.textContent = text;
-      speechBubble.classList.add("visible");
-      clearTimeout(speechTimer);
-      speechTimer = setTimeout(() => {
-        speechBubble.classList.remove("visible");
-      }, 2600);
+    // Seed Modal
+    function openSeedModal(potIdx) {
+      activePotIndex = potIdx;
+      const body = document.getElementById("seedModalBody");
+      body.innerHTML = "";
+
+      SEED_CATALOG.forEach((seed) => {
+        const count = state.seedInventory[seed.id] || 0;
+        const card = document.createElement("div");
+        card.className = "seed-option-card";
+        card.innerHTML = `
+          <div class="seed-option-head">
+            <span>${seed.name}</span>
+            <span>x${count}</span>
+          </div>
+          <div class="seed-option-stats">
+            ${seed.type} • Sprouts ${seed.sproutDays}d • Transplant ${seed.transplantDays}d • Bloom ${seed.bloomDays}d<br/>
+            Zone: <strong>${seed.zoneName}</strong> • ${seed.perk}
+          </div>
+          <button class="px-btn px-btn-sm px-btn-gold" data-pick-seed="${seed.id}" ${count > 0 ? "" : "disabled"} type="button">
+            ${count > 0 ? "[ PLANT IN POT ]" : "OUT OF SEEDS (PULL GACHA)"}
+          </button>`;
+        body.appendChild(card);
+      });
+
+      document.getElementById("seedModal").classList.add("open");
     }
 
-    function setHamsterState(state) {
-      hamsterBtn.classList.remove("idle", "jumping", "munching");
-      hamsterBtn.classList.add(state);
-    }
+    // Secret Garden Rendering
+    let pendingTransplantPot = null;
 
-    // Gacha Pull Mechanics (60% Common, 30% Rare, 10% Ultra Rare)
-    function pickCapsule() {
-      const roll = Math.random();
-      let tier = "common";
-      if (roll >= 0.90) {
-        tier = "ultra";
-      } else if (roll >= 0.60) {
-        tier = "rare";
+    function renderGarden() {
+      const container = document.getElementById("gardenContent");
+      if (!state.gardenUnlocked) {
+        container.innerHTML = `
+          <div class="garden-locked-box">
+            <svg width="88" height="72" viewBox="0 0 22 18" shape-rendering="crispEdges">
+              <rect x="2" y="4" width="3" height="12" fill="#8c5a3c"/>
+              <rect x="7" y="5" width="3" height="11" fill="#a8704e"/>
+              <rect x="12" y="5" width="3" height="11" fill="#a8704e"/>
+              <rect x="17" y="4" width="3" height="12" fill="#8c5a3c"/>
+              <rect x="2" y="8" width="18" height="2" fill="#5c3c28"/>
+              <rect x="9" y="9" width="4" height="4" fill="#f4d06f"/>
+            </svg>
+            <div class="room-title">GARDEN GATE LOCKED</div>
+            <div style="font-size:20px; line-height:1.2;">
+              Grow any seedling in your Windowsill Greenhouse until it reaches transplant age (e.g. Day 7 for Marigold) to unlock Mahal's Secret Garden!
+            </div>
+          </div>`;
+        return;
       }
 
-      let pool = CAPSULE_POOL.filter((item) => item.rarity === tier);
-      if (pool.length === 0) pool = CAPSULE_POOL;
+      let banner = "";
+      if (pendingTransplantPot !== null && state.pots[pendingTransplantPot]) {
+        const s = getSeedById(state.pots[pendingTransplantPot].seedId);
+        banner = `
+          <div class="backup-box" style="background:var(--accent-gold);">
+            <strong>Transplanting: ${s.name}</strong>
+            <span>Tap the matching real-world habitat zone below!</span>
+          </div>`;
+      }
 
-      // Slightly favor uncollected capsules in the rolled tier so completing the Dex feels great
-      const uncollected = pool.filter((item) => !unlockedIds.includes(item.id));
-      const source = uncollected.length > 0 ? uncollected : pool;
-      return source[Math.floor(Math.random() * source.length)];
+      const list = document.createElement("div");
+      list.className = "garden-zones-list";
+
+      GARDEN_ZONES.forEach((zone) => {
+        const planted = state.garden[zone.id];
+        const card = document.createElement("div");
+        card.className = "garden-zone-card";
+
+        let spriteHtml = `<span style="font-size:14px;">Empty</span>`;
+        let desc = zone.hint;
+        let actionHtml = "";
+
+        if (planted) {
+          const seed = getSeedById(planted.seedId);
+          const stage = getPlantStage(planted);
+          const age = getPlantAgeDays(planted).toFixed(1);
+          spriteHtml = renderPlantSVG(seed, stage.key);
+          desc = `${seed.shortName} • ${stage.label} (${age}d)<br/>${seed.fact}`;
+        } else if (pendingTransplantPot !== null) {
+          actionHtml = `<button class="px-btn px-btn-sm px-btn-gold" data-plant-zone="${zone.id}" type="button">PLANT HERE</button>`;
+        }
+
+        card.innerHTML = `
+          <div class="zone-preview ${zone.css}">${spriteHtml}</div>
+          <div>
+            <div class="zone-title">${zone.name}</div>
+            <div class="zone-desc">${desc}</div>
+          </div>
+          <div>${actionHtml}</div>`;
+        list.appendChild(card);
+      });
+
+      container.innerHTML = banner;
+      container.appendChild(list);
     }
 
-    function openCapsuleModal(capsule, isNew) {
-      capsuleModalHeader.className = `modal-header rarity-${capsule.rarity}`;
-      capsuleRarityTag.textContent = RARITY_LABELS[capsule.rarity];
-      capsuleNewTag.style.display = isNew ? "inline-block" : "none";
-      capsuleCategory.textContent = capsule.category.toUpperCase();
-      capsuleMessage.textContent = capsule.message;
-      capsuleModal.classList.add("open");
+    // Gacha Pull Logic
+    function pickGachaCapsule() {
+      const r = Math.random();
+      let tier = "common";
+      if (r >= 0.95) tier = "botanical";
+      else if (r >= 0.85) tier = "ultra";
+      else if (r >= 0.55) tier = "rare";
+
+      const pool = GACHA_CAPSULE_POOL.filter((c) => c.rarity === tier);
+      const uncollected = pool.filter((c) => !state.unlockedCapsules.includes(c.id));
+      const src = uncollected.length > 0 ? uncollected : pool;
+      return src[Math.floor(Math.random() * src.length)];
     }
 
-    function handlePull() {
+    function handlePullGacha() {
       if (isPulling) return;
-      isPulling = true;
-      pullBtn.disabled = true;
+      const isFree = state.lastFreePullDate !== todayKey();
+      if (!isFree && state.seeds < 3) {
+        showMessageModal("NEED MORE SEEDS!", "You need 3 Sunflower Seeds for a bonus pull—or wait for tomorrow's 1 Free Daily Pull!", "gold");
+        return;
+      }
 
-      droppedCapsule.classList.remove("drop-in");
+      isPulling = true;
+      document.getElementById("pullBtn").disabled = true;
+      if (isFree) state.lastFreePullDate = todayKey();
+      else state.seeds -= 3;
+      saveState();
+      updateHUD();
+
+      const gachaWrap = document.getElementById("gachaWrap");
+      const dropped = document.getElementById("droppedCapsule");
+      const hammie = document.getElementById("hammieGacha");
+      dropped.classList.remove("drop-in");
       gachaWrap.classList.add("shake", "cranking");
-      setHamsterState("jumping");
+      hammie.classList.remove("idle");
+      hammie.classList.add("jumping");
       sfx.crank();
 
-      const chosen = pickCapsule();
-      const color = RARITY_COLOR_HEX[chosen.rarity];
-      dropCapTop.setAttribute("fill", color);
-      dropCapMid.setAttribute("fill", color);
+      const chosen = pickGachaCapsule();
+      const colorMap = { common: "#78a878", rare: "#a3c9a8", ultra: "#f4d06f", botanical: "#c5e3a5" };
+      document.getElementById("dropCapTop").setAttribute("fill", colorMap[chosen.rarity]);
+      document.getElementById("dropCapMid").setAttribute("fill", colorMap[chosen.rarity]);
 
       setTimeout(() => {
         gachaWrap.classList.remove("shake", "cranking");
-        setHamsterState("idle");
-        droppedCapsule.classList.add("drop-in");
-        spawnSparklesAroundChute();
+        hammie.classList.remove("jumping");
+        hammie.classList.add("idle");
+        dropped.classList.add("drop-in");
         sfx.drop(chosen.rarity);
 
-        const isNew = !unlockedIds.includes(chosen.id);
-        if (isNew) {
-          unlockedIds.push(chosen.id);
-          saveUnlocked();
+        const isNew = !state.unlockedCapsules.includes(chosen.id);
+        if (isNew) state.unlockedCapsules.push(chosen.id);
+
+        if (chosen.rarity === "botanical" && chosen.seedId) {
+          state.seedInventory[chosen.seedId] = (state.seedInventory[chosen.seedId] || 0) + 1;
         }
+        saveState();
 
         setTimeout(() => {
-          openCapsuleModal(chosen, isNew);
+          const meta = `<span class="rarity-pill ${chosen.rarity}">${chosen.rarity.toUpperCase()}</span>` +
+            (isNew ? `<span class="rarity-pill ultra">NEW!</span>` : "");
+          showMessageModal(chosen.category.toUpperCase(), chosen.message, chosen.rarity === "ultra" ? "gold" : "mint", meta);
           isPulling = false;
-          pullBtn.disabled = false;
-        }, 620);
-      }, 900);
+          document.getElementById("pullBtn").disabled = false;
+          updateHUD();
+        }, 580);
+      }, 880);
     }
 
-    // Feed Hamster
-    function handleFeed() {
-      if (isPulling) return;
-      sfx.crunch();
-      setHamsterState("munching");
-
-      const quote = HAMSTER_QUOTES[Math.floor(Math.random() * HAMSTER_QUOTES.length)];
-      showSpeechBubble(quote);
-
-      spawnStageHeart(68, 52);
-      setTimeout(() => spawnStageHeart(78, 46), 140);
-      setTimeout(() => spawnStageHeart(73, 56), 280);
-
-      setTimeout(() => {
-        if (!isPulling) setHamsterState("idle");
-      }, 1100);
-    }
-
-    // Mahal's Dex
+    // Dex & Journal Rendering
     function renderDex() {
-      const unlockedSet = new Set(unlockedIds);
-      dexProgress.textContent = `Unlocked: ${unlockedSet.size} / ${CAPSULE_POOL.length}`;
+      const el = document.getElementById("dexContent");
+      el.innerHTML = "";
 
-      const filtered = CAPSULE_POOL.filter((item) =>
-        currentDexFilter === "all" ? true : item.rarity === currentDexFilter
-      );
+      if (currentDexSubtab === "notes") {
+        const unlockedSet = new Set(state.unlockedCapsules);
+        const progress = document.createElement("div");
+        progress.className = "dex-card";
+        progress.innerHTML = `<strong>Unlocked Capsules: ${unlockedSet.size} / ${GACHA_CAPSULE_POOL.length}</strong>`;
+        el.appendChild(progress);
 
-      dexList.innerHTML = "";
-      filtered.forEach((item) => {
-        const isUnlocked = unlockedSet.has(item.id);
-        const card = document.createElement("div");
-        card.className = `dex-item${isUnlocked ? "" : " locked"}`;
+        GACHA_CAPSULE_POOL.forEach((cap) => {
+          const unlocked = unlockedSet.has(cap.id);
+          const redeemed = state.redeemedCoupons.includes(cap.id);
+          const card = document.createElement("div");
+          card.className = `dex-card${unlocked ? "" : " locked"}`;
+          card.innerHTML = `
+            <div class="dex-card-top">
+              <span class="rarity-pill ${cap.rarity}">${cap.rarity.toUpperCase()}</span>
+              <span style="font-size:15px;">${unlocked ? cap.category : "???"}</span>
+            </div>
+            <div class="dex-card-msg">${unlocked ? cap.message : "??? (Pull more capsules to unlock!)"}</div>
+            ${unlocked && cap.rarity === "ultra" ? `
+              <div>
+                <button class="px-btn px-btn-sm ${redeemed ? "px-btn-secondary" : "px-btn-gold"}" data-redeem-coupon="${cap.id}" type="button">
+                  ${redeemed ? "REDEEMED ✓" : "[ REDEEM COUPON ]"}
+                </button>
+              </div>` : ""}`;
+          el.appendChild(card);
+        });
+      } else if (currentDexSubtab === "flora") {
+        SEED_CATALOG.forEach((seed) => {
+          const disc = state.discoveredFlowers.includes(seed.id);
+          const activeInPot = state.pots.find((p) => p && p.seedId === seed.id);
+          const activeInGarden = Object.values(state.garden).find((g) => g && g.seedId === seed.id);
+          const active = activeInGarden || activeInPot;
 
-        const badgeLabel =
-          item.rarity === "ultra" ? "ULTRA RARE" : item.rarity.toUpperCase();
+          let snapshot = "Not planted yet.";
+          if (active) {
+            const plantedStr = new Date(active.plantedAt).toLocaleDateString();
+            snapshot = `Planted: ${plantedStr} • Age: ${getPlantAgeDays(active).toFixed(1)}d • ${getPlantStage(active).label}`;
+          }
 
-        card.innerHTML = `
-          <div class="dex-item-top">
-            <span class="dex-item-badge ${item.rarity}">${badgeLabel}</span>
-            <span class="dex-item-cat">${isUnlocked ? item.category : "???"}</span>
+          const card = document.createElement("div");
+          card.className = `dex-card${disc ? "" : " locked"}`;
+          card.innerHTML = `
+            <div class="dex-card-top">
+              <strong style="font-family:'Press Start 2P',monospace; font-size:8px;">${seed.name}</strong>
+              <span class="rarity-pill botanical">${seed.zoneName}</span>
+            </div>
+            <div class="dex-card-msg">${disc ? seed.fact : "Plant this seed to unlock its botanical entry!"}</div>
+            <div style="font-size:16px; color:var(--accent-primary-dark);">${snapshot}</div>`;
+          el.appendChild(card);
+        });
+      } else {
+        const code = btoa(unescape(encodeURIComponent(JSON.stringify(state))));
+        el.innerHTML = `
+          <div class="backup-box">
+            <strong>Save Code Backup</strong>
+            <span style="font-size:17px;">Copy this code to keep your greenhouse safe across devices or browser resets.</span>
+            <textarea class="backup-textarea" id="saveCodeBox" readonly>${code}</textarea>
+            <button class="px-btn px-btn-sm px-btn-gold" id="copySaveBtn" type="button">[ COPY SAVE CODE ]</button>
           </div>
-          <div class="dex-item-msg">${isUnlocked ? escapeHtml(item.message) : "??? (Pull more capsules to unlock!)"}</div>
-        `;
-        dexList.appendChild(card);
-      });
-    }
-
-    function escapeHtml(str) {
-      const div = document.createElement("div");
-      div.textContent = str;
-      return div.innerHTML;
-    }
-
-    // Secret Easter Egg (Tap hamster 5 times)
-    function launchConfettiShower() {
-      confettiLayer.innerHTML = "";
-      const total = 34;
-
-      for (let i = 0; i < total; i++) {
-        const piece = document.createElement("div");
-        piece.className = "confetti-piece";
-        piece.style.left = `${Math.random() * 96}%`;
-        const duration = 2.2 + Math.random() * 1.8;
-        const delay = Math.random() * 0.9;
-        piece.style.animationDuration = `${duration}s`;
-        piece.style.animationDelay = `${delay}s`;
-
-        const isHeart = i % 2 === 0;
-        piece.innerHTML = isHeart
-          ? `<svg width="18" height="16" viewBox="0 0 9 8" shape-rendering="crispEdges">
-               <rect x="1" y="1" width="2" height="1" fill="#e88d97"/>
-               <rect x="6" y="1" width="2" height="1" fill="#e88d97"/>
-               <rect x="0" y="2" width="4" height="2" fill="#e88d97"/>
-               <rect x="5" y="2" width="4" height="2" fill="#e88d97"/>
-               <rect x="1" y="4" width="7" height="1" fill="#e88d97"/>
-               <rect x="2" y="5" width="5" height="1" fill="#e88d97"/>
-               <rect x="3" y="6" width="3" height="1" fill="#e88d97"/>
-               <rect x="4" y="7" width="1" height="1" fill="#e88d97"/>
-             </svg>`
-          : `<svg width="14" height="16" viewBox="0 0 7 8" shape-rendering="crispEdges">
-               <rect x="2" y="0" width="3" height="1" fill="#1b2e21"/>
-               <rect x="1" y="1" width="5" height="5" fill="#1b2e21"/>
-               <rect x="2" y="6" width="3" height="2" fill="#1b2e21"/>
-               <rect x="2" y="2" width="3" height="3" fill="#f4d06f"/>
-               <rect x="3" y="1" width="1" height="5" fill="#fff6eb"/>
-             </svg>`;
-
-        confettiLayer.appendChild(piece);
+          <div class="backup-box">
+            <strong>Restore Save Code</strong>
+            <textarea class="backup-textarea" id="restoreCodeBox" placeholder="Paste your saved code here..."></textarea>
+            <button class="px-btn px-btn-sm px-btn-secondary" id="restoreSaveBtn" type="button">[ RESTORE SAVE ]</button>
+          </div>`;
       }
-
-      setTimeout(() => {
-        confettiLayer.innerHTML = "";
-      }, 4800);
     }
 
-    function openSecretLetter() {
-      secretLetterBody.textContent = SECRET_LETTER;
-      secretModal.classList.add("open");
+    // Visual FX Helpers
+    function spawnHeartFX() {
+      const fx = document.getElementById("fxLayer");
+      const el = document.createElement("div");
+      el.className = "float-fx";
+      el.style.left = `${20 + Math.random() * 55}%`;
+      el.style.top = `${55 + Math.random() * 20}%`;
+      el.innerHTML = `<svg width="16" height="14" viewBox="0 0 9 8" shape-rendering="crispEdges"><rect x="1" y="1" width="2" height="1" fill="#e88d97"/><rect x="6" y="1" width="2" height="1" fill="#e88d97"/><rect x="0" y="2" width="9" height="2" fill="#e88d97"/><rect x="1" y="4" width="7" height="1" fill="#e88d97"/><rect x="2" y="5" width="5" height="1" fill="#e88d97"/><rect x="3" y="6" width="3" height="1" fill="#e88d97"/></svg>`;
+      fx.appendChild(el);
+      setTimeout(() => el.remove(), 1200);
     }
 
-    function handleHamsterTap() {
+    function launchConfetti() {
+      const layer = document.getElementById("confettiLayer");
+      layer.innerHTML = "";
+      for (let i = 0; i < 36; i++) {
+        const p = document.createElement("div");
+        p.className = "confetti-piece";
+        p.style.left = `${Math.random() * 96}%`;
+        p.style.animationDuration = `${2 + Math.random() * 1.8}s`;
+        p.style.animationDelay = `${Math.random() * 0.8}s`;
+        const mod = i % 3;
+        p.innerHTML = mod === 0
+          ? `<svg width="16" height="14" viewBox="0 0 9 8" shape-rendering="crispEdges"><rect x="1" y="1" width="2" height="1" fill="#e88d97"/><rect x="6" y="1" width="2" height="1" fill="#e88d97"/><rect x="0" y="2" width="9" height="2" fill="#e88d97"/><rect x="2" y="4" width="5" height="2" fill="#e88d97"/><rect x="3" y="6" width="3" height="1" fill="#e88d97"/></svg>`
+          : mod === 1
+          ? `<svg width="14" height="14" viewBox="0 0 7 7" shape-rendering="crispEdges"><rect x="2" y="1" width="3" height="5" fill="#f4d06f"/><rect x="3" y="0" width="1" height="7" fill="#fff6eb"/></svg>`
+          : `<svg width="14" height="14" viewBox="0 0 7 7" shape-rendering="crispEdges"><rect x="1" y="2" width="5" height="3" fill="#78a878"/><rect x="2" y="1" width="3" height="5" fill="#a3c9a8"/></svg>`;
+        layer.appendChild(p);
+      }
+      setTimeout(() => { layer.innerHTML = ""; }, 4600);
+    }
+
+    function showMessageModal(title, body, headerClass = "gold", metaHtml = "") {
+      document.getElementById("messageModalHeader").className = `modal-header ${headerClass}`;
+      document.getElementById("messageModalTitle").textContent = title;
+      document.getElementById("messageModalMeta").innerHTML = metaHtml;
+      document.getElementById("messageModalBody").textContent = body;
+      document.getElementById("messageModal").classList.add("open");
+    }
+
+    function switchRoom(roomName) {
+      currentRoom = roomName;
+      document.querySelectorAll(".room-panel").forEach((p) => p.classList.remove("active"));
+      document.querySelectorAll(".nav-btn").forEach((b) => b.classList.toggle("active", b.dataset.room === roomName));
+
+      if (roomName === "greenhouse") {
+        document.getElementById("roomGreenhouse").classList.add("active");
+        renderGreenhouse();
+      } else if (roomName === "garden") {
+        document.getElementById("roomGarden").classList.add("active");
+        renderGarden();
+      } else if (roomName === "gacha") {
+        document.getElementById("roomGacha").classList.add("active");
+      } else if (roomName === "dex") {
+        document.getElementById("roomDex").classList.add("active");
+        renderDex();
+      }
+    }
+
+    // Hammie Tap Easter Egg (5 taps)
+    function handleHammieTap(el) {
       sfx.blip();
-      hamsterTapCount += 1;
-      spawnStageHeart(72, 54);
+      spawnHeartFX();
+      hammieTaps += 1;
+      clearTimeout(hammieTapTimer);
+      hammieTapTimer = setTimeout(() => { hammieTaps = 0; }, 2500);
 
-      clearTimeout(hamsterTapTimer);
-      hamsterTapTimer = setTimeout(() => {
-        hamsterTapCount = 0;
-      }, 2500);
-
-      if (hamsterTapCount >= 5) {
-        hamsterTapCount = 0;
-        secretUnlocked = true;
-        localStorage.setItem(STORAGE_KEY_SECRET, "1");
-        secretLetterBtn.classList.add("unlocked");
-        sfx.secret();
-        launchConfettiShower();
-        showSpeechBubble("You found my secret, Mahal!");
-        setTimeout(openSecretLetter, 550);
-      } else if (hamsterTapCount === 1) {
-        showSpeechBubble("*squeak!* Hi Mahal!");
+      if (hammieTaps >= 5) {
+        hammieTaps = 0;
+        state.secretUnlocked = true;
+        saveState();
+        document.getElementById("secretLetterBtn").style.display = "inline-flex";
+        sfx.fanfare();
+        launchConfetti();
+        document.getElementById("secretLetterBody").textContent = SECRET_MONTHSARY_LETTER;
+        setTimeout(() => document.getElementById("secretModal").classList.add("open"), 450);
       }
     }
 
-    // Event Listeners
-    pressStartBtn.addEventListener("click", () => {
+    // Event Delegation & Listeners
+    document.getElementById("pressStartBtn").addEventListener("click", () => {
       ensureAudio();
       sfx.start();
-      titleScreen.classList.add("hidden");
-      gameScreen.classList.remove("hidden");
-      updateRelationshipHUD();
-      if (secretUnlocked) {
-        secretLetterBtn.classList.add("unlocked");
-      }
+      document.getElementById("titleScreen").classList.add("hidden");
+      document.getElementById("gameShell").classList.remove("hidden");
+      rollWeatherAndVisitors();
+      evaluateProgression();
+      if (state.secretUnlocked) document.getElementById("secretLetterBtn").style.display = "inline-flex";
+      updateHUD();
+      renderGreenhouse();
     });
 
-    soundToggleBtn.addEventListener("click", () => {
+    document.getElementById("soundToggleBtn").addEventListener("click", (e) => {
       soundEnabled = !soundEnabled;
-      soundToggleBtn.textContent = soundEnabled ? "SFX:ON" : "SFX:OFF";
-      if (soundEnabled) {
-        ensureAudio();
-        sfx.blip();
-      }
+      e.target.textContent = soundEnabled ? "SFX:ON" : "SFX:OFF";
+      if (soundEnabled) sfx.blip();
     });
 
-    pullBtn.addEventListener("click", handlePull);
-    feedBtn.addEventListener("click", handleFeed);
-
-    dexBtn.addEventListener("click", () => {
-      sfx.blip();
-      renderDex();
-      dexModal.classList.add("open");
-    });
-
-    secretLetterBtn.addEventListener("click", () => {
-      sfx.blip();
-      openSecretLetter();
-    });
-
-    hamsterBtn.addEventListener("click", handleHamsterTap);
-    hamsterBtn.addEventListener("keydown", (e) => {
-      if (e.key === "Enter" || e.key === " ") {
-        e.preventDefault();
-        handleHamsterTap();
-      }
-    });
-
-    dexFilters.addEventListener("click", (e) => {
-      const btn = e.target.closest(".dex-filter-btn");
+    document.querySelector(".bottom-nav").addEventListener("click", (e) => {
+      const btn = e.target.closest(".nav-btn");
       if (!btn) return;
       sfx.blip();
-      currentDexFilter = btn.dataset.filter;
-      dexFilters.querySelectorAll(".dex-filter-btn").forEach((el) => {
-        el.classList.toggle("active", el === btn);
-      });
+      switchRoom(btn.dataset.room);
+    });
+
+    document.getElementById("unlockBanner").addEventListener("click", () => {
+      sfx.blip();
+      document.getElementById("unlockBanner").classList.remove("visible");
+      switchRoom("garden");
+    });
+
+    document.getElementById("dailyCheckinBtn").addEventListener("click", () => {
+      if (state.lastDailyCheckinDate === todayKey()) {
+        showMessageModal("DAILY GIFT", "You already claimed today's Sunflower Seeds! Come back tomorrow, Mahal!", "mint");
+        return;
+      }
+      state.lastDailyCheckinDate = todayKey();
+      state.seeds += 2;
+      saveState();
+      updateHUD();
+      sfx.fanfare();
+      showMessageModal("DAILY CHECK-IN!", "Hammie gave you +2 Sunflower Seeds for visiting your greenhouse today!", "gold");
+    });
+
+    document.getElementById("feedHammieBtn").addEventListener("click", () => {
+      if (state.seeds < 1) {
+        document.getElementById("hammieSpeech").textContent = "No seeds left! Claim Daily Gift or water blooms!";
+        sfx.blip();
+        return;
+      }
+      state.seeds -= 1;
+      saveState();
+      updateHUD();
+      sfx.crunch();
+      const h = document.getElementById("hammieGreenhouse");
+      h.classList.remove("idle");
+      h.classList.add("munching");
+      spawnHeartFX();
+      setTimeout(spawnHeartFX, 160);
+      document.getElementById("hammieSpeech").textContent =
+        HAMMIE_SPEECH_QUOTES[Math.floor(Math.random() * HAMMIE_SPEECH_QUOTES.length)];
+      setTimeout(() => {
+        h.classList.remove("munching");
+        h.classList.add("idle");
+      }, 1050);
+    });
+
+    document.getElementById("secretLetterBtn").addEventListener("click", () => {
+      sfx.blip();
+      document.getElementById("secretLetterBody").textContent = SECRET_MONTHSARY_LETTER;
+      document.getElementById("secretModal").classList.add("open");
+    });
+
+    document.getElementById("hammieGreenhouse").addEventListener("click", () => handleHammieTap());
+    document.getElementById("hammieGacha").addEventListener("click", () => handleHammieTap());
+    document.getElementById("pullBtn").addEventListener("click", handlePullGacha);
+
+    // Greenhouse Pot Actions
+    document.getElementById("potsGrid").addEventListener("click", (e) => {
+      const plantBtn = e.target.closest("[data-plant-pot]");
+      if (plantBtn) {
+        sfx.blip();
+        openSeedModal(Number(plantBtn.dataset.plantPot));
+        return;
+      }
+      const waterBtn = e.target.closest("[data-water-pot]");
+      if (waterBtn) {
+        const idx = Number(waterBtn.dataset.waterPot);
+        const pot = state.pots[idx];
+        if (!pot) return;
+        pot.lastWatered = Date.now();
+        pot.bonusDays = (pot.bonusDays || 0) + 0.5;
+        pot.hasDewDrop = true;
+        sfx.water();
+        evaluateProgression();
+        updateHUD();
+        renderGreenhouse();
+        return;
+      }
+      const sunBtn = e.target.closest("[data-sun-pot]");
+      if (sunBtn) {
+        const idx = Number(sunBtn.dataset.sunPot);
+        const pot = state.pots[idx];
+        if (!pot) return;
+        pot.lastSun = Date.now();
+        pot.bonusDays = (pot.bonusDays || 0) + 0.5;
+        sfx.blip();
+        evaluateProgression();
+        updateHUD();
+        renderGreenhouse();
+        return;
+      }
+      const dewBtn = e.target.closest("[data-dew-pot]");
+      if (dewBtn) {
+        const idx = Number(dewBtn.dataset.dewPot);
+        const pot = state.pots[idx];
+        if (!pot) return;
+        pot.hasDewDrop = false;
+        state.loveDew += 1;
+        saveState();
+        updateHUD();
+        renderGreenhouse();
+        sfx.drop("rare");
+        const note = DAILY_LOVE_DEW_NOTES[Math.floor(Math.random() * DAILY_LOVE_DEW_NOTES.length)];
+        showMessageModal("LOVE DEW DROP (+1 DEW)", note, "mint");
+        return;
+      }
+      const bugBtn = e.target.closest("[data-ladybug-pot]");
+      if (bugBtn) {
+        const idx = Number(bugBtn.dataset.ladybugPot);
+        const pot = state.pots[idx];
+        if (pot) pot.bonusDays = (pot.bonusDays || 0) + 1;
+        ladybugPotIndex = -1;
+        state.seeds += 1;
+        sfx.fanfare();
+        evaluateProgression();
+        updateHUD();
+        renderGreenhouse();
+        showMessageModal("LUCKY LADYBUG!", "A friendly ladybug boosted your plant by +1 day and left +1 Sunflower Seed!", "gold");
+        return;
+      }
+      const transBtn = e.target.closest("[data-transplant-pot]");
+      if (transBtn) {
+        sfx.blip();
+        pendingTransplantPot = Number(transBtn.dataset.transplantPot);
+        switchRoom("garden");
+      }
+    });
+
+    // Pick Seed from Modal
+    document.getElementById("seedModalBody").addEventListener("click", (e) => {
+      const btn = e.target.closest("[data-pick-seed]");
+      if (!btn || activePotIndex === null) return;
+      const seedId = btn.dataset.pickSeed;
+      if ((state.seedInventory[seedId] || 0) < 1) return;
+
+      state.seedInventory[seedId] -= 1;
+      state.pots[activePotIndex] = {
+        seedId,
+        plantedAt: Date.now(),
+        bonusDays: 0,
+        lastWatered: 0,
+        lastSun: 0,
+        hasDewDrop: false
+      };
+      if (!state.discoveredFlowers.includes(seedId)) {
+        state.discoveredFlowers.push(seedId);
+      }
+      saveState();
+      sfx.water();
+      document.getElementById("seedModal").classList.remove("open");
+      renderGreenhouse();
+    });
+
+    // Garden Zone Planting
+    document.getElementById("gardenContent").addEventListener("click", (e) => {
+      const btn = e.target.closest("[data-plant-zone]");
+      if (!btn || pendingTransplantPot === null) return;
+      const zoneId = btn.dataset.plantZone;
+      const pot = state.pots[pendingTransplantPot];
+      if (!pot) return;
+      const seed = getSeedById(pot.seedId);
+
+      if (seed.zoneId !== zoneId) {
+        sfx.blip();
+        showMessageModal("WRONG HABITAT!", `Hammie says: "${seed.shortName} prefers the ${seed.zoneName}!"`, "mint");
+        return;
+      }
+
+      state.garden[zoneId] = pot;
+      state.pots[pendingTransplantPot] = null;
+      pendingTransplantPot = null;
+      saveState();
+      sfx.fanfare();
+      evaluateProgression();
+      updateHUD();
+      renderGarden();
+      showMessageModal("TRANSPLANTED!", `Your ${seed.shortName} is now thriving in the ${seed.zoneName}!`, "gold");
+    });
+
+    // Dex Subtabs & Actions
+    document.getElementById("dexSubtabs").addEventListener("click", (e) => {
+      const btn = e.target.closest(".subtab-btn");
+      if (!btn) return;
+      sfx.blip();
+      currentDexSubtab = btn.dataset.subtab;
+      document.querySelectorAll(".subtab-btn").forEach((b) => b.classList.toggle("active", b === btn));
       renderDex();
     });
 
-    function closeModal(modal) {
-      sfx.blip();
-      modal.classList.remove("open");
-    }
-
-    closeCapsuleBtn.addEventListener("click", () => closeModal(capsuleModal));
-    keepCapsuleBtn.addEventListener("click", () => closeModal(capsuleModal));
-    closeDexBtn.addEventListener("click", () => closeModal(dexModal));
-    closeSecretBtn.addEventListener("click", () => closeModal(secretModal));
-    closeSecretFooterBtn.addEventListener("click", () => closeModal(secretModal));
-
-    [capsuleModal, dexModal, secretModal].forEach((overlay) => {
-      overlay.addEventListener("click", (e) => {
-        if (e.target === overlay) closeModal(overlay);
-      });
+    document.getElementById("dexContent").addEventListener("click", (e) => {
+      const redeemBtn = e.target.closest("[data-redeem-coupon]");
+      if (redeemBtn) {
+        const id = redeemBtn.dataset.redeemCoupon;
+        if (!state.redeemedCoupons.includes(id)) state.redeemedCoupons.push(id);
+        else state.redeemedCoupons = state.redeemedCoupons.filter((x) => x !== id);
+        saveState();
+        sfx.blip();
+        renderDex();
+        return;
+      }
+      if (e.target.id === "copySaveBtn") {
+        const box = document.getElementById("saveCodeBox");
+        box.select();
+        navigator.clipboard?.writeText(box.value);
+        sfx.blip();
+        e.target.textContent = "COPIED! ✓";
+        return;
+      }
+      if (e.target.id === "restoreSaveBtn") {
+        try {
+          const raw = document.getElementById("restoreCodeBox").value.trim();
+          const parsed = JSON.parse(decodeURIComponent(escape(atob(raw))));
+          state = { ...defaultState(), ...parsed };
+          saveState();
+          updateHUD();
+          sfx.fanfare();
+          showMessageModal("SAVE RESTORED!", "Welcome back to your pocket greenhouse, Mahal!", "gold");
+        } catch {
+          showMessageModal("INVALID CODE", "That save code couldn't be read. Please check and try again.", "mint");
+        }
+      }
     });
 
-    // Start live timer tick
-    updateRelationshipHUD();
-    setInterval(updateRelationshipHUD, 1000);
+    // Close Modals
+    document.addEventListener("click", (e) => {
+      const closeBtn = e.target.closest("[data-close]");
+      if (closeBtn) {
+        sfx.blip();
+        document.getElementById(closeBtn.dataset.close).classList.remove("open");
+      } else if (e.target.classList.contains("modal-overlay")) {
+        sfx.blip();
+        e.target.classList.remove("open");
+      }
+    });
+
+    // Start Live HUD Tick
+    updateHUD();
+    setInterval(updateHUD, 1000);
   </script>
 </body>
 </html>
