@@ -1,0 +1,1761 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no" />
+  <title>Mahal's Pixel Hamster Gacha</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Press+Start+2P&family=VT323&display=swap" rel="stylesheet" />
+  <style>
+    :root {
+      --bg-outer: #2d4a36;
+      --bg-outer-dark: #213728;
+      --screen-bg: #e8f3e8;
+      --screen-bg-alt: #d7ead7;
+      --accent-primary: #78a878;
+      --accent-primary-dark: #5b875b;
+      --accent-secondary: #a3c9a8;
+      --accent-gold: #f4d06f;
+      --accent-gold-dark: #d1a73e;
+      --ink: #1b2e21;
+      --rose: #e88d97;
+      --white: #f7fbf7;
+    }
+
+    * {
+      box-sizing: border-box;
+      -webkit-tap-highlight-color: transparent;
+    }
+
+    html, body {
+      margin: 0;
+      padding: 0;
+      min-height: 100%;
+      background-color: var(--bg-outer-dark);
+      background-image:
+        radial-gradient(circle at 20% 20%, rgba(163, 201, 168, 0.1) 0%, transparent 45%),
+        radial-gradient(circle at 80% 80%, rgba(244, 208, 111, 0.08) 0%, transparent 45%),
+        repeating-linear-gradient(
+          0deg,
+          rgba(0, 0, 0, 0.06) 0px,
+          rgba(0, 0, 0, 0.06) 2px,
+          transparent 2px,
+          transparent 4px
+        );
+      color: var(--ink);
+      font-family: 'VT323', monospace;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      padding: 12px;
+      overflow-x: hidden;
+    }
+
+    /* Handheld Console Shell */
+    .console-shell {
+      width: 100%;
+      max-width: 480px;
+      background: var(--bg-outer);
+      border: 4px solid var(--ink);
+      box-shadow:
+        inset 4px 4px 0 rgba(255, 255, 255, 0.14),
+        inset -4px -4px 0 rgba(0, 0, 0, 0.3),
+        0 12px 0 var(--ink),
+        0 20px 36px rgba(0, 0, 0, 0.45);
+      border-radius: 18px 18px 34px 18px;
+      padding: 14px;
+      position: relative;
+    }
+
+    .console-top-bar {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      margin-bottom: 10px;
+      padding: 0 4px;
+    }
+
+    .console-brand {
+      font-family: 'Press Start 2P', monospace;
+      font-size: 9px;
+      color: var(--accent-secondary);
+      letter-spacing: 0.5px;
+      display: flex;
+      align-items: center;
+      gap: 6px;
+    }
+
+    .power-led {
+      width: 8px;
+      height: 8px;
+      background: var(--accent-gold);
+      border: 2px solid var(--ink);
+      box-shadow: 0 0 6px var(--accent-gold);
+      display: inline-block;
+    }
+
+    .console-vents {
+      display: flex;
+      gap: 4px;
+    }
+
+    .console-vents span {
+      width: 14px;
+      height: 4px;
+      background: var(--ink);
+      border-radius: 2px;
+      opacity: 0.55;
+    }
+
+    /* Bezel & LCD Screen */
+    .screen-bezel {
+      background: #1b2e21;
+      padding: 10px;
+      border-radius: 10px 10px 20px 10px;
+      border: 3px solid #122017;
+    }
+
+    .lcd-screen {
+      background: var(--screen-bg);
+      border: 3px solid var(--ink);
+      min-height: 540px;
+      position: relative;
+      overflow: hidden;
+      display: flex;
+      flex-direction: column;
+      background-image:
+        linear-gradient(rgba(27, 46, 33, 0.03) 50%, transparent 50%),
+        linear-gradient(90deg, rgba(27, 46, 33, 0.02) 50%, transparent 50%);
+      background-size: 100% 4px, 4px 100%;
+    }
+
+    /* Pixel Buttons */
+    .px-btn {
+      font-family: 'Press Start 2P', monospace;
+      font-size: 11px;
+      line-height: 1.4;
+      color: var(--ink);
+      background: var(--accent-primary);
+      border: 3px solid var(--ink);
+      box-shadow:
+        inset -3px -3px 0 var(--accent-primary-dark),
+        inset 3px 3px 0 var(--accent-secondary),
+        0 4px 0 var(--ink);
+      padding: 11px 14px;
+      cursor: pointer;
+      text-align: center;
+      user-select: none;
+      transition: transform 0.06s ease, box-shadow 0.06s ease;
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      gap: 6px;
+    }
+
+    .px-btn:hover:not(:disabled) {
+      filter: brightness(1.04);
+    }
+
+    .px-btn:active:not(:disabled),
+    .px-btn.is-pressed {
+      transform: translateY(3px);
+      box-shadow:
+        inset -2px -2px 0 var(--accent-primary-dark),
+        inset 2px 2px 0 var(--accent-secondary),
+        0 1px 0 var(--ink);
+    }
+
+    .px-btn:disabled {
+      opacity: 0.65;
+      cursor: not-allowed;
+    }
+
+    .px-btn-gold {
+      background: var(--accent-gold);
+      box-shadow:
+        inset -3px -3px 0 var(--accent-gold-dark),
+        inset 3px 3px 0 #fae39c,
+        0 4px 0 var(--ink);
+    }
+
+    .px-btn-gold:active:not(:disabled) {
+      box-shadow:
+        inset -2px -2px 0 var(--accent-gold-dark),
+        inset 2px 2px 0 #fae39c,
+        0 1px 0 var(--ink);
+    }
+
+    .px-btn-secondary {
+      background: var(--accent-secondary);
+      box-shadow:
+        inset -3px -3px 0 var(--accent-primary),
+        inset 3px 3px 0 #cde5d0,
+        0 4px 0 var(--ink);
+      font-size: 9px;
+      padding: 9px 10px;
+    }
+
+    .px-btn-sm {
+      font-size: 8px;
+      padding: 6px 8px;
+      box-shadow:
+        inset -2px -2px 0 var(--accent-primary-dark),
+        inset 2px 2px 0 var(--accent-secondary),
+        0 2px 0 var(--ink);
+    }
+
+    /* Title Screen */
+    .title-screen {
+      flex: 1;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      padding: 24px 16px;
+      text-align: center;
+      gap: 18px;
+      background:
+        radial-gradient(circle at 50% 42%, var(--white) 0%, var(--screen-bg) 65%);
+    }
+
+    .title-screen.hidden {
+      display: none;
+    }
+
+    .title-badge {
+      font-family: 'Press Start 2P', monospace;
+      font-size: 8px;
+      background: var(--accent-gold);
+      border: 2px solid var(--ink);
+      padding: 5px 10px;
+      box-shadow: 2px 2px 0 var(--ink);
+    }
+
+    .title-heading {
+      font-family: 'Press Start 2P', monospace;
+      font-size: 16px;
+      line-height: 1.7;
+      margin: 0;
+      color: var(--ink);
+      text-shadow: 2px 2px 0 var(--accent-secondary);
+    }
+
+    .title-subtitle {
+      font-size: 22px;
+      margin: 0;
+      color: var(--accent-primary-dark);
+      line-height: 1.2;
+    }
+
+    .title-hamster-wrap {
+      animation: floatIdle 2.2s ease-in-out infinite;
+    }
+
+    .blink-btn {
+      animation: blinkPulse 1.3s steps(2, start) infinite;
+    }
+
+    @keyframes blinkPulse {
+      0%, 60% { opacity: 1; }
+      61%, 100% { opacity: 0.72; }
+    }
+
+    @keyframes floatIdle {
+      0%, 100% { transform: translateY(0); }
+      50% { transform: translateY(-5px); }
+    }
+
+    /* Main Game Screen */
+    .game-screen {
+      flex: 1;
+      display: flex;
+      flex-direction: column;
+      justify-content: space-between;
+      padding: 10px;
+      gap: 10px;
+    }
+
+    .game-screen.hidden {
+      display: none;
+    }
+
+    /* Top HUD */
+    .hud-bar {
+      display: grid;
+      grid-template-columns: auto 1fr auto;
+      align-items: center;
+      gap: 8px;
+      background: var(--screen-bg-alt);
+      border: 3px solid var(--ink);
+      padding: 6px 8px;
+      box-shadow: 0 3px 0 rgba(27, 46, 33, 0.18);
+    }
+
+    .hud-lvl {
+      font-family: 'Press Start 2P', monospace;
+      font-size: 10px;
+      background: var(--accent-gold);
+      border: 2px solid var(--ink);
+      padding: 5px 7px;
+      white-space: nowrap;
+    }
+
+    .hud-timer {
+      text-align: center;
+      line-height: 1.05;
+    }
+
+    .hud-timer-label {
+      font-family: 'Press Start 2P', monospace;
+      font-size: 7px;
+      color: var(--accent-primary-dark);
+      margin-bottom: 2px;
+    }
+
+    .hud-timer-val {
+      font-family: 'VT323', monospace;
+      font-size: 20px;
+      font-weight: bold;
+      letter-spacing: 0.5px;
+      color: var(--ink);
+    }
+
+    .sound-btn {
+      font-family: 'Press Start 2P', monospace;
+      font-size: 9px;
+      background: var(--white);
+      border: 2px solid var(--ink);
+      padding: 5px 7px;
+      cursor: pointer;
+      color: var(--ink);
+      box-shadow: 0 2px 0 var(--ink);
+    }
+
+    .sound-btn:active {
+      transform: translateY(2px);
+      box-shadow: none;
+    }
+
+    /* Stage / Gacha + Hamster Area */
+    .stage-area {
+      position: relative;
+      flex: 1;
+      min-height: 290px;
+      background:
+        linear-gradient(180deg, #f3faf3 0%, #e1efe1 72%, #c3dec4 72%, #b2d1b4 100%);
+      border: 3px solid var(--ink);
+      display: flex;
+      align-items: flex-end;
+      justify-content: center;
+      padding: 16px 10px 14px;
+      overflow: hidden;
+    }
+
+    .stage-decor-clouds {
+      position: absolute;
+      top: 10px;
+      left: 12px;
+      right: 12px;
+      display: flex;
+      justify-content: space-between;
+      pointer-events: none;
+      opacity: 0.7;
+    }
+
+    .stage-pair {
+      display: flex;
+      align-items: flex-end;
+      justify-content: center;
+      gap: 10px;
+      position: relative;
+      z-index: 2;
+      width: 100%;
+    }
+
+    /* Gacha Machine */
+    .gacha-wrap {
+      position: relative;
+      width: 184px;
+      height: 230px;
+      display: flex;
+      align-items: flex-end;
+      justify-content: center;
+    }
+
+    .gacha-wrap.shake {
+      animation: machineShake 0.45s steps(4, end) 2;
+    }
+
+    @keyframes machineShake {
+      0%, 100% { transform: translate(0, 0); }
+      20% { transform: translate(-3px, 1px); }
+      40% { transform: translate(3px, -1px); }
+      60% { transform: translate(-2px, -1px); }
+      80% { transform: translate(2px, 1px); }
+    }
+
+    .crank-group {
+      transform-origin: 92px 154px;
+      transition: transform 0.2s ease;
+    }
+
+    .gacha-wrap.cranking .crank-group {
+      animation: crankSpin 0.65s linear infinite;
+    }
+
+    @keyframes crankSpin {
+      from { transform: rotate(0deg); }
+      to { transform: rotate(360deg); }
+    }
+
+    /* Dropped capsule animation */
+    .dropped-capsule {
+      position: absolute;
+      bottom: 18px;
+      left: 50%;
+      transform: translateX(-50%) scale(0);
+      opacity: 0;
+      z-index: 5;
+      pointer-events: none;
+    }
+
+    .dropped-capsule.drop-in {
+      animation: capsuleDrop 0.65s cubic-bezier(0.22, 1.25, 0.36, 1) forwards;
+    }
+
+    @keyframes capsuleDrop {
+      0% { transform: translate(-50%, -44px) scale(0.4); opacity: 0; }
+      55% { transform: translate(-50%, 4px) scale(1.1); opacity: 1; }
+      75% { transform: translate(-50%, -6px) scale(0.95); opacity: 1; }
+      100% { transform: translate(-50%, 0) scale(1); opacity: 1; }
+    }
+
+    /* Hamster Area */
+    .hamster-wrap {
+      position: relative;
+      width: 118px;
+      height: 140px;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: flex-end;
+      cursor: pointer;
+      user-select: none;
+    }
+
+    .hamster-svg {
+      width: 108px;
+      height: 108px;
+      transform-origin: bottom center;
+      transition: transform 0.12s ease;
+    }
+
+    .hamster-wrap.idle .hamster-svg {
+      animation: hamsterBreathe 2s ease-in-out infinite;
+    }
+
+    .hamster-wrap.jumping .hamster-svg {
+      animation: hamsterJump 0.42s ease-in-out infinite;
+    }
+
+    .hamster-wrap.munching .hamster-svg {
+      animation: hamsterMunch 0.24s steps(2, end) infinite;
+    }
+
+    .hamster-wrap:active .hamster-svg {
+      transform: scale(0.94, 1.05);
+    }
+
+    @keyframes hamsterBreathe {
+      0%, 100% { transform: scale(1, 1) translateY(0); }
+      50% { transform: scale(1.03, 0.96) translateY(1px); }
+    }
+
+    @keyframes hamsterJump {
+      0%, 100% { transform: translateY(0) scale(1, 1); }
+      45% { transform: translateY(-18px) scale(0.95, 1.06); }
+    }
+
+    @keyframes hamsterMunch {
+      0%, 100% { transform: translateY(0) scale(1, 1); }
+      50% { transform: translateY(-2px) scale(1.04, 0.96); }
+    }
+
+    /* Hamster eyes/mouth overlays */
+    .hamster-svg .eyes-happy,
+    .hamster-svg .seed-munch {
+      display: none;
+    }
+
+    .hamster-wrap.jumping .hamster-svg .eyes-normal,
+    .hamster-wrap.munching .hamster-svg .eyes-normal {
+      display: none;
+    }
+
+    .hamster-wrap.jumping .hamster-svg .eyes-happy,
+    .hamster-wrap.munching .hamster-svg .eyes-happy {
+      display: block;
+    }
+
+    .hamster-wrap.munching .hamster-svg .seed-munch {
+      display: block;
+    }
+
+    /* Speech Bubble */
+    .speech-bubble {
+      position: absolute;
+      bottom: 118px;
+      right: 0;
+      width: 175px;
+      background: var(--white);
+      border: 3px solid var(--ink);
+      padding: 7px 9px;
+      font-size: 18px;
+      line-height: 1.1;
+      color: var(--ink);
+      box-shadow: 3px 3px 0 rgba(27, 46, 33, 0.25);
+      z-index: 10;
+      opacity: 0;
+      transform: translateY(6px);
+      pointer-events: none;
+      transition: opacity 0.18s ease, transform 0.18s ease;
+    }
+
+    .speech-bubble.visible {
+      opacity: 1;
+      transform: translateY(0);
+    }
+
+    .speech-bubble::after {
+      content: '';
+      position: absolute;
+      bottom: -9px;
+      right: 40px;
+      width: 0;
+      height: 0;
+      border-left: 7px solid transparent;
+      border-right: 7px solid transparent;
+      border-top: 9px solid var(--ink);
+    }
+
+    /* Floating Hearts & Sparkles */
+    .fx-layer {
+      position: absolute;
+      inset: 0;
+      pointer-events: none;
+      overflow: hidden;
+      z-index: 12;
+    }
+
+    .float-fx {
+      position: absolute;
+      animation: floatUpFade 1.2s ease-out forwards;
+    }
+
+    @keyframes floatUpFade {
+      0% { transform: translateY(0) scale(0.8); opacity: 1; }
+      100% { transform: translateY(-65px) scale(1.15); opacity: 0; }
+    }
+
+    /* Controls Panel */
+    .controls-panel {
+      display: flex;
+      flex-direction: column;
+      gap: 8px;
+    }
+
+    .pull-btn-main {
+      width: 100%;
+      padding: 13px 12px;
+      font-size: 12px;
+    }
+
+    .sub-actions {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 8px;
+    }
+
+    .secret-pill {
+      display: none;
+      width: 100%;
+      font-size: 8px;
+      padding: 7px 8px;
+    }
+
+    .secret-pill.unlocked {
+      display: inline-flex;
+    }
+
+    /* Modals */
+    .modal-overlay {
+      position: fixed;
+      inset: 0;
+      background: rgba(18, 32, 23, 0.78);
+      display: none;
+      align-items: center;
+      justify-content: center;
+      padding: 16px;
+      z-index: 50;
+    }
+
+    .modal-overlay.open {
+      display: flex;
+    }
+
+    .modal-card {
+      width: 100%;
+      max-width: 410px;
+      max-height: 86vh;
+      background: var(--screen-bg);
+      border: 4px solid var(--ink);
+      box-shadow: 0 8px 0 var(--ink);
+      display: flex;
+      flex-direction: column;
+      overflow: hidden;
+      animation: modalPop 0.22s cubic-bezier(0.22, 1.3, 0.36, 1);
+    }
+
+    @keyframes modalPop {
+      from { transform: scale(0.85); opacity: 0; }
+      to { transform: scale(1); opacity: 1; }
+    }
+
+    .modal-header {
+      background: var(--accent-primary);
+      border-bottom: 3px solid var(--ink);
+      padding: 10px 12px;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      gap: 8px;
+    }
+
+    .modal-header.rarity-common { background: var(--accent-primary); }
+    .modal-header.rarity-rare { background: var(--accent-secondary); }
+    .modal-header.rarity-ultra { background: var(--accent-gold); }
+
+    .modal-title {
+      font-family: 'Press Start 2P', monospace;
+      font-size: 10px;
+      line-height: 1.4;
+      color: var(--ink);
+      margin: 0;
+    }
+
+    .modal-body {
+      padding: 16px 14px;
+      overflow-y: auto;
+      display: flex;
+      flex-direction: column;
+      gap: 12px;
+    }
+
+    .capsule-meta-row {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 8px;
+      flex-wrap: wrap;
+    }
+
+    .rarity-tag {
+      font-family: 'Press Start 2P', monospace;
+      font-size: 8px;
+      padding: 4px 8px;
+      border: 2px solid var(--ink);
+      background: var(--white);
+    }
+
+    .new-tag {
+      font-family: 'Press Start 2P', monospace;
+      font-size: 8px;
+      padding: 4px 8px;
+      border: 2px solid var(--ink);
+      background: var(--accent-gold);
+    }
+
+    .capsule-message-box {
+      background: var(--white);
+      border: 3px solid var(--ink);
+      padding: 14px;
+      font-size: 24px;
+      line-height: 1.28;
+      text-align: center;
+      color: var(--ink);
+    }
+
+    .capsule-category {
+      font-family: 'Press Start 2P', monospace;
+      font-size: 8px;
+      color: var(--accent-primary-dark);
+      text-align: center;
+    }
+
+    .modal-footer {
+      padding: 0 14px 14px;
+      display: flex;
+      justify-content: center;
+    }
+
+    /* Mahal's Dex */
+    .dex-progress {
+      font-family: 'Press Start 2P', monospace;
+      font-size: 9px;
+      background: var(--white);
+      border: 2px solid var(--ink);
+      padding: 8px 10px;
+      text-align: center;
+    }
+
+    .dex-filters {
+      display: flex;
+      gap: 6px;
+      flex-wrap: wrap;
+      justify-content: center;
+    }
+
+    .dex-filter-btn {
+      font-family: 'Press Start 2P', monospace;
+      font-size: 7px;
+      padding: 5px 7px;
+      border: 2px solid var(--ink);
+      background: var(--white);
+      cursor: pointer;
+      color: var(--ink);
+    }
+
+    .dex-filter-btn.active {
+      background: var(--accent-gold);
+    }
+
+    .dex-list {
+      display: flex;
+      flex-direction: column;
+      gap: 8px;
+    }
+
+    .dex-item {
+      background: var(--white);
+      border: 2px solid var(--ink);
+      padding: 9px 10px;
+      display: flex;
+      flex-direction: column;
+      gap: 4px;
+    }
+
+    .dex-item.locked {
+      background: var(--screen-bg-alt);
+      opacity: 0.72;
+    }
+
+    .dex-item-top {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      gap: 6px;
+    }
+
+    .dex-item-badge {
+      font-family: 'Press Start 2P', monospace;
+      font-size: 7px;
+      padding: 3px 6px;
+      border: 2px solid var(--ink);
+    }
+
+    .dex-item-badge.common { background: var(--accent-primary); }
+    .dex-item-badge.rare { background: var(--accent-secondary); }
+    .dex-item-badge.ultra { background: var(--accent-gold); }
+
+    .dex-item-cat {
+      font-family: 'Press Start 2P', monospace;
+      font-size: 7px;
+      color: var(--accent-primary-dark);
+    }
+
+    .dex-item-msg {
+      font-size: 20px;
+      line-height: 1.2;
+      color: var(--ink);
+    }
+
+    /* Secret Letter */
+    .letter-paper {
+      background: #fffdf5;
+      border: 3px solid var(--ink);
+      padding: 14px;
+      font-size: 22px;
+      line-height: 1.32;
+      white-space: pre-line;
+      color: var(--ink);
+    }
+
+    /* Screen-wide Confetti Layer */
+    .confetti-layer {
+      position: fixed;
+      inset: 0;
+      pointer-events: none;
+      z-index: 80;
+      overflow: hidden;
+    }
+
+    .confetti-piece {
+      position: absolute;
+      top: -28px;
+      animation: confettiFall linear forwards;
+    }
+
+    @keyframes confettiFall {
+      0% { transform: translateY(0) rotate(0deg); opacity: 1; }
+      85% { opacity: 1; }
+      100% { transform: translateY(105vh) rotate(360deg); opacity: 0; }
+    }
+
+    /* Bottom Console Decor */
+    .console-bottom-bar {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      margin-top: 10px;
+      padding: 0 6px;
+      font-family: 'Press Start 2P', monospace;
+      font-size: 7px;
+      color: var(--accent-secondary);
+      opacity: 0.85;
+    }
+
+    @media (max-width: 400px) {
+      .title-heading { font-size: 13px; }
+      .gacha-wrap { width: 162px; height: 210px; }
+      .hamster-wrap { width: 102px; }
+      .hamster-svg { width: 94px; height: 94px; }
+      .hud-timer-val { font-size: 18px; }
+    }
+  </style>
+</head>
+<body>
+  <div class="confetti-layer" id="confettiLayer"></div>
+
+  <main class="console-shell" aria-label="Mahal's Pixel Hamster Gacha Handheld">
+    <div class="console-top-bar">
+      <div class="console-brand">
+        <span class="power-led" aria-hidden="true"></span>
+        <span>MAHAL-BOY MATCHA</span>
+      </div>
+      <div class="console-vents" aria-hidden="true">
+        <span></span><span></span><span></span>
+      </div>
+    </div>
+
+    <div class="screen-bezel">
+      <div class="lcd-screen">
+        <!-- ================= TITLE SCREEN ================= -->
+        <section class="title-screen" id="titleScreen">
+          <div class="title-badge">MONTHSARY EDITION</div>
+          <h1 class="title-heading">HAPPY MONTHSARY,<br />MAHAL!</h1>
+
+          <div class="title-hamster-wrap" aria-hidden="true">
+            <svg width="96" height="96" viewBox="0 0 24 24" shape-rendering="crispEdges">
+              <!-- Ears -->
+              <rect x="4" y="4" width="4" height="4" fill="#1b2e21" />
+              <rect x="5" y="5" width="2" height="2" fill="#e88d97" />
+              <rect x="16" y="4" width="4" height="4" fill="#1b2e21" />
+              <rect x="17" y="5" width="2" height="2" fill="#e88d97" />
+              <!-- Head & Body Outline -->
+              <rect x="6" y="5" width="12" height="2" fill="#1b2e21" />
+              <rect x="4" y="7" width="2" height="10" fill="#1b2e21" />
+              <rect x="18" y="7" width="2" height="10" fill="#1b2e21" />
+              <rect x="5" y="17" width="14" height="2" fill="#1b2e21" />
+              <rect x="7" y="19" width="10" height="2" fill="#1b2e21" />
+              <!-- Fur Fill -->
+              <rect x="6" y="7" width="12" height="10" fill="#e8be94" />
+              <rect x="6" y="17" width="12" height="2" fill="#e8be94" />
+              <rect x="8" y="12" width="8" height="7" fill="#fff6eb" />
+              <!-- Eyes & Cheeks -->
+              <rect x="8" y="9" width="2" height="2" fill="#1b2e21" />
+              <rect x="8" y="9" width="1" height="1" fill="#ffffff" />
+              <rect x="14" y="9" width="2" height="2" fill="#1b2e21" />
+              <rect x="14" y="9" width="1" height="1" fill="#ffffff" />
+              <rect x="6" y="11" width="2" height="2" fill="#e88d97" />
+              <rect x="16" y="11" width="2" height="2" fill="#e88d97" />
+              <!-- Nose & Smile -->
+              <rect x="11" y="11" width="2" height="1" fill="#e88d97" />
+              <rect x="10" y="12" width="1" height="1" fill="#1b2e21" />
+              <rect x="13" y="12" width="1" height="1" fill="#1b2e21" />
+              <rect x="11" y="13" width="2" height="1" fill="#1b2e21" />
+              <!-- Heart Held -->
+              <rect x="10" y="15" width="1" height="1" fill="#e88d97" />
+              <rect x="13" y="15" width="1" height="1" fill="#e88d97" />
+              <rect x="9" y="16" width="6" height="1" fill="#e88d97" />
+              <rect x="10" y="17" width="4" height="1" fill="#e88d97" />
+              <rect x="11" y="18" width="2" height="1" fill="#e88d97" />
+            </svg>
+          </div>
+
+          <p class="title-subtitle">A cozy pixel gacha full of love notes, memories &amp; coupons</p>
+
+          <button class="px-btn px-btn-gold blink-btn" id="pressStartBtn" type="button">
+            [ PRESS START ]
+          </button>
+        </section>
+
+        <!-- ================= MAIN GAME SCREEN ================= -->
+        <section class="game-screen hidden" id="gameScreen">
+          <!-- Top HUD -->
+          <header class="hud-bar">
+            <div class="hud-lvl" id="hudLevel">LVL --</div>
+            <div class="hud-timer" aria-live="off">
+              <div class="hud-timer-label">TOGETHER SINCE APR 26, 2025</div>
+              <div class="hud-timer-val" id="hudTimer">000D : 00H : 00M : 00S</div>
+            </div>
+            <button class="sound-btn" id="soundToggleBtn" type="button" aria-label="Toggle 8-bit sound">
+              SFX:ON
+            </button>
+          </header>
+
+          <!-- Interactive Stage -->
+          <div class="stage-area" id="stageArea">
+            <div class="stage-decor-clouds" aria-hidden="true">
+              <svg width="36" height="16" viewBox="0 0 18 8" shape-rendering="crispEdges">
+                <rect x="4" y="2" width="8" height="2" fill="#ffffff" />
+                <rect x="2" y="4" width="14" height="3" fill="#ffffff" />
+              </svg>
+              <svg width="32" height="16" viewBox="0 0 16 8" shape-rendering="crispEdges">
+                <rect x="4" y="2" width="6" height="2" fill="#ffffff" />
+                <rect x="2" y="4" width="12" height="3" fill="#ffffff" />
+              </svg>
+            </div>
+
+            <div class="fx-layer" id="fxLayer" aria-hidden="true"></div>
+
+            <div class="stage-pair">
+              <!-- Gacha Machine SVG -->
+              <div class="gacha-wrap" id="gachaWrap">
+                <svg width="184" height="230" viewBox="0 0 184 230" shape-rendering="crispEdges" aria-label="Pixel Gacha Machine">
+                  <!-- Top Lid -->
+                  <rect x="46" y="8" width="92" height="10" fill="#1b2e21" />
+                  <rect x="52" y="12" width="80" height="6" fill="#78a878" />
+                  <rect x="82" y="2" width="20" height="8" fill="#1b2e21" />
+                  <rect x="86" y="4" width="12" height="4" fill="#f4d06f" />
+
+                  <!-- Glass Dome Outline & Background -->
+                  <rect x="28" y="18" width="128" height="104" fill="#1b2e21" />
+                  <rect x="34" y="24" width="116" height="92" fill="#d9efe0" />
+                  <!-- Glass Shine -->
+                  <rect x="40" y="30" width="8" height="36" fill="#f7fbf7" />
+                  <rect x="40" y="72" width="8" height="10" fill="#f7fbf7" />
+
+                  <!-- Capsules inside Dome -->
+                  <!-- Row 1 (bottom) -->
+                  <rect x="42" y="92" width="22" height="20" fill="#1b2e21" />
+                  <rect x="44" y="94" width="18" height="8" fill="#78a878" />
+                  <rect x="44" y="102" width="18" height="8" fill="#f7fbf7" />
+
+                  <rect x="68" y="90" width="22" height="22" fill="#1b2e21" />
+                  <rect x="70" y="92" width="18" height="9" fill="#f4d06f" />
+                  <rect x="70" y="101" width="18" height="9" fill="#f7fbf7" />
+
+                  <rect x="94" y="92" width="22" height="20" fill="#1b2e21" />
+                  <rect x="96" y="94" width="18" height="8" fill="#a3c9a8" />
+                  <rect x="96" y="102" width="18" height="8" fill="#f7fbf7" />
+
+                  <rect x="120" y="90" width="22" height="22" fill="#1b2e21" />
+                  <rect x="122" y="92" width="18" height="9" fill="#78a878" />
+                  <rect x="122" y="101" width="18" height="9" fill="#f7fbf7" />
+
+                  <!-- Row 2 -->
+                  <rect x="52" y="68" width="22" height="20" fill="#1b2e21" />
+                  <rect x="54" y="70" width="18" height="8" fill="#a3c9a8" />
+                  <rect x="54" y="78" width="18" height="8" fill="#f7fbf7" />
+
+                  <rect x="80" y="66" width="22" height="20" fill="#1b2e21" />
+                  <rect x="82" y="68" width="18" height="8" fill="#78a878" />
+                  <rect x="82" y="76" width="18" height="8" fill="#f7fbf7" />
+
+                  <rect x="108" y="68" width="22" height="20" fill="#1b2e21" />
+                  <rect x="110" y="70" width="18" height="8" fill="#f4d06f" />
+                  <rect x="110" y="78" width="18" height="8" fill="#f7fbf7" />
+
+                  <!-- Row 3 -->
+                  <rect x="66" y="44" width="22" height="20" fill="#1b2e21" />
+                  <rect x="68" y="46" width="18" height="8" fill="#f4d06f" />
+                  <rect x="68" y="54" width="18" height="8" fill="#f7fbf7" />
+
+                  <rect x="94" y="46" width="22" height="20" fill="#1b2e21" />
+                  <rect x="96" y="48" width="18" height="8" fill="#78a878" />
+                  <rect x="96" y="56" width="18" height="8" fill="#f7fbf7" />
+
+                  <!-- Machine Body -->
+                  <rect x="34" y="122" width="116" height="98" fill="#1b2e21" />
+                  <rect x="40" y="128" width="104" height="86" fill="#78a878" />
+                  <rect x="40" y="128" width="104" height="10" fill="#a3c9a8" />
+
+                  <!-- Crank Plate & Handle -->
+                  <rect x="74" y="138" width="36" height="32" fill="#1b2e21" />
+                  <rect x="78" y="142" width="28" height="24" fill="#f4d06f" />
+                  <g class="crank-group">
+                    <rect x="88" y="146" width="8" height="16" fill="#1b2e21" />
+                    <rect x="82" y="151" width="20" height="6" fill="#1b2e21" />
+                    <rect x="89" y="152" width="6" height="4" fill="#fff6eb" />
+                  </g>
+
+                  <!-- Dispenser Chute -->
+                  <rect x="64" y="176" width="56" height="34" fill="#1b2e21" />
+                  <rect x="70" y="182" width="44" height="24" fill="#2d4a36" />
+                  <rect x="74" y="182" width="36" height="6" fill="#1b2e21" />
+
+                  <!-- Base Feet -->
+                  <rect x="28" y="220" width="128" height="8" fill="#1b2e21" />
+                </svg>
+
+                <!-- Capsule that drops into chute -->
+                <div class="dropped-capsule" id="droppedCapsule" aria-hidden="true">
+                  <svg width="28" height="28" viewBox="0 0 14 14" shape-rendering="crispEdges">
+                    <rect x="2" y="1" width="10" height="12" fill="#1b2e21" />
+                    <rect x="1" y="3" width="12" height="8" fill="#1b2e21" />
+                    <rect x="3" y="2" width="8" height="5" id="dropCapTop" fill="#f4d06f" />
+                    <rect x="2" y="4" width="10" height="3" id="dropCapMid" fill="#f4d06f" />
+                    <rect x="2" y="7" width="10" height="4" fill="#f7fbf7" />
+                    <rect x="3" y="10" width="8" height="2" fill="#f7fbf7" />
+                  </svg>
+                </div>
+              </div>
+
+              <!-- Hamster Mascot (Clickable for Easter Egg) -->
+              <div
+                class="hamster-wrap idle"
+                id="hamsterBtn"
+                role="button"
+                tabindex="0"
+                aria-label="Hamster mascot. Tap to say hi!"
+              >
+                <div class="speech-bubble" id="speechBubble" aria-live="polite"></div>
+
+                <svg class="hamster-svg" viewBox="0 0 24 24" shape-rendering="crispEdges">
+                  <!-- Ears -->
+                  <rect x="4" y="4" width="4" height="4" fill="#1b2e21" />
+                  <rect x="5" y="5" width="2" height="2" fill="#e88d97" />
+                  <rect x="16" y="4" width="4" height="4" fill="#1b2e21" />
+                  <rect x="17" y="5" width="2" height="2" fill="#e88d97" />
+
+                  <!-- Outline -->
+                  <rect x="6" y="5" width="12" height="2" fill="#1b2e21" />
+                  <rect x="4" y="7" width="2" height="11" fill="#1b2e21" />
+                  <rect x="18" y="7" width="2" height="11" fill="#1b2e21" />
+                  <rect x="5" y="18" width="14" height="2" fill="#1b2e21" />
+                  <rect x="6" y="20" width="4" height="2" fill="#1b2e21" />
+                  <rect x="14" y="20" width="4" height="2" fill="#1b2e21" />
+
+                  <!-- Body Fur -->
+                  <rect x="6" y="7" width="12" height="11" fill="#e8be94" />
+                  <rect x="8" y="12" width="8" height="6" fill="#fff6eb" />
+
+                  <!-- Normal Eyes -->
+                  <g class="eyes-normal">
+                    <rect x="8" y="9" width="2" height="2" fill="#1b2e21" />
+                    <rect x="8" y="9" width="1" height="1" fill="#ffffff" />
+                    <rect x="14" y="9" width="2" height="2" fill="#1b2e21" />
+                    <rect x="14" y="9" width="1" height="1" fill="#ffffff" />
+                  </g>
+
+                  <!-- Happy / Munching Eyes (^ ^) -->
+                  <g class="eyes-happy">
+                    <rect x="8" y="9" width="1" height="1" fill="#1b2e21" />
+                    <rect x="9" y="8" width="1" height="1" fill="#1b2e21" />
+                    <rect x="10" y="9" width="1" height="1" fill="#1b2e21" />
+                    <rect x="13" y="9" width="1" height="1" fill="#1b2e21" />
+                    <rect x="14" y="8" width="1" height="1" fill="#1b2e21" />
+                    <rect x="15" y="9" width="1" height="1" fill="#1b2e21" />
+                  </g>
+
+                  <!-- Cheeks & Nose -->
+                  <rect x="6" y="11" width="2" height="2" fill="#e88d97" />
+                  <rect x="16" y="11" width="2" height="2" fill="#e88d97" />
+                  <rect x="11" y="11" width="2" height="1" fill="#e88d97" />
+                  <rect x="10" y="12" width="1" height="1" fill="#1b2e21" />
+                  <rect x="13" y="12" width="1" height="1" fill="#1b2e21" />
+                  <rect x="11" y="13" width="2" height="1" fill="#1b2e21" />
+
+                  <!-- Paws -->
+                  <rect x="7" y="14" width="2" height="2" fill="#f7d5b4" />
+                  <rect x="15" y="14" width="2" height="2" fill="#f7d5b4" />
+
+                  <!-- Sunflower Seed (visible when munching) -->
+                  <g class="seed-munch">
+                    <rect x="10" y="13" width="4" height="4" fill="#1b2e21" />
+                    <rect x="11" y="14" width="2" height="2" fill="#f4d06f" />
+                  </g>
+                </svg>
+              </div>
+            </div>
+          </div>
+
+          <!-- Controls -->
+          <div class="controls-panel">
+            <button class="px-btn px-btn-gold pull-btn-main" id="pullBtn" type="button">
+              [ PULL CAPSULE ]
+            </button>
+
+            <div class="sub-actions">
+              <button class="px-btn px-btn-secondary" id="feedBtn" type="button">
+                [ FEED SEED ]
+              </button>
+              <button class="px-btn px-btn-secondary" id="dexBtn" type="button">
+                [ MAHAL'S DEX ]
+              </button>
+            </div>
+
+            <button class="px-btn px-btn-gold secret-pill" id="secretLetterBtn" type="button">
+              ★ SECRET MONTHSARY LETTER UNLOCKED ★
+            </button>
+          </div>
+        </section>
+      </div>
+    </div>
+
+    <div class="console-bottom-bar">
+      <span>START: 04.26.2025</span>
+      <span>A: PULL &nbsp; B: FEED</span>
+    </div>
+  </main>
+
+  <!-- ================= CAPSULE RESULT MODAL ================= -->
+  <div class="modal-overlay" id="capsuleModal" role="dialog" aria-modal="true" aria-labelledby="capsuleModalTitle">
+    <div class="modal-card">
+      <div class="modal-header" id="capsuleModalHeader">
+        <h2 class="modal-title" id="capsuleModalTitle">CAPSULE OPENED!</h2>
+        <button class="px-btn px-btn-sm" id="closeCapsuleBtn" type="button">X</button>
+      </div>
+      <div class="modal-body">
+        <div class="capsule-meta-row">
+          <span class="rarity-tag" id="capsuleRarityTag">COMMON</span>
+          <span class="new-tag" id="capsuleNewTag">NEW!</span>
+        </div>
+        <div class="capsule-category" id="capsuleCategory">DAILY AFFIRMATION</div>
+        <div class="capsule-message-box" id="capsuleMessage"></div>
+      </div>
+      <div class="modal-footer">
+        <button class="px-btn px-btn-gold" id="keepCapsuleBtn" type="button">[ KEEP IN DEX ]</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- ================= MAHAL'S DEX MODAL ================= -->
+  <div class="modal-overlay" id="dexModal" role="dialog" aria-modal="true" aria-labelledby="dexModalTitle">
+    <div class="modal-card">
+      <div class="modal-header rarity-rare">
+        <h2 class="modal-title" id="dexModalTitle">MAHAL'S DEX</h2>
+        <button class="px-btn px-btn-sm" id="closeDexBtn" type="button">X</button>
+      </div>
+      <div class="modal-body">
+        <div class="dex-progress" id="dexProgress">Unlocked: 0 / 25</div>
+        <div class="dex-filters" id="dexFilters">
+          <button class="dex-filter-btn active" data-filter="all" type="button">ALL</button>
+          <button class="dex-filter-btn" data-filter="common" type="button">COMMON</button>
+          <button class="dex-filter-btn" data-filter="rare" type="button">RARE</button>
+          <button class="dex-filter-btn" data-filter="ultra" type="button">ULTRA RARE</button>
+        </div>
+        <div class="dex-list" id="dexList"></div>
+      </div>
+    </div>
+  </div>
+
+  <!-- ================= SECRET LETTER MODAL ================= -->
+  <div class="modal-overlay" id="secretModal" role="dialog" aria-modal="true" aria-labelledby="secretModalTitle">
+    <div class="modal-card">
+      <div class="modal-header rarity-ultra">
+        <h2 class="modal-title" id="secretModalTitle">SECRET LOVE LETTER</h2>
+        <button class="px-btn px-btn-sm" id="closeSecretBtn" type="button">X</button>
+      </div>
+      <div class="modal-body">
+        <div class="letter-paper" id="secretLetterBody"></div>
+      </div>
+      <div class="modal-footer">
+        <button class="px-btn px-btn-gold" id="closeSecretFooterBtn" type="button">[ CLOSE ]</button>
+      </div>
+    </div>
+  </div>
+
+  <script>
+    /* =========================================================================
+       CUSTOMIZATION SECTION — EDIT YOUR PERSONAL MESSAGES HERE!
+       ========================================================================= */
+
+    // 1. Relationship Start Date (ISO format with local timezone or midnight)
+    const RELATIONSHIP_START_DATE = "2025-04-26T00:00:00";
+
+    // 2. Capsule Pool
+    //    rarity: "common" (60% drop), "rare" (30% drop), "ultra" (10% drop)
+    //    Replace or add entries freely! Keep each id unique.
+    const CAPSULE_POOL = [
+      // --- COMMON: Matcha Capsules (60% drop rate) ---
+      { id: "c1",  rarity: "common", category: "Daily Affirmation", message: "I love you, Mahal! Always and in all ways." },
+      { id: "c2",  rarity: "common", category: "Sweet Compliment",  message: "Your smile is still my favorite sight in the whole world." },
+      { id: "c3",  rarity: "common", category: "Cozy Reminder",     message: "Drink some water and take a deep breath today, Mahal. I'm proud of you!" },
+      { id: "c4",  rarity: "common", category: "Sweet Compliment",  message: "Everything feels softer, warmer, and brighter whenever I'm with you." },
+      { id: "c5",  rarity: "common", category: "Daily Affirmation", message: "No matter how busy the day gets, you are always my favorite person to come home to." },
+      { id: "c6",  rarity: "common", category: "Little Note",       message: "You make ordinary days feel like my favorite memories." },
+      { id: "c7",  rarity: "common", category: "Daily Affirmation", message: "Thank you for being so patient, kind, and wonderfully you, Mahal." },
+      { id: "c8",  rarity: "common", category: "Sweet Compliment",  message: "You're the prettiest, cutest, and most lovable person I know." },
+      { id: "c9",  rarity: "common", category: "Cozy Reminder",     message: "Whenever you feel tired, remember you have a permanent hug waiting for you." },
+      { id: "c10", rarity: "common", category: "Little Note",       message: "I fall in love with the little things you do every single day." },
+      { id: "c11", rarity: "common", category: "Daily Affirmation", message: "You're doing amazing, Mahal. I'm always cheering the loudest for you!" },
+      { id: "c12", rarity: "common", category: "Sweet Compliment",  message: "Even your sleepy voice is 10/10 adorable to me." },
+      { id: "c13", rarity: "common", category: "Little Note",       message: "My favorite notification on my phone will always be your name." },
+      { id: "c14", rarity: "common", category: "Cozy Reminder",     message: "Sending you a pocket-sized kiss right through this screen!" },
+
+      // --- RARE: Mint Capsules (30% drop rate) ---
+      { id: "r1", rarity: "rare", category: "Core Memory",    message: "April 26, 2025: The day our story officially started—and my favorite date on the calendar." },
+      { id: "r2", rarity: "rare", category: "Inside Joke",    message: "[Placeholder] Insert our favorite inside joke or silly nickname moment here!" },
+      { id: "r3", rarity: "rare", category: "Shared Memory",  message: "[Placeholder] Remember that spontaneous food trip we couldn't stop laughing about?" },
+      { id: "r4", rarity: "rare", category: "Milestone",      message: "Every single monthsary with you feels like leveling up in the coziest game ever." },
+      { id: "r5", rarity: "rare", category: "Shared Memory",  message: "[Placeholder] Our late-night talks where we lose track of time are still my favorite." },
+      { id: "r6", rarity: "rare", category: "Inside Joke",    message: "[Placeholder] That one look we give each other across the room when something funny happens." },
+      { id: "r7", rarity: "rare", category: "Milestone",      message: "From April 26, 2025 to today—thank you for every laugh, hug, and adventure together." },
+
+      // --- ULTRA RARE: Golden Sunflower Seed Capsules (10% drop rate) ---
+      { id: "u1", rarity: "ultra", category: "Redeemable Coupon", message: "COUPON: 1 Free Iced Matcha or Coffee Delivery, anytime you crave it!" },
+      { id: "u2", rarity: "ultra", category: "Redeemable Coupon", message: "COUPON: Unli Back Rubs & Head Scratches (Valid whenever you want!)" },
+      { id: "u3", rarity: "ultra", category: "Redeemable Coupon", message: "COUPON: Your Pick for Movie Night + Snacks on Me!" },
+      { id: "u4", rarity: "ultra", category: "Redeemable Coupon", message: "COUPON: 1 Free Dinner Date at Your Favorite Spot!" }
+    ];
+
+    // 3. Hamster Speech Bubble Quotes (shown when feeding sunflower seeds)
+    const HAMSTER_QUOTES = [
+      "Cronch! Mahal is the cutest!",
+      "Seed power! I love Mahal!",
+      "Yum! Happy monthsary, Mahal!",
+      "Matcha + Mahal = perfection!",
+      "*happy hamster squeaks!*",
+      "You're my favorite human!",
+      "More seeds, more kisses!"
+    ];
+
+    // 4. Secret Monthsary Love Letter (unlocked by tapping the hamster 5 times)
+    const SECRET_LETTER = `Dear Mahal,
+
+Happy Monthsary! Since April 26, 2025, every month with you has been my favorite chapter.
+
+Thank you for bringing so much warmth, laughter, and comfort into my life. Even on the quietest or busiest days, just knowing I have you by my side makes everything feel right.
+
+I made this little pixel hamster gacha so you always have a pocket full of love notes, memories, and treats whenever you want a smile.
+
+I love you so much, Mahal. Here's to countless more monthsaries together!
+
+Forever yours,
+Your Player 2`;
+
+    /* =========================================================================
+       APPLICATION LOGIC (NO EDITS NEEDED BELOW)
+       ========================================================================= */
+
+    const STORAGE_KEY_DEX = "mahal_gacha_unlocked_v1";
+    const STORAGE_KEY_SECRET = "mahal_gacha_secret_v1";
+
+    const RARITY_LABELS = {
+      common: "COMMON • MATCHA",
+      rare: "RARE • MINT",
+      ultra: "ULTRA RARE • GOLDEN SEED"
+    };
+
+    const RARITY_COLOR_HEX = {
+      common: "#78a878",
+      rare: "#a3c9a8",
+      ultra: "#f4d06f"
+    };
+
+    // State
+    let unlockedIds = loadUnlocked();
+    let secretUnlocked = localStorage.getItem(STORAGE_KEY_SECRET) === "1";
+    let soundEnabled = true;
+    let isPulling = false;
+    let hamsterTapCount = 0;
+    let hamsterTapTimer = null;
+    let speechTimer = null;
+    let currentDexFilter = "all";
+    let audioCtx = null;
+
+    // DOM References
+    const titleScreen = document.getElementById("titleScreen");
+    const gameScreen = document.getElementById("gameScreen");
+    const pressStartBtn = document.getElementById("pressStartBtn");
+    const hudLevel = document.getElementById("hudLevel");
+    const hudTimer = document.getElementById("hudTimer");
+    const soundToggleBtn = document.getElementById("soundToggleBtn");
+
+    const gachaWrap = document.getElementById("gachaWrap");
+    const droppedCapsule = document.getElementById("droppedCapsule");
+    const dropCapTop = document.getElementById("dropCapTop");
+    const dropCapMid = document.getElementById("dropCapMid");
+    const hamsterBtn = document.getElementById("hamsterBtn");
+    const speechBubble = document.getElementById("speechBubble");
+    const fxLayer = document.getElementById("fxLayer");
+    const confettiLayer = document.getElementById("confettiLayer");
+
+    const pullBtn = document.getElementById("pullBtn");
+    const feedBtn = document.getElementById("feedBtn");
+    const dexBtn = document.getElementById("dexBtn");
+    const secretLetterBtn = document.getElementById("secretLetterBtn");
+
+    const capsuleModal = document.getElementById("capsuleModal");
+    const capsuleModalHeader = document.getElementById("capsuleModalHeader");
+    const capsuleRarityTag = document.getElementById("capsuleRarityTag");
+    const capsuleNewTag = document.getElementById("capsuleNewTag");
+    const capsuleCategory = document.getElementById("capsuleCategory");
+    const capsuleMessage = document.getElementById("capsuleMessage");
+    const closeCapsuleBtn = document.getElementById("closeCapsuleBtn");
+    const keepCapsuleBtn = document.getElementById("keepCapsuleBtn");
+
+    const dexModal = document.getElementById("dexModal");
+    const dexProgress = document.getElementById("dexProgress");
+    const dexFilters = document.getElementById("dexFilters");
+    const dexList = document.getElementById("dexList");
+    const closeDexBtn = document.getElementById("closeDexBtn");
+
+    const secretModal = document.getElementById("secretModal");
+    const secretLetterBody = document.getElementById("secretLetterBody");
+    const closeSecretBtn = document.getElementById("closeSecretBtn");
+    const closeSecretFooterBtn = document.getElementById("closeSecretFooterBtn");
+
+    // Persistence helpers
+    function loadUnlocked() {
+      try {
+        const raw = localStorage.getItem(STORAGE_KEY_DEX);
+        const parsed = raw ? JSON.parse(raw) : [];
+        return Array.isArray(parsed) ? parsed : [];
+      } catch {
+        return [];
+      }
+    }
+
+    function saveUnlocked() {
+      try {
+        localStorage.setItem(STORAGE_KEY_DEX, JSON.stringify(unlockedIds));
+      } catch {
+        // Ignore storage quota errors
+      }
+    }
+
+    // Procedural 8-bit Web Audio API
+    function ensureAudio() {
+      if (!audioCtx) {
+        const Ctx = window.AudioContext || window.webkitAudioContext;
+        if (Ctx) audioCtx = new Ctx();
+      }
+      if (audioCtx && audioCtx.state === "suspended") {
+        audioCtx.resume();
+      }
+    }
+
+    function playTone(freq, duration, type = "square", delay = 0, volume = 0.08) {
+      if (!soundEnabled) return;
+      ensureAudio();
+      if (!audioCtx) return;
+
+      const startTime = audioCtx.currentTime + delay;
+      const osc = audioCtx.createOscillator();
+      const gain = audioCtx.createGain();
+      osc.type = type;
+      osc.frequency.setValueAtTime(freq, startTime);
+
+      gain.gain.setValueAtTime(volume, startTime);
+      gain.gain.exponentialRampToValueAtTime(0.001, startTime + duration);
+
+      osc.connect(gain);
+      gain.connect(audioCtx.destination);
+      osc.start(startTime);
+      osc.stop(startTime + duration);
+    }
+
+    const sfx = {
+      blip() {
+        playTone(660, 0.07, "square", 0, 0.07);
+      },
+      start() {
+        playTone(523.25, 0.09, "square", 0, 0.08);
+        playTone(659.25, 0.09, "square", 0.09, 0.08);
+        playTone(783.99, 0.14, "square", 0.18, 0.08);
+      },
+      crank() {
+        const notes = [330, 392, 440, 392, 523, 587];
+        notes.forEach((n, idx) => {
+          playTone(n, 0.08, "square", idx * 0.09, 0.07);
+        });
+      },
+      drop(rarity) {
+        if (rarity === "ultra") {
+          [523.25, 659.25, 783.99, 1046.5, 1318.5].forEach((n, i) => {
+            playTone(n, 0.12, "square", i * 0.08, 0.09);
+          });
+        } else if (rarity === "rare") {
+          [440, 554.37, 659.25, 880].forEach((n, i) => {
+            playTone(n, 0.1, "square", i * 0.08, 0.08);
+          });
+        } else {
+          playTone(587.33, 0.09, "triangle", 0, 0.1);
+          playTone(783.99, 0.14, "square", 0.08, 0.07);
+        }
+      },
+      crunch() {
+        playTone(220, 0.04, "sawtooth", 0, 0.06);
+        playTone(310, 0.04, "sawtooth", 0.07, 0.06);
+        playTone(240, 0.05, "sawtooth", 0.14, 0.06);
+        playTone(784, 0.1, "square", 0.22, 0.06);
+      },
+      secret() {
+        const fanfare = [523.25, 659.25, 783.99, 1046.5, 783.99, 1046.5];
+        fanfare.forEach((n, i) => {
+          playTone(n, i === fanfare.length - 1 ? 0.28 : 0.1, "square", i * 0.1, 0.08);
+        });
+      }
+    };
+
+    // Relationship Level & Live Timer
+    function updateRelationshipHUD() {
+      const start = new Date(RELATIONSHIP_START_DATE);
+      const now = new Date();
+      const diffMs = Math.max(0, now - start);
+
+      // Total completed months since start date
+      let months = (now.getFullYear() - start.getFullYear()) * 12 + (now.getMonth() - start.getMonth());
+      if (now.getDate() < start.getDate()) {
+        months -= 1;
+      }
+      months = Math.max(0, months);
+      hudLevel.textContent = `LVL ${months}`;
+
+      const totalSeconds = Math.floor(diffMs / 1000);
+      const days = Math.floor(totalSeconds / 86400);
+      const hrs = Math.floor((totalSeconds % 86400) / 3600);
+      const mins = Math.floor((totalSeconds % 3600) / 60);
+      const secs = totalSeconds % 60;
+
+      const pad = (n) => String(n).padStart(2, "0");
+      hudTimer.textContent = `${days}D : ${pad(hrs)}H : ${pad(mins)}M : ${pad(secs)}S`;
+    }
+
+    // Visual FX Helpers
+    function spawnStageHeart(xPercent, yPercent) {
+      const el = document.createElement("div");
+      el.className = "float-fx";
+      el.style.left = `${xPercent}%`;
+      el.style.top = `${yPercent}%`;
+      el.innerHTML = `
+        <svg width="18" height="16" viewBox="0 0 9 8" shape-rendering="crispEdges">
+          <rect x="1" y="1" width="2" height="1" fill="#e88d97" />
+          <rect x="6" y="1" width="2" height="1" fill="#e88d97" />
+          <rect x="0" y="2" width="4" height="2" fill="#e88d97" />
+          <rect x="5" y="2" width="4" height="2" fill="#e88d97" />
+          <rect x="1" y="4" width="7" height="1" fill="#e88d97" />
+          <rect x="2" y="5" width="5" height="1" fill="#e88d97" />
+          <rect x="3" y="6" width="3" height="1" fill="#e88d97" />
+          <rect x="4" y="7" width="1" height="1" fill="#e88d97" />
+        </svg>
+      `;
+      fxLayer.appendChild(el);
+      setTimeout(() => el.remove(), 1250);
+    }
+
+    function spawnSparklesAroundChute() {
+      const coords = [
+        [34, 72], [44, 64], [24, 68], [38, 82]
+      ];
+      coords.forEach(([x, y], i) => {
+        setTimeout(() => {
+          const el = document.createElement("div");
+          el.className = "float-fx";
+          el.style.left = `${x}%`;
+          el.style.top = `${y}%`;
+          el.innerHTML = `
+            <svg width="14" height="14" viewBox="0 0 7 7" shape-rendering="crispEdges">
+              <rect x="3" y="0" width="1" height="7" fill="#f4d06f" />
+              <rect x="0" y="3" width="7" height="1" fill="#f4d06f" />
+              <rect x="2" y="2" width="3" height="3" fill="#fff6eb" />
+            </svg>
+          `;
+          fxLayer.appendChild(el);
+          setTimeout(() => el.remove(), 1200);
+        }, i * 70);
+      });
+    }
+
+    function showSpeechBubble(text) {
+      speechBubble.textContent = text;
+      speechBubble.classList.add("visible");
+      clearTimeout(speechTimer);
+      speechTimer = setTimeout(() => {
+        speechBubble.classList.remove("visible");
+      }, 2600);
+    }
+
+    function setHamsterState(state) {
+      hamsterBtn.classList.remove("idle", "jumping", "munching");
+      hamsterBtn.classList.add(state);
+    }
+
+    // Gacha Pull Mechanics (60% Common, 30% Rare, 10% Ultra Rare)
+    function pickCapsule() {
+      const roll = Math.random();
+      let tier = "common";
+      if (roll >= 0.90) {
+        tier = "ultra";
+      } else if (roll >= 0.60) {
+        tier = "rare";
+      }
+
+      let pool = CAPSULE_POOL.filter((item) => item.rarity === tier);
+      if (pool.length === 0) pool = CAPSULE_POOL;
+
+      // Slightly favor uncollected capsules in the rolled tier so completing the Dex feels great
+      const uncollected = pool.filter((item) => !unlockedIds.includes(item.id));
+      const source = uncollected.length > 0 ? uncollected : pool;
+      return source[Math.floor(Math.random() * source.length)];
+    }
+
+    function openCapsuleModal(capsule, isNew) {
+      capsuleModalHeader.className = `modal-header rarity-${capsule.rarity}`;
+      capsuleRarityTag.textContent = RARITY_LABELS[capsule.rarity];
+      capsuleNewTag.style.display = isNew ? "inline-block" : "none";
+      capsuleCategory.textContent = capsule.category.toUpperCase();
+      capsuleMessage.textContent = capsule.message;
+      capsuleModal.classList.add("open");
+    }
+
+    function handlePull() {
+      if (isPulling) return;
+      isPulling = true;
+      pullBtn.disabled = true;
+
+      droppedCapsule.classList.remove("drop-in");
+      gachaWrap.classList.add("shake", "cranking");
+      setHamsterState("jumping");
+      sfx.crank();
+
+      const chosen = pickCapsule();
+      const color = RARITY_COLOR_HEX[chosen.rarity];
+      dropCapTop.setAttribute("fill", color);
+      dropCapMid.setAttribute("fill", color);
+
+      setTimeout(() => {
+        gachaWrap.classList.remove("shake", "cranking");
+        setHamsterState("idle");
+        droppedCapsule.classList.add("drop-in");
+        spawnSparklesAroundChute();
+        sfx.drop(chosen.rarity);
+
+        const isNew = !unlockedIds.includes(chosen.id);
+        if (isNew) {
+          unlockedIds.push(chosen.id);
+          saveUnlocked();
+        }
+
+        setTimeout(() => {
+          openCapsuleModal(chosen, isNew);
+          isPulling = false;
+          pullBtn.disabled = false;
+        }, 620);
+      }, 900);
+    }
+
+    // Feed Hamster
+    function handleFeed() {
+      if (isPulling) return;
+      sfx.crunch();
+      setHamsterState("munching");
+
+      const quote = HAMSTER_QUOTES[Math.floor(Math.random() * HAMSTER_QUOTES.length)];
+      showSpeechBubble(quote);
+
+      spawnStageHeart(68, 52);
+      setTimeout(() => spawnStageHeart(78, 46), 140);
+      setTimeout(() => spawnStageHeart(73, 56), 280);
+
+      setTimeout(() => {
+        if (!isPulling) setHamsterState("idle");
+      }, 1100);
+    }
+
+    // Mahal's Dex
+    function renderDex() {
+      const unlockedSet = new Set(unlockedIds);
+      dexProgress.textContent = `Unlocked: ${unlockedSet.size} / ${CAPSULE_POOL.length}`;
+
+      const filtered = CAPSULE_POOL.filter((item) =>
+        currentDexFilter === "all" ? true : item.rarity === currentDexFilter
+      );
+
+      dexList.innerHTML = "";
+      filtered.forEach((item) => {
+        const isUnlocked = unlockedSet.has(item.id);
+        const card = document.createElement("div");
+        card.className = `dex-item${isUnlocked ? "" : " locked"}`;
+
+        const badgeLabel =
+          item.rarity === "ultra" ? "ULTRA RARE" : item.rarity.toUpperCase();
+
+        card.innerHTML = `
+          <div class="dex-item-top">
+            <span class="dex-item-badge ${item.rarity}">${badgeLabel}</span>
+            <span class="dex-item-cat">${isUnlocked ? item.category : "???"}</span>
+          </div>
+          <div class="dex-item-msg">${isUnlocked ? escapeHtml(item.message) : "??? (Pull more capsules to unlock!)"}</div>
+        `;
+        dexList.appendChild(card);
+      });
+    }
+
+    function escapeHtml(str) {
+      const div = document.createElement("div");
+      div.textContent = str;
+      return div.innerHTML;
+    }
+
+    // Secret Easter Egg (Tap hamster 5 times)
+    function launchConfettiShower() {
+      confettiLayer.innerHTML = "";
+      const total = 34;
+
+      for (let i = 0; i < total; i++) {
+        const piece = document.createElement("div");
+        piece.className = "confetti-piece";
+        piece.style.left = `${Math.random() * 96}%`;
+        const duration = 2.2 + Math.random() * 1.8;
+        const delay = Math.random() * 0.9;
+        piece.style.animationDuration = `${duration}s`;
+        piece.style.animationDelay = `${delay}s`;
+
+        const isHeart = i % 2 === 0;
+        piece.innerHTML = isHeart
+          ? `<svg width="18" height="16" viewBox="0 0 9 8" shape-rendering="crispEdges">
+               <rect x="1" y="1" width="2" height="1" fill="#e88d97"/>
+               <rect x="6" y="1" width="2" height="1" fill="#e88d97"/>
+               <rect x="0" y="2" width="4" height="2" fill="#e88d97"/>
+               <rect x="5" y="2" width="4" height="2" fill="#e88d97"/>
+               <rect x="1" y="4" width="7" height="1" fill="#e88d97"/>
+               <rect x="2" y="5" width="5" height="1" fill="#e88d97"/>
+               <rect x="3" y="6" width="3" height="1" fill="#e88d97"/>
+               <rect x="4" y="7" width="1" height="1" fill="#e88d97"/>
+             </svg>`
+          : `<svg width="14" height="16" viewBox="0 0 7 8" shape-rendering="crispEdges">
+               <rect x="2" y="0" width="3" height="1" fill="#1b2e21"/>
+               <rect x="1" y="1" width="5" height="5" fill="#1b2e21"/>
+               <rect x="2" y="6" width="3" height="2" fill="#1b2e21"/>
+               <rect x="2" y="2" width="3" height="3" fill="#f4d06f"/>
+               <rect x="3" y="1" width="1" height="5" fill="#fff6eb"/>
+             </svg>`;
+
+        confettiLayer.appendChild(piece);
+      }
+
+      setTimeout(() => {
+        confettiLayer.innerHTML = "";
+      }, 4800);
+    }
+
+    function openSecretLetter() {
+      secretLetterBody.textContent = SECRET_LETTER;
+      secretModal.classList.add("open");
+    }
+
+    function handleHamsterTap() {
+      sfx.blip();
+      hamsterTapCount += 1;
+      spawnStageHeart(72, 54);
+
+      clearTimeout(hamsterTapTimer);
+      hamsterTapTimer = setTimeout(() => {
+        hamsterTapCount = 0;
+      }, 2500);
+
+      if (hamsterTapCount >= 5) {
+        hamsterTapCount = 0;
+        secretUnlocked = true;
+        localStorage.setItem(STORAGE_KEY_SECRET, "1");
+        secretLetterBtn.classList.add("unlocked");
+        sfx.secret();
+        launchConfettiShower();
+        showSpeechBubble("You found my secret, Mahal!");
+        setTimeout(openSecretLetter, 550);
+      } else if (hamsterTapCount === 1) {
+        showSpeechBubble("*squeak!* Hi Mahal!");
+      }
+    }
+
+    // Event Listeners
+    pressStartBtn.addEventListener("click", () => {
+      ensureAudio();
+      sfx.start();
+      titleScreen.classList.add("hidden");
+      gameScreen.classList.remove("hidden");
+      updateRelationshipHUD();
+      if (secretUnlocked) {
+        secretLetterBtn.classList.add("unlocked");
+      }
+    });
+
+    soundToggleBtn.addEventListener("click", () => {
+      soundEnabled = !soundEnabled;
+      soundToggleBtn.textContent = soundEnabled ? "SFX:ON" : "SFX:OFF";
+      if (soundEnabled) {
+        ensureAudio();
+        sfx.blip();
+      }
+    });
+
+    pullBtn.addEventListener("click", handlePull);
+    feedBtn.addEventListener("click", handleFeed);
+
+    dexBtn.addEventListener("click", () => {
+      sfx.blip();
+      renderDex();
+      dexModal.classList.add("open");
+    });
+
+    secretLetterBtn.addEventListener("click", () => {
+      sfx.blip();
+      openSecretLetter();
+    });
+
+    hamsterBtn.addEventListener("click", handleHamsterTap);
+    hamsterBtn.addEventListener("keydown", (e) => {
+      if (e.key === "Enter" || e.key === " ") {
+        e.preventDefault();
+        handleHamsterTap();
+      }
+    });
+
+    dexFilters.addEventListener("click", (e) => {
+      const btn = e.target.closest(".dex-filter-btn");
+      if (!btn) return;
+      sfx.blip();
+      currentDexFilter = btn.dataset.filter;
+      dexFilters.querySelectorAll(".dex-filter-btn").forEach((el) => {
+        el.classList.toggle("active", el === btn);
+      });
+      renderDex();
+    });
+
+    function closeModal(modal) {
+      sfx.blip();
+      modal.classList.remove("open");
+    }
+
+    closeCapsuleBtn.addEventListener("click", () => closeModal(capsuleModal));
+    keepCapsuleBtn.addEventListener("click", () => closeModal(capsuleModal));
+    closeDexBtn.addEventListener("click", () => closeModal(dexModal));
+    closeSecretBtn.addEventListener("click", () => closeModal(secretModal));
+    closeSecretFooterBtn.addEventListener("click", () => closeModal(secretModal));
+
+    [capsuleModal, dexModal, secretModal].forEach((overlay) => {
+      overlay.addEventListener("click", (e) => {
+        if (e.target === overlay) closeModal(overlay);
+      });
+    });
+
+    // Start live timer tick
+    updateRelationshipHUD();
+    setInterval(updateRelationshipHUD, 1000);
+  </script>
+</body>
+</html>
